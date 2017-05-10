@@ -1,0 +1,10 @@
+<div class="r_link border">
+    <div class="title2">
+        <h4>热门帖子</h4>
+    </div>
+    <ul class="hourul">
+        <volist name="hotthreadslist" id="hotthreadslist">
+            <li class="onlink"><a href="{:U('showbbs',array('id'=>$hotthreadslist['threadid']))}" title="{$hotthreadslist.topic}">{$hotthreadslist.topic}</a></li>
+        </volist>
+    </ul>
+</div>

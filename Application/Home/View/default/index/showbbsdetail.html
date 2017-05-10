@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{$threads.topic}-{$threads.cat_name}吧-贴吧-{$sys_sitename}</title>
+    <meta name="Description" content="{$threads.topic}">
+    <meta name="Keywords" content="{$threads.topic}">
+    <link href="{$model_path}/css/css.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="{$model_path}/css/brush.css"/>
+    <link type="text/css" rel="stylesheet" href="{$model_path}/css/brush_de.css"/>
+</head>
+<body>
+<div class="wrapper">
+    <!--  顶部链接  -->
+    <include file="top" />
+    <!--  正文  -->
+    <div class="container m10">
+        <div class="con_left">
+            <!--  左侧正文内容部分  -->
+            <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:10px;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('bbs')}">贴&nbsp;吧</a>><a href="{:U('showbbsclass',array('id'=>$threads['cat_id']))}">{$threads.cat_name}吧</a>>&nbsp;&nbsp;{$threads.topic}</div>
+            <div class="black"></div>
+            <volist name="pagelist['list']" id="pagelist" key="key">
+            <table bgcolor="#ABC8E0" border="0" cellpadding="5" cellspacing="1" width="100%">
+                <tbody>
+                <tr>
+                    <td style="padding-left: 9px; padding-bottom: 5px;" bgcolor="#F9FBFD" valign="top" width="168">
+                        <table style="table-layout: fixed; word-wrap: break-word;" border="0" cellpadding="1" cellspacing="0" width="98%">
+                            <tbody>
+                            <tr>
+                                <td class="zise" style="padding-top: 6px; padding-bottom: 6px; width:120px;"><img src="{$model_path}/images/user_man_0.gif" alt="{$pagelist.postname}" width="15" height="15" border="0" align="absmiddle"><b>{$pagelist.postname}</b></td>
+                                <td align="right" class="zise" style="padding-top: 6px; padding-bottom: 6px;"><span class="green"><if condition="$key == 1">楼主<else />{$key}楼</if></span></td>
+                            </tr>
+                            <tr>
+                                <td height="140" colspan="2"><img src="{$model_path}/images/pic5.gif" width="85" height="90" border="0" alt="{$pagelist.postname}"></td>
+                            </tr>
+                            </tbody>
+                        </table></td>
+                    <td style="padding: 5px 15px 8px;" bgcolor="#FFFFFF" valign="top">
+                        <table class="tahoma" style="border-bottom: 1px solid rgb(203, 223, 233);" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                        <tr height="25">
+                            <td class="hui">发表于&nbsp;{$pagelist.posttime|date="Y-m-d H:i:s",###}</td>
+                            <td class="green" align="right"><a href="#top" class="hui">回顶端</a>　</td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <style>span {line-height:130%}</style>
+                            <tbody>
+                            <tr>
+                                <td class="hie" valign="top">
+                                    {$pagelist.postcontent|htmlspecialchars_decode}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="black"></div>
+            </volist>
+            <table width="100%" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td colspan="5" class="paddright" align="center" bgcolor="#F4F9FC">{$pagefooter}
+                        <div class="clear"></div> </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="con_right">
+            <include file="bbs_right" />
+        </div>
+        <div class="clearit"></div>
+        <div class="shownewsbuttom"></div>
+    </div>
+    <br />
+
+    <table class="tahoma" border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tbody>
+        <tr>
+            <td height="30" background="{$model_path}/images/bg_re.gif" bgcolor="#5F9DE0" class="white" style="padding-left: 8px;"><img src="{$model_path}/images/huifu.gif" align="absmiddle" width="16" height="16" alt="快速回复"> <b>快速回复</b></td>
+        </tr>
+        <tr>
+            <td bgcolor="#D0E5F5" height="3"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!--  底部导航  -->
+    <include file="foot" />
+</div>
+</body>
+</html>
