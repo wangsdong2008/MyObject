@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的积分-会员中心-{$sys_sitename}</title>
+    <meta content="xxxxxxxxx" name="Keywords" />
+    <meta content="xxxxxx" name="Description" />
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="{$js_model_path}/js/admin.js" language="javascript" ></script>
+</head>
+<body>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <script>
+                s=1;
+            </script>
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="我的积分">我的积分</a></span><span> &gt; </span><span> 积分情况</span><a id="YourPosition_SkipLink"></a></span></div>
+                <div class="model_info_list">
+                    <div class="model_info_sate mtop10">
+                        <ul>
+                            <!-- CSS Tabs -->
+                            <li id="ElitePending" class="hover"><span> <a id="LinkPending" href="?act=list">我的所有积分</a></span> </li>
+                            <li id="EliteAudited"><span> <a id="LinkAudited" href="?act=list2">如何获取积分</a></span> </li>
+                        </ul>
+                    </div>
+                    <!--模型内容列表开始-->
+                    <div class="model_info_content">
+                        <!--列表开始-->
+                        <div>
+                            <table id="EgvContent" cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
+                                <thead>
+                                <tr class="model_info_title">
+                                    <th width="60" scope="col">ID</th>
+                                    <th scope="col">原因</th>
+                                    <th width="80" scope="col">分值</th>
+                                    <th width="120" scope="col">时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="integrallist" id="integrallist">
+                                <tr class="listbg1">
+                                    <td>{$integrallist.id}</td>
+                                    <td style="text-align:left;">&nbsp;&nbsp;{$integrallist.rule_name}</td>
+                                    <td>{$integrallist.integral}</td>
+                                    <td>{$integrallist.addtime|date="Y-m-d H:i:s",###}</td>
+                                </tr>
+                                </volist>
+                                <tr>
+                                    <td colspan="4" class="listbg1" style="text-align:left;">&nbsp;&nbsp;<strong>总积分：{$users.sum_integral}分</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="list_page">
+                                {$pagefooter}
+                            </div>
+                        </div>
+                        <!--列表结束-->
+                    </div>
+                    <!--模型内容列表结束-->
+                </div>
+
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<!--网站底部结束-->
+</body>
+</html>

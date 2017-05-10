@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的订单-会员中心-{$sys_sitename}</title>
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <style type="text/css">
+        .fclick {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+        .subtable tr:last-child td{
+            border-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    s = 2;
+</script>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="">订单管理</a></span><span> &gt; </span><span>我的订单</span><a id="YourPosition_SkipLink"></a></span></div>
+                <div class="model_info_list">
+                    <div class="model_info_sate mtop10">
+                        <ul>
+                            <!-- CSS Tabs -->
+                            <li id="EliteContentList" <if condition="$flg eq '3'"> class="hover"</if>><span> <a id="LinkContentList" href="{:U('myorder',array('flg'=>3))}">全部订单</a></span> </li>
+                            <li id="ElitePending" <if condition="$flg eq '2'"> class="hover"</if>><span> <a id="LinkPending" href="{:U('myorder',array('flg'=>2))}">已付款</a></span> </li>
+                            <li id="EliteAudited2" <if condition="$flg eq '0'"> class="hover"</if>><span> <a id="LinkAudited2" href="{:U('myorder',array('flg'=>0))}">未付款</a></span> </li>
+                            <li id="EliteAudited3" <if condition="$flg eq '1'"> class="hover"</if>><span> <a id="LinkAudited3" href="{:U('myorder',array('flg'=>1))}">已取消</a></span> </li>
+                        </ul>
+                    </div>
+                    <!--模型内容列表开始-->
+                    <div class="model_info_content">
+                        <!--列表开始-->
+                            <div>
+                                <table id="EgvContent" cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
+                                    <thead>
+                                    <tr class="model_info_title">
+                                        <th scope="col">订单号</th>
+                                        <th scope="col" style="width:12%;">状态</th>
+                                        <th scope="col" style="width:20%;">时间</th>
+                                        <th class="operate" scope="col" style="width:15%;">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="orderlist" id="orderlist">
+                                        <tr class="listbg1">
+                                            <td class="content_left">订单号：{$orderlist.order_sn}</td>
+                                            <td><if condition="$orderlist.order_status == 2"><span style="color: green;">已付款</span><elseif condition="$orderlist.order_status == 1"/>已取消<else/><span style="color: red;">未付款</span></if></td>
+                                            <td>{$orderlist.addtime|date="Y-m-d H:i:s",###}</td>
+                                            <td><if condition="$orderlist.order_status == 0"><a href="{:U('Index/pay',array('id'=>$orderlist['order_id']))}">去付款</a> <a href="">取消</a></if></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <table style="margin:10px 30px;width: 90%;border: 1px solid #D5D5D5;" class="subtable">
+                                                    <tr>
+                                                        <td>产品名</td>
+                                                        <td style="width: 15%">积分</td>
+                                                        <td style="width: 15%">操作</td>
+                                                    </tr>
+                                                    <volist name="orderlist.goodslist" id="goodslist">
+                                                    <tr>
+                                                        <td style="text-align: left;padding-left: 10px;">{$goodslist.goods_name}</td>
+                                                        <td>{$goodslist.shop_price}</td>
+                                                        <td><a href="{:U('down',array('orderid'=>$orderlist['order_id'],'id'=>$goodslist['goods_id']))}" target="_blank">下载</a></td>
+                                                    </tr>
+                                                    </volist>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                                <div class="list_page">
+                                    {$pagefooter}
+                                </div>
+                            </div>
+                        <!--列表结束-->
+                    </div>
+                    <!--模型内容列表结束-->
+                </div>
+                <div class="clear"> </div>
+                <div class="model_list_manage">
+                    <form name="search" action="{:U('myorder')}" method="post">
+                        &nbsp;&nbsp;搜索订单号：<input name="keyword" type="text" id="keyword" class="inputxt" value="{$keyword}" />
+                        <input type="hidden" name="flg" id="flg" value="{$flg}">
+                        <input type="submit" name="BtnSearch" value="搜索" id="BtnSearch" class="input_button" />
+                    </form>
+                </div>
+
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<!--网站底部结束-->
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$news_title}-{$cat_name}-技术{$data}-{$sys_sitename}</title>
+<meta name="description" content="{$news_description}">
+<meta name="keywords" content="{$news_keywords}">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="{$css_model_path}/css/brush.css"/>
+<link type="text/css" rel="stylesheet" href="{$css_model_path}/css/brush_de.css"/>
+<style type="text/css">
+.ad{ height:250px; margin:0 auto; margin-top:10px; width:600px; text-align:center;}
+.adv2{ margin:0 auto; width:540px; }
+.ad1{ margin:0 auto; margin-right:20px; float:left; }
+</style>
+<script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+</head>
+<body>
+<div class="wrapper">
+<include file="top" />
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('tech')}">技术{$data}</a>><a href="{:U('Index/newslist',array('id'=>$cat_id))}">{$cat_name}</a>>&nbsp;&nbsp;正文</div>
+      <div class="techlist border">
+        <div class="con_main">
+          <h1>{$news_title}</h1>
+          <div class="abstract">{$news_time|date="Y-m-d H:i:s",###}&nbsp;&nbsp;&nbsp;来源：{$news_from}&nbsp;&nbsp;&nbsp;作者：{$news_author}&nbsp;&nbsp;&nbsp;浏览量:{$news_hits}</div>
+          
+          <div class="main_text"> {$news_content|htmlspecialchars_decode}<div class="thinks">感谢wangsdong投稿</div>
+</div>
+
+          <div class="lastnext">
+            <volist name="news_about" id="news_about" key="k">
+            <p><if condition="$k eq 1">上一篇<else />下一篇</if>：
+              <if condition="$news_about.news_id eq 0">
+                {$news_about.news_title}
+                <else />
+              <a href="{:U('showtech',array('id'=>$news_about['news_id']))}" title="{$news_about.news_title}">{$news_about.news_title}</a>
+              </if>
+            </p>
+            </volist>
+          </div>
+            <div class="black"></div>
+        </div>
+      </div>
+      <div class="black"></div>
+      <div class="tech_news border">
+        <!--  最新相关教程-->
+        <div class="title">
+          <h4>最新相关教程</h4>
+        </div>
+        <ul class="technewsul">
+          <volist name="alist" id="alist">
+          <li><a href="{:U('showtech',array('id'=>$alist['news_id']))}" title="{$alist.news_title}">{$alist.news_title}</a></li>
+          </volist>
+        </ul>
+        <div class="clearit"></div>
+      </div>
+    </div>
+    <div class="con_right">
+      <include file="tech_right" />
+    </div>
+
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <!--  底部导航  -->
+<include file="foot" />
+</div>
+</body>
+</html>

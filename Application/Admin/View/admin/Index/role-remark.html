@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/html5.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$DEFAULT_PATH}/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href="{$DEFAULT_PATH}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加权限</title>
+</head>
+<body>
+<div class="pd-20">
+  <form action="role_remark_save" method="post" class="form form-horizontal" id="form-user-add">
+    <div class="row cl">
+      <label class="form-label col-3">用户管理：<input type="hidden" name="role_id" id="role_id" value="{$role_id}"></label>
+      <div class="formControls col-5">      
+        
+        <input type="checkbox" value="1" name="checkbox" <if condition="stripos($qx,',1,') nheq false">checked</if>>用户列表
+        <input type="checkbox" value="2" name="checkbox" <if condition="stripos($qx,',2,') nheq false">checked</if>>用户添加
+        <input type="checkbox" value="3" name="checkbox" <if condition="stripos($qx,',3,') nheq false">checked</if>>用户修改
+        <input type="checkbox" value="4" name="checkbox" <if condition="stripos($qx,',4,') nheq false">checked</if>>用户删除<br />
+        <input type="checkbox" value="5" name="checkbox" <if condition="stripos($qx,',5,') nheq false">checked</if>>密码修改
+        <input type="checkbox" value="6" name="checkbox" <if condition="stripos($qx,',6,') nheq false">checked</if>>修改用户状态
+        <input type="checkbox" value="94" name="checkbox" <if condition="stripos($qx,',94,') nheq false">checked</if>>会员等级列表<br />
+        <input type="checkbox" value="95" name="checkbox" <if condition="stripos($qx,',95,') nheq false">checked</if>>会员等级添加
+        <input type="checkbox" value="96" name="checkbox" <if condition="stripos($qx,',96,') nheq false">checked</if>>会员等级修改
+        <input type="checkbox" value="97" name="checkbox" <if condition="stripos($qx,',97,') nheq false">checked</if>>会员等级删除<br />
+        <input type="checkbox" value="107" name="checkbox" <if condition="stripos($qx,',107,') nheq false">checked</if>>下载记录
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">文章库：</label>
+      <div class="formControls col-5">      
+        <input type="checkbox" value="7" name="checkbox" <if condition="stripos($qx,',7,') nheq false">checked</if>>分类列表
+        <input type="checkbox" value="8" name="checkbox" <if condition="stripos($qx,',8,') nheq false">checked</if>>分类添加
+        <input type="checkbox" value="9" name="checkbox" <if condition="stripos($qx,',9,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="10" name="checkbox" <if condition="stripos($qx,',10,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="11" name="checkbox" <if condition="stripos($qx,',11,') nheq false">checked</if>>文章列表
+        <input type="checkbox" value="12" name="checkbox" <if condition="stripos($qx,',12,') nheq false">checked</if>>文章添加
+        <input type="checkbox" value="13" name="checkbox" <if condition="stripos($qx,',13,') nheq false">checked</if>>文章修改
+        <input type="checkbox" value="14" name="checkbox" <if condition="stripos($qx,',14,') nheq false">checked</if>>文章删除
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">新闻库：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="15" name="checkbox" <if condition="stripos($qx,',15,') nheq false">checked</if>>分类列表
+        <input type="checkbox" value="16" name="checkbox" <if condition="stripos($qx,',16,') nheq false">checked</if>>分类添加
+        <input type="checkbox" value="17" name="checkbox" <if condition="stripos($qx,',17,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="18" name="checkbox" <if condition="stripos($qx,',18,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="19" name="checkbox" <if condition="stripos($qx,',19,') nheq false">checked</if>>新闻列表
+        <input type="checkbox" value="20" name="checkbox" <if condition="stripos($qx,',20,') nheq false">checked</if>>新闻添加
+        <input type="checkbox" value="21" name="checkbox" <if condition="stripos($qx,',21,') nheq false">checked</if>>新闻修改
+        <input type="checkbox" value="22" name="checkbox" <if condition="stripos($qx,',22,') nheq false">checked</if>>新闻删除 
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">产品库：</label>
+      <div class="formControls col-5">      
+        <input type="checkbox" value="27" name="checkbox" <if condition="stripos($qx,',27,') nheq false">checked</if>>分类列表
+        <input type="checkbox" value="28" name="checkbox" <if condition="stripos($qx,',28,') nheq false">checked</if>>分类添加
+        <input type="checkbox" value="29" name="checkbox" <if condition="stripos($qx,',29,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="30" name="checkbox" <if condition="stripos($qx,',30,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="31" name="checkbox" <if condition="stripos($qx,',31,') nheq false">checked</if>>产品列表
+        <input type="checkbox" value="32" name="checkbox" <if condition="stripos($qx,',32,') nheq false">checked</if>>产品添加
+        <input type="checkbox" value="33" name="checkbox" <if condition="stripos($qx,',33,') nheq false">checked</if>>产品修改
+        <input type="checkbox" value="34" name="checkbox" <if condition="stripos($qx,',34,') nheq false">checked</if>>产品删除 
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">开源算法：</label>
+      <div class="formControls col-5">      
+        <input type="checkbox" value="23" name="checkbox" <if condition="stripos($qx,',23,') nheq false">checked</if>>开源算法列表
+        <input type="checkbox" value="24" name="checkbox" <if condition="stripos($qx,',24,') nheq false">checked</if>>开源算法添加
+        <input type="checkbox" value="25" name="checkbox" <if condition="stripos($qx,',25,') nheq false">checked</if>>开源算法修改<br />
+        <input type="checkbox" value="26" name="checkbox" <if condition="stripos($qx,',26,') nheq false">checked</if>>开源算法删除             
+        <input type="checkbox" value="102" name="checkbox" <if condition="stripos($qx,',102,') nheq false">checked</if>>开源商品列表
+        <input type="checkbox" value="103" name="checkbox" <if condition="stripos($qx,',103,') nheq false">checked</if>>开源商品添加<br />
+        <input type="checkbox" value="104" name="checkbox" <if condition="stripos($qx,',104,') nheq false">checked</if>>开源商品修改
+        <input type="checkbox" value="105" name="checkbox" <if condition="stripos($qx,',105,') nheq false">checked</if>>开源商品删除
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">广告库：</label>
+      <div class="formControls col-5">
+               
+        <input type="checkbox" value="79" name="checkbox" <if condition="stripos($qx,',79,') nheq false">checked</if>>分类列表
+        <input type="checkbox" value="80" name="checkbox" <if condition="stripos($qx,',80,') nheq false">checked</if>>分类添加
+        <input type="checkbox" value="81" name="checkbox" <if condition="stripos($qx,',81,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="82" name="checkbox" <if condition="stripos($qx,',82,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="83" name="checkbox" <if condition="stripos($qx,',83,') nheq false">checked</if>>广告列表
+        <input type="checkbox" value="84" name="checkbox" <if condition="stripos($qx,',84,') nheq false">checked</if>>广告添加
+        <input type="checkbox" value="85" name="checkbox" <if condition="stripos($qx,',85,') nheq false">checked</if>>广告修改
+        <input type="checkbox" value="86" name="checkbox" <if condition="stripos($qx,',86,') nheq false">checked</if>>广告删除 <br />
+        <input type="checkbox" value="98" name="checkbox" <if condition="stripos($qx,',98,') nheq false">checked</if>>品牌广告列表
+        <input type="checkbox" value="99" name="checkbox" <if condition="stripos($qx,',99,') nheq false">checked</if>>品牌广告添加
+        <input type="checkbox" value="100" name="checkbox" <if condition="stripos($qx,',100,') nheq false">checked</if>>品牌广告修改 <br />
+        <input type="checkbox" value="101" name="checkbox" <if condition="stripos($qx,',101,') nheq false">checked</if>>品牌广告删除
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">友情链接：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="35" name="checkbox" <if condition="stripos($qx,',35,') nheq false">checked</if>>分类列表
+        <input type="checkbox" value="36" name="checkbox" <if condition="stripos($qx,',36,') nheq false">checked</if>>分类添加
+        <input type="checkbox" value="37" name="checkbox" <if condition="stripos($qx,',37,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="38" name="checkbox" <if condition="stripos($qx,',38,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="39" name="checkbox" <if condition="stripos($qx,',39,') nheq false">checked</if>>友链列表
+        <input type="checkbox" value="40" name="checkbox" <if condition="stripos($qx,',40,') nheq false">checked</if>>友链添加
+        <input type="checkbox" value="41" name="checkbox" <if condition="stripos($qx,',41,') nheq false">checked</if>>友链修改
+        <input type="checkbox" value="42" name="checkbox" <if condition="stripos($qx,',42,') nheq false">checked</if>>友链删除 
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">留言管理：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="43" name="checkbox" <if condition="stripos($qx,',43,') nheq false">checked</if>>留言列表
+        <input type="checkbox" value="44" name="checkbox" <if condition="stripos($qx,',44,') nheq false">checked</if>>留言添加
+        <input type="checkbox" value="45" name="checkbox" <if condition="stripos($qx,',45,') nheq false">checked</if>>留言修改
+        <input type="checkbox" value="46" name="checkbox" <if condition="stripos($qx,',46,') nheq false">checked</if>>留言删除
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+     <div class="row cl">
+      <label class="form-label col-3">人才招聘：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="47" name="checkbox" <if condition="stripos($qx,',47,') nheq false">checked</if>>分类列表
+        <input type="checkbox" value="48" name="checkbox" <if condition="stripos($qx,',48,') nheq false">checked</if>>分类添加
+        <input type="checkbox" value="49" name="checkbox" <if condition="stripos($qx,',49,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="50" name="checkbox" <if condition="stripos($qx,',50,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="51" name="checkbox" <if condition="stripos($qx,',51,') nheq false">checked</if>>招聘列表
+        <input type="checkbox" value="52" name="checkbox" <if condition="stripos($qx,',52,') nheq false">checked</if>>招聘添加
+        <input type="checkbox" value="53" name="checkbox" <if condition="stripos($qx,',53,') nheq false">checked</if>>招聘修改
+        <input type="checkbox" value="54" name="checkbox" <if condition="stripos($qx,',54,') nheq false">checked</if>>招聘删除 <br />
+        <input type="checkbox" value="76" name="checkbox" <if condition="stripos($qx,',76,') nheq false">checked</if>>查看简历 
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">财务管理：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="77" name="checkbox" <if condition="stripos($qx,',77,') nheq false">checked</if>>订单列表
+       <input type="checkbox" value="78" name="checkbox" <if condition="stripos($qx,',78,') nheq false">checked</if>>查看订单详情
+       <!--  <input type="checkbox" value="49" name="checkbox" <if condition="stripos($qx,',49,') nheq false">checked</if>>分类修改
+        <input type="checkbox" value="50" name="checkbox" <if condition="stripos($qx,',50,') nheq false">checked</if>>分类删除<br />
+        <input type="checkbox" value="51" name="checkbox" <if condition="stripos($qx,',51,') nheq false">checked</if>>招聘列表
+        <input type="checkbox" value="52" name="checkbox" <if condition="stripos($qx,',52,') nheq false">checked</if>>招聘添加
+        <input type="checkbox" value="53" name="checkbox" <if condition="stripos($qx,',53,') nheq false">checked</if>>招聘修改
+        <input type="checkbox" value="54" name="checkbox" <if condition="stripos($qx,',54,') nheq false">checked</if>>招聘删除 <br />
+        <input type="checkbox" value="76" name="checkbox" <if condition="stripos($qx,',76,') nheq false">checked</if>>查看简历 -->
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">管理员管理：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="55" name="checkbox" <if condition="stripos($qx,',55,') nheq false">checked</if>>角色列表
+        <input type="checkbox" value="56" name="checkbox" <if condition="stripos($qx,',56,') nheq false">checked</if>>角色添加
+        <input type="checkbox" value="57" name="checkbox" <if condition="stripos($qx,',57,') nheq false">checked</if>>角色修改
+        <input type="checkbox" value="58" name="checkbox" <if condition="stripos($qx,',58,') nheq false">checked</if>>角色删除<br />
+        <input type="checkbox" value="63" name="checkbox" <if condition="stripos($qx,',63,') nheq false">checked</if>>权限分配<br />
+        <input type="checkbox" value="59" name="checkbox" <if condition="stripos($qx,',59,') nheq false">checked</if>>管理员列表
+        <input type="checkbox" value="60" name="checkbox" <if condition="stripos($qx,',60,') nheq false">checked</if>>管理员添加
+        <input type="checkbox" value="61" name="checkbox" <if condition="stripos($qx,',61,') nheq false">checked</if>>管理员修改
+        <input type="checkbox" value="62" name="checkbox" <if condition="stripos($qx,',62,') nheq false">checked</if>>管理员删除 
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+     <div class="row cl">
+      <label class="form-label col-3">系统管理：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="64" name="checkbox" <if condition="stripos($qx,',64,') nheq false">checked</if>>基本设置
+        <input type="checkbox" value="65" name="checkbox" <if condition="stripos($qx,',65,') nheq false">checked</if>>公司信息设置
+        <input type="checkbox" value="66" name="checkbox" <if condition="stripos($qx,',66,') nheq false">checked</if>>屏蔽词<br />
+                
+        <input type="checkbox" value="88" name="checkbox" <if condition="stripos($qx,',88,') nheq false">checked</if>>模版列表
+        <input type="checkbox" value="89" name="checkbox" <if condition="stripos($qx,',89,') nheq false">checked</if>>模版添加
+        <input type="checkbox" value="90" name="checkbox" <if condition="stripos($qx,',90,') nheq false">checked</if>>模版修改
+        <input type="checkbox" value="91" name="checkbox" <if condition="stripos($qx,',91,') nheq false">checked</if>>模版删除<br />    
+        
+        <input type="checkbox" value="67" name="checkbox" <if condition="stripos($qx,',67,') nheq false">checked</if>>栏目列表
+        <input type="checkbox" value="68" name="checkbox" <if condition="stripos($qx,',68,') nheq false">checked</if>>栏目添加
+        <input type="checkbox" value="69" name="checkbox" <if condition="stripos($qx,',69,') nheq false">checked</if>>栏目修改
+        <input type="checkbox" value="70" name="checkbox" <if condition="stripos($qx,',70,') nheq false">checked</if>>栏目删除<br />
+        
+        <input type="checkbox" value="71" name="checkbox" <if condition="stripos($qx,',71,') nheq false">checked</if>>字典列表
+        <input type="checkbox" value="72" name="checkbox" <if condition="stripos($qx,',72,') nheq false">checked</if>>字典添加
+        <input type="checkbox" value="73" name="checkbox" <if condition="stripos($qx,',73,') nheq false">checked</if>>字典修改
+        <input type="checkbox" value="74" name="checkbox" <if condition="stripos($qx,',74,') nheq false">checked</if>>字典删除<br />
+        
+        <input type="checkbox" value="75" name="checkbox" <if condition="stripos($qx,',75,') nheq false">checked</if>>字典详情修改 
+        <input type="checkbox" value="87" name="checkbox" <if condition="stripos($qx,',87,') nheq false">checked</if>>搜索词设置
+        <input type="checkbox" value="106" name="checkbox" <if condition="stripos($qx,',106,') nheq false">checked</if>>清除缓存<br/>
+        
+        <input type="checkbox" value="108" name="checkbox" <if condition="stripos($qx,',108,') nheq false">checked</if>>编辑邮件内容
+      	<input type="checkbox" value="109" name="checkbox" <if condition="stripos($qx,',109,') nheq false">checked</if>>群发短信
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3">系统统计：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="110" name="checkbox" <if condition="stripos($qx,',110,') nheq false">checked</if>>访问人数
+        <input type="checkbox" value="111" name="checkbox" <if condition="stripos($qx,',111,') nheq false">checked</if>>注册率
+        <input type="checkbox" value="112" name="checkbox" <if condition="stripos($qx,',112,') nheq false">checked</if>>下载率
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3">静页面管理：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="92" name="checkbox" <if condition="stripos($qx,',92,') nheq false">checked</if>>生成网站地图
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3">浏览记录库：</label>
+      <div class="formControls col-5"> 
+        <input type="checkbox" value="93" name="checkbox" <if condition="stripos($qx,',93,') nheq false">checked</if>>浏览痕迹
+      </div>
+      <div class="col-4"> </div>
+    </div>
+        
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        <input class="btn btn-default radius width_60" type="buttom" value="关闭" onClick="closeWin()" >
+        <input type="hidden" name="selectcheckbox" id="selectcheckbox" value="{$remark}">
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/jquery.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/layer1.8/layer.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/laypage/laypage.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.doc.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$("input:checkbox").click(function(){
+		var result = new Array();
+		$("input[name=checkbox]:checked").each(function(){
+				result.push($(this).val());			
+		});
+		var str = result.join(',');	
+		$("#selectcheckbox").val(str);
+	});
+});
+</script> 
+</body>
+</html>

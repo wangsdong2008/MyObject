@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$GoodsDetail.goods_title}-Ajax源码-源码下载-{$sys_sitename}</title>
+<meta name="Keywords" content="{$GoodsDetail.goods_keyword}">
+<meta name="Description" content="{$GoodsDetail.goods_description}">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+    <include file="top" />
+    <script>
+        $(function(){
+            $("#kanbuq").click(function(){
+                $("#passcode").attr("src","{:U('verify')}?t="+Math.random());
+            });
+        })
+    </script>
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('code')}">源码下载</a>><a href="{:U('codelist',array('id'=>$GoodsDetail['cat_id']))}">{$GoodsDetail.cat_name}</a>>&nbsp;&nbsp;正文</div>
+      <div class="techlist border">
+        <div class="con_main">
+          <h1>{$GoodsDetail.goods_name}</h1>
+          <div class="software-summary">
+                <div class="image">
+                    <span>
+                        <img src="{$sys_url}/{$sys_upload_img}/{$GoodsDetail.goods_img}" onerror="this.src='{$img_model_path}/images/noimage.gif'" alt="{$GoodsDetail.goods_name}"  />
+                    </span>
+                </div>
+                <div style="">
+                    <form action="{:U('addflow')}" method="post">
+                    <ul class="clearfix software-infolist">
+                        <li>
+                            <strong>源码作者:</strong>
+                            <span class="author">{$GoodsDetail.true_name}</span>
+                        </li>
+                        <li class="right"><strong>源码大小:</strong> </li>
+                        <li><strong>源码语言:</strong> 简体中文 </li>
+                        <li class="right"><strong>运行环境:</strong>{$GoodsDetail.goods_environment}</li>
+                        <li><strong>源码评级:</strong> <img src="{$img_model_path}/images/5star.gif" alt="5星级" /></li>
+                        <li class="right"><strong>更新时间:</strong>{$GoodsDetail.goods_time|date="Y-m-d H:i:s",###}</li>
+                        <li><strong>相关链接:</strong> Home Page </li>
+                        <li class="right"><strong>演示地址:</strong> Demo Url </li>
+                        <li><strong>下载积分:</strong> <em>{$GoodsDetail.goods_price}</em></li>
+                        <li class="right"><strong>插件情况:</strong> <img src="{$img_model_path}/images/plugin1.gif" alt="插件情况" /></li>
+                        <li style="height: 25px;"><input type="hidden" id="goods_id" name="goods_id" value="{$goods_id}"><input type="submit" value="加入购物车"></li>
+                        <li class="right"></li>
+                    </ul>
+                    </form>
+                </div>
+                
+          </div>
+          <div style="margin:0 auto; display:inline-block; width:620px; margin-top:10px;" class="border">
+          	<div class="title">
+              <h4>详细介绍</h4>
+            </div>
+          	<div style="padding:10px; line-height:22px;">{$GoodsDetail.goods_content|htmlspecialchars_decode}-</div>
+          </div>
+          <div class="lastnext" style="margin-top: 0px;">
+              <volist name="goods_about" id="goods_about" key="k">
+                  <p><if condition="$k eq 1">上一篇<else />下一篇</if>：
+                      <if condition="$goods_about.goods_id eq 0">
+                          {$goods_about.goods_name}
+                          <else />
+                          <a href="{:U('showcode',array('id'=>$goods_about['goods_id']))}" title="{$goods_about.goods_name}">{$goods_about.goods_name}</a>
+                      </if>
+                  </p>
+              </volist>
+          </div>
+            <div class="black"></div>
+        </div>
+      </div>
+      <div class="black"></div>
+      <div class="tech_news border">
+        <!--  最新相关教程-->
+        <div class="title">
+          <h4>最新相关源码</h4>
+        </div>
+        <ul class="technewsul">
+            <volist name="codelist" id="codelist">
+                <li><a href="{:U('showcode',array('id'=>$codelist['goods_id']))}" target="_blank" title="{$codelist.goods_name}">{$codelist.goods_name}</a></li>
+            </volist>
+        </ul>
+        <div class="clearit"></div>
+      </div>
+
+    </div>
+    <div class="con_right">
+  <!--  右侧广告链接部分  -->
+  <div class="r_link border">
+    <!--  热门教程  -->
+    <div class="title2">
+      <h4>热门下载</h4>
+    </div>
+    <ul class="hourul">
+        <volist name="hotgoodslist" id="hotgoodslist">
+            <li class="onlink"><a href="{:U('showcode',array('id'=>$hotgoodslist['goods_id']))}" target="_blank" title="{$hotgoodslist.goods_name}">{$hotgoodslist.goods_name}</a></li>
+        </volist>
+    </ul>
+  </div>
+  <div class="black"></div>
+  <div class="r_link border">
+    <!--  下载排行榜  -->
+    <div class="title2">
+      <h4>下载排行榜</h4>
+    </div>
+    <ul class="hourul">
+      <li class="onlink"><a href="http://www.aspbc.com/code/showcode.asp?id=207" target="_blank" title="easyui+asp Demo 演示程序">easyui+asp&nbsp;Demo&nbsp;演示程序</a></li>
+        <volist name="bestnewslist" id="bestnewslist">
+            <li class="onlink"><a href="{:U('showtech',array('id'=>$bestnewslist['news_id']))}" target="_blank" title="{$bestnewslist.news_title}">{$bestnewslist.news_title}</a></li>
+        </volist>
+    </ul>
+  </div>
+</div>
+
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <!--  底部导航  -->
+    <include file="foot" />
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>AdminLTE bootstrap 后台框架-开发软件-软件下载-asp编程网</title>
+<meta name="Description" content="超级漂亮的AdminLTE bootstrap 后台框架">
+<meta name="Keywords" content="AdminLTE">
+<link href="{$model_path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('soft')}">软件下载</a>><a href="{:U('softlist',array('id'=>$GoodsDetail['cat_id']))}">{$GoodsDetail.cat_name}</a>>&nbsp;&nbsp;正文</div>
+      <div class="techlist border">
+        <div class="con_main">
+          <h1>{$GoodsDetail.goods_name}</h1>
+          <div class="software-summary" style="margin-top:20px;">
+                <div class="image">
+                    <span>
+                       <img src="{$sys_url}/{$sys_upload_img}/{$GoodsDetail.goods_img}" onerror="this.src='{$img_model_path}/images/noimage.gif'" alt="{$GoodsDetail.goods_name}"  />
+                    </span>
+                </div>
+              <form action="{:U('addflow')}" method="post">
+                <ul class="clearfix software-infolist">
+                    <li>
+                        <strong>软件作者:</strong>
+                        <span class="author">&nbsp;</span>
+                    </li>
+                    <li class="right monials">感谢{$GoodsDetail.true_name}对本软件的更新 </li>
+                    <li><strong>软件大小:</strong>  </li>
+                    <li class="right"><strong>软件类别:</strong> 国产软件</li>
+                    <li><strong>软件评级:</strong> <img src="{$img_model_path}/images/5star.gif" alt="5星级" /></li>
+                    <li class="right"><strong>更新时间:</strong>{$GoodsDetail.goods_time|date="Y-m-d H:i:s",###}</li>
+                    <li><strong>下载积分:</strong> <em>{$GoodsDetail.goods_price}</em></li>
+                    <li class="right"><strong>插件情况:</strong> <img src="{$img_model_path}/images/plugin1.gif" alt="插件情况" /></li>
+                    <li><strong>相关链接:</strong> <a title="{$GoodsDetail.goods_name}" target="_blank">Home Page</a> </li>
+                    <li class="right"><strong>演示地址:</strong> <a>Demo Url</a> </li>
+                    <li style="height: 25px;"><input type="hidden" id="goods_id" name="goods_id" value="{$goods_id}"><input type="submit" value="加入购物车"></li>
+                    <li class="right"> </li>
+                </ul>
+              </form>
+          </div>
+          <div style=" margin:0 auto; display:inline-block; width:620px; margin-top:10px;" class="border">
+          	<div class="title">
+              <h4>详细介绍</h4>
+            </div>
+          	<div style="padding:10px; line-height:22px;">{$GoodsDetail.goods_content|htmlspecialchars_decode}</div>
+          </div>
+          <div class="lastnext" style="margin-top: 0px;">
+                <volist name="goods_about" id="goods_about" key="k">
+                    <p><if condition="$k eq 1">上一篇<else />下一篇</if>：
+                        <if condition="$goods_about.goods_id eq 0">
+                            {$goods_about.goods_name}
+                            <else />
+                            <a href="{:U('showsoft',array('id'=>$goods_about['goods_id']))}" title="{$goods_about.goods_name}">{$goods_about.goods_name}</a>
+                        </if>
+                    </p>
+                </volist>
+
+            </div>
+        </div>
+      </div>
+      <div class="black"></div>
+      <div class="tech_news border">
+        <!--  最新相关教程-->
+        <div class="title">
+            <h4>最新{$GoodsDetail.cat_name}</h4>
+        </div>
+        <ul class="technewsul">
+            <volist name="codelist" id="codelist">
+                <li><a href="{:U('showsoft',array('id'=>$codelist['goods_id']))}" target="_blank" title="{$codelist.goods_name}">{$codelist.goods_name}</a></li>
+            </volist>
+        </ul>
+        <div class="clearit"></div>
+      </div>
+    </div>
+    <div class="con_right">
+        <include file="soft_right" />
+    </div>
+
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <!--  底部导航  -->
+  <include file="foot" />
+</div>
+</body>
+</html>

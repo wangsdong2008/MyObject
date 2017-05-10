@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>购物车-{$sys_sitename}</title>
+  <meta name="Keywords" content="购物车">
+  <meta name="Description" content="购物车">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+  <style>
+    table td{ text-align: left;
+      padding-left:10px;
+      padding-top: 10px;
+      height:25px;
+    }
+    .pay-btn {
+      border: 1px solid #ccc;
+      height: 22px;
+      line-height: 22px;
+      border-radius: 10px;
+      padding: 2px 10px;
+      cursor: pointer;
+      background-color: #FF8301;
+      color:#fff;
+    }
+    #lblTotal {
+      color: #f00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10" style="background-image: none;">
+    <div class="con_left" style="width: 100%">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>  购物车</div>
+      <div class="techlist border">
+        <form action="{:U('Index/order_info')}" method="post" id="theForm">
+        <table style="width: 100%" id="flowlist">
+          <volist name="flowlist" id="flow1list">
+          <tr>
+            <td style="width: 3%;"><input type="checkbox" value="{$flow1list.flow_id}" name="flow_id[]"> </td>
+            <if condition="$flow1list.root_id == 29">
+              <td><a href="{:U('showcode',array('id'=>$flow1list['goods_id']))}" target="_blank" title="{$flow1list.goods_name}">{$flow1list.goods_name}</a></td>
+              <else/>
+              <td><a href="{:U('showsoft',array('id'=>$flow1list['goods_id']))}" target="_blank" title="{$flow1list.goods_name}">{$flow1list.goods_name}</a></td>
+            </if>
+          </tr>
+          </volist>
+          <tr>
+            <td style="border-top: 1px solid #ccc; width: 100%; position: relative;" colspan="2"><span style="color: #333;font-size: 12px; }"><input type="checkbox" value="" id="allselect" name="allselect">全选</span>
+              <a href="javascript:void(0);" id="delall" >批量删除</a>
+              <a href="/">继续购物</a>
+              <a class="pay-btn run" id="btBatch" style="float: right;">去结算</a>
+              <label class="total" style="float: right; margin-right: 10px;">
+                商品合计:<em id="lblTotal">{$count}</em> 积分
+              </label>
+
+            </td>
+          </tr>
+
+        </table>
+        </form>
+        <script type="text/javascript">
+          $(function(){
+            //checkbox 全选/取消全选
+            var isCheckAll = false;
+            $("#allselect").click(function(){
+              if (isCheckAll) {
+                $("input[name='flow_id[]']").each(function() {
+                  this.checked = false;
+                });
+                isCheckAll = false;
+              }else {
+                $("input[name='flow_id[]']").each(function() {
+                  this.checked = true;
+                });
+                isCheckAll = true;
+              }
+            })
+            $("#delall").click(function(){
+              var j = $("input[name='flow_id[]']:checked").index();
+              if(j>=0){
+                $("#theForm").attr("action","{:U('delflowAll')}");
+                $("#theForm").submit();
+              }else{
+                alert('请选择您要删除的产品');
+              }
+            })
+            $("#btBatch").click(function(){
+              var j = $("input[name='flow_id[]']:checked").index();
+              if(j>=0){
+                $("#theForm").submit();
+              }else{
+                alert('请选择您要购买的产品');
+              }
+            })
+          })
+        </script>
+
+      </div>
+    </div>
+    <div class="clearit"></div>
+  </div>
+  <!--  底部导航  -->
+  <include file="foot" />
+</div>
+</body>
+</html>

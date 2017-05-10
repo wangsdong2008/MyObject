@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>教程信息-会员中心-{$sys_sitename}</title>
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <style type="text/css">
+        .fclick {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+<script>
+    s = 2;
+</script>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="教程信息">教程信息</a></span><span> &gt; </span><span>我的教程信息</span><a id="YourPosition_SkipLink"></a></span></div>
+                <div class="model_info_list">
+                    <div class="model_info_sate mtop10">
+                        <ul>
+                            <!-- CSS Tabs -->
+                            <li id="EliteContentList"<if condition="$flg eq '1'"> class="hover"</if>><span> <a id="LinkContentList" href="{:U('newslist',array('flg'=>1))}">已通过的教程信息</a></span> </li>
+                            <li id="ElitePending"<if condition="$flg eq '0'"> class="hover"</if>><span> <a id="LinkPending" href="{:U('newslist',array('flg'=>0))}">待审核的教程信息</a></span> </li>
+                            <li id="EliteAudited2"<if condition="$flg eq '-1'"> class="hover"</if>><span> <a id="LinkAudited2" href="{:U('newslist',array('flg'=>-1))}">未通过的教程信息</a></span> </li>
+                        </ul>
+                    </div>
+                    <!--模型内容列表开始-->
+                    <div class="model_info_content">
+                        <!--列表开始-->
+                        <form name="form1" method="post" action="?act=del&uid=1" onSubmit="return fdel('删除','教程信息')">
+                            <div>
+                                <table id="EgvContent" cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
+                                    <thead>
+                                    <tr class="model_info_title">
+                                        <th scope="col" style="width:3%;">&nbsp;</th>
+                                        <th scope="col" style="width:6%;">ID</th>
+                                        <th scope="col">标题</th>
+                                        <th scope="col" style="width:8%;">点击数</th>
+                                        <th scope="col" style="width:16%;">分类</th>
+                                        <th scope="col" style="width:12%;">状态</th>
+                                        <!--<th scope="col" style="width:10%;">作者</th>-->
+                                        <th class="operate" scope="col" style="width:13%;">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="newslist['list']" id="newslist">
+                                    <tr class="listbg1">
+                                        <td align="center"><input name="d" type="checkbox" id="d" value="{$newslist.news_id}"></td>
+                                        <td>{$newslist.news_id}</td>
+                                        <td class="content_left"><div class="linkType"><a href="{:U('newsedit',array('id'=>$newslist['news_id']))}" target="_blank" title="{$newslist.news_title}">{$newslist.news_title}</a></div></td>
+                                        <td>{$newslist.news_hits}</td>
+                                        <td>{$newslist.cat_name}{$data}</td>
+                                        <td>
+                                            <if condition="$newslist.is_show eq '1'"><span style="color:green">通过</span>
+                                                <elseif condition="$newslist.is_show eq '0'" />待审核
+                                                <else /><span style="color:red">不通过</span>
+                                            </if></td>
+                                       <!-- <td>佚名</td>
+                                        <td>网络</td>-->
+                                        <td><a href="{:U('newsedit',array('id'=>$newslist['news_id']))}">修改</a></td>
+                                    </tr>
+                                    </volist>
+                                    <tr>
+                                        <td colspan="7" style="text-align:left; padding-left: 5px;"><label class="checkbox"><input id="ChkAll" type="checkbox"  onClick="CheckAll('d')"/>
+                                            全选</label>
+                                            <input type="submit" name="EBtnBatchDelete" value="批量删除"  id="EBtnBatchDelete" class="input_button" /></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="list_page">
+                                    {$pagefooter}
+                                </div>
+                            </div>
+                        </form>
+                        <!--列表结束-->
+                    </div>
+                    <!--模型内容列表结束-->
+                </div>
+                <div class="clear"> </div>
+                <div class="model_list_manage">
+                    <form name="search" action="{:U('newslist')}" method="post">
+                        &nbsp;&nbsp;搜索标题：
+                        <select name="cat_id" id="cat_id">
+                            <option value="0">选择所属分类</option>
+                            <volist name="categorylist" id="categorylist">
+                                <option value="{$categorylist.cat_id}" <if condition="$categorylist.cat_id == $cat_id">selected</if>>{$categorylist.cat_name}{$data}</option>
+                            </volist>
+                        </select>
+                        <input name="keyword" type="text" id="keyword" class="inputxt" value="{$keyword}" />
+                        <input type="submit" name="BtnSearch" value="搜索" id="BtnSearch" class="input_button" />
+                    </form>
+                </div>
+
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<!--网站底部结束-->
+</body>
+</html>

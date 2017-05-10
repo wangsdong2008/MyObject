@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>{$categorylist.cat_title}-软件下载-{$sys_sitename}</title>
+  <meta name="Keywords" content="{$categorylist.cat_keyword}">
+  <meta name="Description" content="{$categorylist.cat_description}">
+<link href="{$model_path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('soft')}">软件下载</a>>&nbsp;&nbsp;{$categorylist.cat_name}</div>
+      <div class="techlist border">
+        <ul class="techlistul">
+          <volist name="goodslist.list" id="goodslist">
+              <li><span>{$goodslist.goods_time|date="Y-m-d",###}</span><a href="{:U('showsoft',array('id'=>$goodslist['goods_id']))}" target="_blank" title="{$goodslist.goods_name}">{$goodslist.goods_name}</a></li>
+          </volist>
+        </ul>
+        <div class="fy"><strong>1</strong>&nbsp;</div>
+      </div>
+    </div>
+    <div class="con_right">
+
+  <div class="r_link border">
+    <!--  热门教程  -->
+    <div class="title2">
+      <h4>热门软件</h4>
+    </div>
+    <ul class="hourul">
+      <volist name="hotgoodslist" id="hotgoodslist">
+        <li class="onlink"><a href="{:U('showsoft',array('id'=>$hotgoodslist['goods_id']))}" target="_blank" title="{$hotgoodslist.goods_name}">{$hotgoodslist.goods_name}</a></li>
+      </volist>
+    </ul>
+  </div>
+  <div class="black"></div>
+  <div class="r_link border">
+    <!--  下载排行榜  -->
+    <div class="title2">
+      <h4>下载排行榜</h4>
+    </div>
+    <ul class="hourul">
+      <li class="onlink"><a href="http://www.aspbc.com/soft/showsoft.asp?id=208" target="_blank" title="AdminLTE bootstrap 后台框架">AdminLTE&nbsp;bootstrap&nbsp;后台框架</a></li>
+    </ul>
+  </div>
+</div>
+
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <include file="foot" />
+</div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$sys_title}-{$sys_sitename}</title>
+<meta name="keywords" content="{$sys_keywords}">
+<meta name="description" content="{$sys_description}">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+<script>
+$(function(){	
+   run();             //加载页面时启动定时器   
+   var interval;   	   //定义一个定时器
+   function run() {   
+	  interval = setInterval(chat, 3000);   //定时的设置
+   }   
+   function chat() {   
+	  var i = $(".num>ul>li.current").index();
+	  len = $(".num>ul>li").length;
+	  i = i+1;
+	  if(i==len) i = 0;	  
+	  $(".num>ul>li").eq(i).click();	  
+   } 
+   
+   $(".num>ul>li").each(function(index){
+		$(this).click(function(){
+			clearTimeout(interval);  //关闭定时器  			
+			$(this).addClass("current").siblings().removeClass("current");
+			$(".pic>li").eq(index).show().animate({"opacity":1},100).siblings().hide().css({"opacity":0});
+			$(".txt>ul>li").eq(index).animate({"bottom":"0px"}).siblings().css({"bottom":"-36px"});
+			interval = setInterval(chat,3000);   //定时的设置
+		});
+	});
+});
+</script>
+</head>
+<body>
+<div class="wrapper"> <include file="top" />
+  <script type="text/javascript" src="{$js_model_path}/js/index.js"></script>
+  <!--  正文  -->
+  <div class="index_main">
+    <!--  正文第一块  -->
+    <div class="block m10">
+      <div class="c_left">
+        <div class="c_left_l">
+          <div class="mF_expo2010_wrap">
+            <div class="focus border mF_expo2010 mF_expo2010_myFocus" id="myFocus" style="visibility:hidden;">
+              <ul class="pic" style="margin:0px; padding:0px;">
+                <volist name="hdp_ad" id="xdp">
+                <li><a href="{$xdp.ad_url}" target="_blank"><img src="{$sys_upload_img}/{$xdp.ad_logo}" alt="{$xdp.ad_name}" width="334" height="186"/></a></li>	
+				</volist>
+              </ul>              
+              <div class="num">
+                <ul>
+                  <li><a>1</a></li>
+                  <li><a>2</a></li>
+                  <li class="current"><a>3</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="news border m10">
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>25))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>25))}" target="_blank">网站公告</a></h4>
+            </div>
+            <ul class="newsul">
+              <volist name="gonggao" id="gonggao">
+                <li><a href="{:U('showtech',array('id'=>$gonggao['news_id']))}" target="_blank" title="{$gonggao.news_title}" >{$gonggao.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="c_left_r">
+          <div class="hotnews border">
+            <div class="title"></span>
+              <h4><a href="{:U('tech')}" target="_blank">最新{$data}</a></h4>
+            </div>
+            <div class="zhuti">
+              <h1><a href="{$ad1.ad_url}" target="_blank">{$ad1.ad_name}</a></h1>
+            </div>
+            <div class="zhuti_bottom">
+              <a href="{$ad2.ad_url}" target="_blank">{$ad2.ad_name}</a>
+              <a href="{$ad3.ad_url}" target="_blank">{$ad3.ad_name}</a></div>
+            <ul class="hotul">
+              <volist name="news_list" id="news_list">
+                <li><a href="{:U('showtech',array('id'=>$news_list['news_id']))}" target="_blank" title="{$news_list.news_title}" >{$news_list.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="clearit"></div>
+      </div>
+      <div class="c_right">
+        <div class="tiezi border">
+          <div class="title"><span><a href="{:U('Index/soft')}" target="_blank">更多>></a></span>
+            <h4>本站软件</h4>
+          </div>
+          <ul class="tieul">
+            <volist name="codelist2" id="codelist2">
+              <li class="onlink"><a href="{:U('showsoft',array('id'=>$codelist2['goods_id']))}" target="_blank" title="{$codelist2.goods_name}">{$codelist2.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+      </div>
+      <div class="clearit"></div>
+    </div>
+    <!--  正文第二块  -->
+    <div class="block m10">
+      <div class="c_left">
+	      <a href="{$middle_left_ad.ad_url}" target="_blank"><img src="{$sys_upload_img}/{$middle_left_ad.ad_logo}" width="686" height="90" border="0" alt="{$middle_left_ad.ad_name}" /></a>
+	  </div>
+      <div class="c_right">
+		<a href="{$middle_right_ad.ad_url}" target="_blank"><img src="{$sys_upload_img}/{$middle_right_ad.ad_logo}" width="263" height="90" border="0" alt="{$middle_right_ad.ad_name}" /></a>
+	  </div>
+      <div class="clearit"></div>
+    </div>
+    <!--  正文第三块  -->
+    <div class="block m10">
+      <div class="c_left">
+        <div class="c_left_l">
+          <div class="l_class border">
+            <!--  ASP{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>1))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>1))}" target="_blank">ASP{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>1))}" target="_blank"><img src="{$sys_upload_img}/{$ad_asp.ad_logo}" width="114" height="90" border="0" alt="{$ad_asp.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>1))}" target="_blank">{$ad_asp.ad_name}</a></h5>
+              <p>{$ad_asp.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="aspjc" id="aspjc">
+                <li><a href="{:U('showtech',array('id'=>$aspjc['news_id']))}" target="_blank" title="{$aspjc.news_title}" >{$aspjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+          <div class="l_class border m10">
+            <!--  HTML5{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>8))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>8))}" target="_blank">HTML5{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>8))}" target="_blank"><img src="{$sys_upload_img}/{$ad_html.ad_logo}" width="114" height="90" border="0" alt="{$ad_html.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>8))}" target="_blank">{$ad_html.ad_name}</a></h5>
+              <p>{$ad_html.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="htmljc" id="htmljc">
+                <li><a href="{:U('showtech',array('id'=>$htmljc['news_id']))}" target="_blank" title="{$htmljc.news_title}" >{$htmljc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="c_left_r">
+          <div class="l_class border">
+            <!--  PHP{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>10))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>10))}" target="_blank">PHP{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>10))}" target="_blank"><img src="{$sys_upload_img}/{$ad_php.ad_logo}" width="114" height="90" border="0" alt="{$ad_php.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>10))}" target="_blank">{$ad_php.ad_name}</a></h5>
+              <p>{$ad_php.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="phpjc" id="phpjc">
+                <li><a href="{:U('showtech',array('id'=>$phpjc['news_id']))}" target="_blank" title="{$phpjc.news_title}" >{$phpjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+          <div class="l_class border m10">
+            <!--  CSS3{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>3))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>3))}" target="_blank">CSS3{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>3))}" target="_blank"><img src="{$sys_upload_img}/{$ad_css.ad_logo}" width="114" height="90" border="0" alt="{$ad_css.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>3))}" target="_blank">{$ad_css.ad_name}</a></h5>
+              <p>{$ad_css.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="cssjc" id="cssjc">
+                <li><a href="{:U('showtech',array('id'=>$cssjc['news_id']))}" target="_blank" title="{$cssjc.news_title}" >{$cssjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="clearit"></div>
+      </div>
+      <div class="c_right">
+        <div class="l_class border">
+          <div class="title"><span><a href="{:U('Index/code')}" target="_blank">更多>></a></span>
+            <h4>最新源码</h4>
+          </div>
+          <ul class="hourul">
+            <volist name="codelist" id="codelist">
+              <li><a href="{:U('showcode',array('id'=>$codelist['goods_id']))}" target="_blank" title="{$codelist.goods_name}">{$codelist.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+        <div class="l_class border m10">
+          <!--  专家在线  -->
+          <div class="title">
+            <h4>最新会员</h4>
+          </div>
+          <ul class="zjul">
+            <volist name="users_list" id="users_list">
+              <li><a href="{:U('users',array('id'=>$users_list['id']))}" target="_blank"><img src="{$sys_upload_img}/users/{$users_list.face}" width="72" height="72" alt="guozigzs" border="0" /></a><br />
+                <a href="{:U('users',array('id'=>$users_list['id']))}" target="_blank">{$users_list.username}</a></li>
+            </volist>
+          </ul>
+        </div>
+      </div>
+      <div class="clearit"></div>
+    </div>
+    <!--  正文第四块  -->
+    <div class="block m10">
+      <div class="download">
+        <!--  模板下载  -->
+        <div class="download_tit">
+          <h6><a href="http://www.aspbc.com/code/showclass.asp?id=15" target="_blank">模板下载</a></h6>
+          <p>&nbsp;</p>
+        </div>
+        <div class="download_con">
+          <ul>
+            <volist name="goods_list" id="goods_list">
+            <li><a href="{:U('goods',array('id'=>$goods_list['goods_id']))}" target="_blank" title="{$goods_list.goods_name}"><img src="{$sys_upload_img}/{$goods_list.goods_img}" width="120" height="106" alt="{$goods_list.goods_name}"></a><br><a href="{:U('goods',array('id'=>$goods_list['goods_id']))}" target="_blank" title="{$goods_list.goods_name}">{$goods_list.goods_name|msubstr=0,10,"utf-8", false}</a></li>
+            </volist>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--  正文第五块  -->
+    <div class="block m10">
+      <div class="c_left">
+        <div class="c_left_l">
+          <div class="l_class border">
+            <!--  JS{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>4))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>4))}" target="_blank">JS{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>4))}" target="_blank"><img src="{$sys_upload_img}/{$ad_js.ad_logo}" width="114" height="90" border="0" alt="{$ad_js.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>4))}" target="_blank">{$ad_js.ad_name}</a></h5>
+              <p>{$ad_js.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="jsjc" id="jsjc">
+                <li><a href="{:U('showtech',array('id'=>$jsjc['news_id']))}" target="_blank" title="{$jsjc.news_title}" >{$jsjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+          <div class="l_class border m10">
+            <!--  Database{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>7))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>7))}" target="_blank">Database{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>7))}" target="_blank"><img src="{$sys_upload_img}/{$ad_db.ad_logo}" width="114" height="90" border="0" alt="{$ad_db.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>7))}" target="_blank">{$ad_db.ad_name}</a></h5>
+              <p>{$ad_db.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="dbjc" id="dbjc">
+                <li><a href="{:U('showtech',array('id'=>$dbjc['news_id']))}" target="_blank" title="{$dbjc.news_title}" >{$dbjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+          <div class="l_class border m10">
+            <!--  xml{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>6))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>6))}" target="_blank">xml{$data}</a></h4>
+            </div>
+            <div class="pic"> <a href="{:U('Index/newslist',array('id'=>6))}" target="_blank"><img src="{$sys_upload_img}/{$ad_xml.ad_logo}" width="114" height="90" border="0" alt="{$ad_xml.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>6))}" target="_blank">{$ad_xml.ad_name}</a></h5>
+              <p>{$ad_xml.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="xmljc" id="xmljc">
+                <li><a href="{:U('showtech',array('id'=>$xmljc['news_id']))}" target="_blank" title="{$xmljc.news_title}" >{$xmljc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="c_left_r">
+          <div class="l_class border">
+            <!--  Ajax{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>5))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>5))}" target="_blank">Ajax{$data}</a></h4>
+            </div>
+            <div class="pic"><a href="{:U('Index/newslist',array('id'=>5))}" target="_blank"><img src="{$sys_upload_img}/{$ad_ajax.ad_logo}" width="114" height="90" border="0" alt="Web开发中常用的广告代码" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>5))}" target="_blank">{$ad_ajax.ad_name}</a></h5>
+              <p>{$ad_ajax.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="ajaxjc" id="ajaxjc">
+                <li><a href="{:U('showtech',array('id'=>$ajaxjc['news_id']))}" target="_blank" title="{$ajaxjc.news_title}" >{$ajaxjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+          <div class="l_class border m10">
+            <!--  .net{$date}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>2))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>2))}" target="_blank">.net{$data}</a></h4>
+            </div>
+            <div class="pic"> <a href="{:U('Index/newslist',array('id'=>2))}" target="_blank"><img src="{$sys_upload_img}/{$ad_net.ad_logo}" width="114" height="90" border="0" alt="{$ad_net.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>2))}" target="_blank">{$ad_net.ad_name}</a></h5>
+              <p>{$ad_net.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="netjc" id="netjc">
+                <li><a href="{:U('showtech',array('id'=>$netjc['news_id']))}" target="_blank" title="{$netjc.news_title}" >{$netjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+          <div class="l_class border m10">
+            <!--  linux使用{$data}  -->
+            <div class="title"><span><a href="{:U('Index/newslist',array('id'=>11))}" target="_blank">更多>></a></span>
+              <h4><a href="{:U('Index/newslist',array('id'=>11))}" target="_blank">Linux使用{$data}</a></h4>
+            </div>
+            <div class="pic"> <a href="{:U('Index/newslist',array('id'=>11))}" target="_blank"><img src="{$sys_upload_img}/{$ad_linux.ad_logo}" width="114" height="90" border="0" alt="{$ad_linux.ad_name}" /></a>
+              <h5><a href="{:U('Index/newslist',array('id'=>11))}" target="_blank">{$ad_linux.ad_name}</a></h5>
+              <p>{$ad_linux.intro}</p>
+            </div>
+            <div class="clearit"></div>
+            <ul class="picul">
+              <volist name="linuxjc" id="linuxjc">
+                <li><a href="{:U('showtech',array('id'=>$linuxjc['news_id']))}" target="_blank" title="{$linuxjc.news_title}" >{$linuxjc.news_title}</a></li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="clearit"></div>
+      </div>
+      <div class="c_right">
+        <div class="l_class border">
+          <div class="title">
+            <h4>邮件订阅</h4>
+            <div class="dingyue">
+              <form name="theform" method="post" action="dy.asp" onsubmit="return dycheckbox()">
+                <div class="btn">
+                  <div class="cat1">
+                    <input type="checkbox" value="1" name="catlist"/>
+                    Asp{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="2" name="catlist"/>
+                    Net{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="3" name="catlist"/>
+                    Css{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="4" name="catlist"/>
+                    Js{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="5" name="catlist"/>
+                    Ajax{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="6" name="catlist"/>
+                    Xml{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="7" name="catlist"/>
+                    DB{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="8" name="catlist"/>
+                    html{$data}</div>
+                  <div class="cat1">
+                    <input type="checkbox" value="9" name="catlist"/>
+                    软件{$data}</div>
+                </div>
+                <div class="btn">
+                  <input type="text" placeholder="输入Email,订阅每日信息" name="email" class="w170" onfocus="this.value=''" style="padding-left: 5px;font-size: 12px;;" />
+                  <input type="submit" name="Submit" class="w46" value="订阅" />
+                </div>
+              </form>
+              <div class="text">
+                <h5>联系我们</h5>
+                <p>欢迎大家学习交流</p>
+                <p><b>QQ交流群：41991607</b></p>
+                <p><b>电子信箱：wangsdong2008@163.com</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="l_class border m10">
+          <div class="title"><span><a href="{:U('Index/softlist',array('id'=>26))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/softlist',array('id'=>26))}" target="_blank">技术文档</a></h4>
+          </div>
+          <ul class="interul">
+            <volist name="codelist3" id="codelist3">
+              <li class="onlink"><a href="{:U('showsoft',array('id'=>$codelist3['goods_id']))}" target="_blank" title="{$codelist3.goods_name}">{$codelist3.goods_name}</a></li>
+            </volist>
+
+          </ul>
+        </div>
+        <div class="l_class border m10">
+          <!--  软件使用{$data}  -->
+          <div class="title"><span><a href="{:U('Index/newslist',array('id'=>9))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/newslist',array('id'=>9))}" target="_blank">软件使用{$data}</a></h4>
+          </div>
+          <ul class="interul">
+            <volist name="softjc" id="softjc">
+              <li><a href="{:U('showtech',array('id'=>$softjc['news_id']))}" target="_blank" title="{$softjc.news_title}" >{$softjc.news_title}</a></li>
+            </volist>
+          </ul>
+        </div>
+      </div>
+      <div class="clearit"></div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{$js_model_path}/js/check.js"></script>
+  <script type="text/javascript">
+  function dycheckbox()
+  {
+	  j=0;
+	  m=document.getElementsByName("catlist");
+	  for(i=0;i<m.length;i++)
+	  {
+		  if(m[i].checked==true)
+		  {
+			  j++;
+		  }
+	  }	
+	  if(j==0)
+	  {
+		  alert('请选择你要订阅的内容');
+		  return false;
+	  }
+	  if(!CheckIsEmail("theform","email")) return false;	  
+  }
+  </script>
+  <!--  友情链接  -->
+  <div class="friend border m10">
+    <p><b>友情链接:</b>
+      <volist name="linkslist" id="linkslist"> <a href="{$linkslist.links_url}" target="_blank">{$linkslist.links_name}</a> </volist>
+    </p>
+  </div>
+  <!--  底部导航  -->
+  <include file="foot" /> </div>
+</body>
+</html>

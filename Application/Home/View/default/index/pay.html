@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>在线支付-{$sys_sitename}</title>
+  <meta name="Keywords" content="在线支付">
+  <meta name="Description" content="在线支付">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+  <style>
+    h1{
+      font-size: 16px;
+      border-bottom: 1px solid #d1d1d1;
+      height: 40px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .techlist{
+      margin-bottom: 15px;
+    }
+    h2 {
+      margin-bottom: 15px;
+      color: #333333;
+      font-size: 14px;
+    }
+    .paytype1 li {
+      float: left;
+      display: table-cell;
+      vertical-align: middle;
+      width: 175px;
+      height: 69px;
+      border: 1px solid #d7d7d7;
+      background: #ffffff;
+      margin-left: 17px;
+      margin-bottom: 22px;
+      cursor: pointer;
+    }
+    .paytype1 li div {
+      display: table-cell;
+      vertical-align: middle;
+      height: 71px;
+      width: 177px;
+      text-align: center;
+    }
+    .paytype1 li img{
+      vertical-align: middle;
+      margin: 0 auto;
+      display: inline-block;
+    }
+    #button{ width: 150px;
+      height: 40px;
+      cursor: pointer;}
+    .paytype1 li.hover{
+      border: 1px solid #f00;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10" style="background-image: none;">
+    <div class="con_left" style="width: 100%">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>  在线支付</div>
+      <div class="techlist border">
+        <div class="payment_top">
+          <h1>订单提交成功，还差最后一步，请尽快付款！</h1>
+          <p>应付金额：￥<span class="number">{$order_mount}</span>积分</p>
+        </div>
+      </div>
+      <div class="techlist border">
+        <div class="payment_top">
+          <h1>选择以下支付方式付款</h1>
+          <h2>支付平台</h2>
+          <ul class="paytype1 clearfix">
+            <li class="hover" rel="1">
+              <div><img src="{$img_model_path}/images/pay0.png"></div>
+            </li>
+            <li rel="2">
+              <div><img src="{$img_model_path}/images/pay1.jpg"></div>
+            </li>
+            <li rel="3">
+              <div><img src="{$img_model_path}/images/pay2.jpg"></a></div>
+            </li>
+          </ul>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="techlist border">
+        <form action="{:U('payorderinfo')}" method="post">
+          <input type="submit" value="提交订单" id="button">
+          <input type="text" name="order_id" value="{$order_id}">
+          <input type="text" id="pays" name="pays" value="1">
+        </form>
+      </div>
+    </div>
+    <div class="clearit"></div>
+  </div>
+  <!--  底部导航  -->
+  <include file="foot" />
+  <script>
+    $(function(){
+      $(".paytype1 li").each(function(){
+        $(this).click(function(){
+          $(this).addClass("hover").siblings("li").removeClass("hover");
+          $("#pays").val($(this).attr("rel"));
+        })
+      })
+    })
+  </script>
+</div>
+</body>
+</html>

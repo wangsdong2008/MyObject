@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>贴吧-{$sys_sitename}</title>
+    <meta name="Description" content="贴吧，asp编程网技术讨论区域">
+    <meta name="Keywords" content="贴吧，asp编程网技术讨论区域">
+    <link href="{$model_path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrapper">
+    <include file="top" />
+    <!--  正文  -->
+    <table class="tahoma" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+        <tr>
+            <td height="50" class="cheng"><img src="{$model_path}/images/notice.gif" alt="ASP编程网全面上线了，欢迎大家一起学习交流！！！" width="9" height="9"><b> ASP编程网全面上线了，欢迎大家一起学习交流！！！</b></td>
+            <td style="line-height: 130%;" align="right"><b>查看全部帖子</b>　今日新帖 <b>0</b> 帖&nbsp;&nbsp; <br>
+                共 <b>57</b> 篇主题 | <b>320</b> 篇帖子 | <b>2296</b> 位会员&nbsp;&nbsp;</td>
+        </tr>
+        </tbody></table>
+
+    <!------------------------------------------------------------------- 教程 Strat -->
+    <table border="0" cellpadding="3" cellspacing="0" width="100%">
+        <tbody>
+        <tr>
+            <td height="8"></td>
+        </tr>
+        <tr>
+            <td class="white" style="padding-left: 8px;" background="{$model_path}/images/bg1.gif" bgcolor="#5D9BDF" height="25">◎ <b>教程版块</b></td>
+        </tr>
+        <tr>
+            <td bgcolor="#D0E5F5" height="4"></td>
+        </tr>
+        </tbody>
+    </table>
+    <table style="border: 1px solid #D3E0EB;" border="0" cellpadding="3" cellspacing="0" width="100%">
+        <tbody>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tahoma">
+                    <tbody>
+                    <volist name="categorylist" id="categorylist">
+                    <!--------------------------------------- {$categorylist.cat_name}{$data} Strat -->
+                    <tr>
+                        <td width="6%" height="110" align="center"><img src="{$model_path}/images/new.gif" width="38" height="38" alt="新贴"></td>
+                        <td style="line-height: 150%;">
+                            <a href="{:U('showbbsclass',array('id'=>$categorylist['cat_id']))}">『<b>{$categorylist.cat_name}吧</b> 』</a>（{$categorylist.num}篇）<br>
+                            此区域只可以发布跟{$categorylist.cat_name}{$data}相关的主题帖~~，禁止灌水！<br>
+                        </td>
+                        <td width="36%" style="line-height: 150%;">
+                            新帖：<a href="">{$categorylist.list.topic}</a><br>
+                            发帖：{$categorylist.list.postname}<br>
+                            发帖时间：<span class="time">{$categorylist.list.posttime|date="Y-m-d H:i:s",###}</span><br>
+                            主题：<span class="heise">{$categorylist.num}</span>　
+                            帖子：<span class="heise">156</span>　
+                            今日：<span class="heise">0</span>
+                        </td>
+                    </tr>
+                    <!--------------------------------------- {$categorylist.cat_name}{$data} End -->
+                    </volist>
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!------------------------------------------------------------------- 教程 End -->
+
+
+    <include file="foot" />
+
+</div>
+
+</body>
+</html>

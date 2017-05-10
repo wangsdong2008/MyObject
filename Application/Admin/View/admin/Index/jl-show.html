@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/html5.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$DEFAULT_PATH}/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href="{$DEFAULT_PATH}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]--><title>简历查看</title>
+</head>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <img class="avatar size-XL l" src="{$DEFAULT_PATH}/images/user.png">
+  <dl style="margin-left:80px; color:#fff">
+    <dt><span class="f-18">{$jl_name}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0"></dd>
+  </dl>
+</div>
+<div class="pd-20">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="text-r" width="80">应聘职位：</th>
+        <td>{$job_name}</td>
+      </tr>
+      <tr>
+        <th class="text-r" width="80">性别：</th>
+        <td>{$jl_sex}</td>
+      </tr>
+      <tr>
+        <th class="text-r">学历：</th>
+        <td>{$jl_xl}</td>
+      </tr>
+      <tr>
+        <th class="text-r">专业：</th>
+        <td>{$jl_zy}</td>
+      </tr>
+      <tr>
+        <th class="text-r">地址：</th>
+        <td>{$jl_address}</td>
+      </tr>
+      <tr>
+        <th class="text-r">电话：</th>
+        <td>{$jl_tel}</td>
+      </tr>      
+      <tr>
+        <th class="text-r">手机：</th>
+        <td>{$jl_mobile}</td>
+      </tr>
+      <tr>
+        <th class="text-r">毕业时间：</th>
+        <td>{$jl_bysj|date="Y-m-d",###}</td>
+      </tr>
+       <tr>
+        <th class="text-r">毕业学校：</th>
+        <td>{$jl_xx}</td>
+      </tr>
+      <tr>
+        <th class="text-r">教育经历：</th>
+        <td>{$jl_edu}</td>
+      </tr>
+      <tr>
+        <th class="text-r">工作经历：</th>
+        <td>{$jl_work}</td>
+      </tr>
+      <tr>
+        <th class="text-r">婚姻状态：</th>
+        <td>{$jl_merry}</td>
+      </tr>
+      <!--<tr>
+        <th class="text-r">薪水要求：</th>
+        <td>{$jl_salery}</td>
+      </tr>-->
+      <tr>
+        <th class="text-r">发布时间：</th>
+        <td>{$jl_time|date="Y-m-d H:i:s",###}</td>
+      </tr>      
+    </tbody>
+  </table>
+</div>
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/jquery.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.js"></script> 
+</body>
+</html>

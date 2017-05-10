@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$usersdetail.username}个人资料-贴吧-{$sys_sitename}</title>
+<meta name="Description" content="{$usersdetail.username}个人资料，贴吧，{$sys_sitename}">
+<meta name="Keywords" content="{$usersdetail.username}个人资料，贴吧，{$sys_sitename}">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.clear {
+	clear:both;
+}
+.t2 {
+	width:355px;
+}
+.b10 {
+	margin-bottom:10px;
+}
+</style>
+<script type="text/javascript" src="{$js_model_path}/js/zDrag.js"></script>
+<script type="text/javascript" src="{$js_model_path}/js/zDialog.js"></script>
+<script type="text/javascript" src="{$js_model_path}/js/user.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10"  style="background:none;">
+    <!--  左侧正文内容部分  -->
+    <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:10px;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>&nbsp;&nbsp;<a href="{:U('bbs')}">贴吧</a>>&nbsp;&nbsp;{$usersdetail.username}的个人资料</div>
+    <div style="width:100%;">
+      <!-- 左边一列-->
+      <div style="float:left;width:230px; ">
+        <div class="con_right" style="height:280px;width:230px;">
+          <!--  右侧广告链接部分  -->
+          <div class="r_link border b10">
+            <div class="title2">
+              <h4>个人资料</h4>
+            </div>
+            <div class="hourul" style="margin-top:30px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center"><img src="{$img_model_path}/images/pic2.gif" width="85" height="90" /></td>
+                </tr>
+                <tr>
+                  <td height="25" align="center">{$usersdetail.username}</td>
+                </tr>
+                <tr>
+                	<td style="text-align:center;padding:0px 10px;">兴趣：未填写个人兴趣</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div style="width:730px; float:right;">
+      <!-- 中间一列-->
+      <div style="float:left;margin-left:10px;" class="t2">
+        <div class="r_link border b10">
+          <div class="title2" style="width:350px;">
+            <h4>{$usersdetail.username}推荐的教程</h4>
+          </div>
+          <ul class="hourul">
+            <volist name="technewslist" id="technewslist">
+            <li class="onlink" style="width:90%;">【<a href="{:U('newslist',array('id'=>$technewslist['cat_id']))}" target="_blank">{$technewslist.cat_name}</a>】<a title="{$technewslist.news_title}" href="{:U('showtech',array('id'=>$technewslist['news_id']))}" target="_blank">{$technewslist.news_title}</a></li>
+            </volist>
+          </ul>
+        </div>      
+      </div>
+      <div style="float:right;" class="t2">
+        <div class="r_link border b10">
+          <div class="title2" style="width:350px;">
+            <h4>{$usersdetail.username}推荐的软件</h4>
+          </div>
+          <ul class="hourul">
+            <volist name="usersoftlist" id="usersoftlist">
+              <li class="onlink" style="width:90%;">【<a href="{:U('softlist',array('id'=>$usersoftlist['cat_id']))}" target="_blank">{$usersoftlist.cat_name}</a>】
+                <a title="{$usersoftlist.goods_name}" href="{:U('showsoft',array('id'=>$usersoftlist['goods_id']))}" target="_blank">{$usersoftlist.goods_name}</a>
+              </li>
+            </volist>
+          </ul>
+        </div>        
+      </div>
+      <div style="float:left;margin-left:10px;" class="t2">
+        <div class="r_link border b10">
+          <div class="title2" style="width:350px;">
+            <h4>{$usersdetail.username}推荐的源码</h4>
+          </div>
+          <ul class="hourul">
+            <volist name="usercodelist" id="usercodelist">
+              <li class="onlink" style="width:90%;">【<a href="{:U('codelist',array('id'=>$usercodelist['cat_id']))}" target="_blank">{$usercodelist.cat_name}</a>】
+                <a title="{$usercodelist.goods_name}" href="{:U('showcode',array('id'=>$usercodelist['goods_id']))}" target="_blank">{$usercodelist.goods_name}</a>
+              </li>
+            </volist>
+          </ul>
+        </div>        
+      </div>
+      <div style="float:right;" class="t2">
+        <div class="r_link border b10">
+          <div class="title2" style="width:350px;">
+            <h4>{$usersdetail.username}发布的问题</h4>
+          </div>
+          <ul class="hourul">
+            
+          </ul>
+        </div>        
+      </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="clearit"></div>
+  </div>
+  <br />
+  <!--  底部导航  -->
+  <include file="foot" />
+</div>
+</div>
+</body>
+</html>

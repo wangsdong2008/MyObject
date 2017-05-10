@@ -1,0 +1,123 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>教程信息-会员中心-{$sys_sitename}</title>
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="{$css_model_path}/css/Validform_style.css" />
+    <script type="text/javascript" src="{$js_model_path}/js/Validform_v5.3.2_min.js"></script>
+    <style type="text/css">
+        .fclick {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+<script>
+    s=2;
+</script>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <script type="text/javascript" charset="utf-8" src="{$js_model_path}/kindeditor/kindeditor.js"></script>
+                <script type="text/javascript" charset="utf-8" src="{$js_model_path}/kindeditor/lang/zh_CN.js"></script>
+                <script type="text/javascript" charset="utf-8">
+                    var editor;
+                    KindEditor.ready(function(K) {
+                        editor = K.create('textarea[name="news_content"]', {width:"80%",afterBlur: function(){this.sync();}});
+                    });
+                </script>
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="教程信息">教程信息</a></span><span> &gt; </span><span>添加教程信息</span><a id="YourPosition_SkipLink"></a></span></div>
+                <form name="theForm" id="theForm" method="post" action="{:U('newssave')}">
+                    <div class="model_content_wrap">
+                        <div class="model_content_top">
+                            <h3> 添加教程信息 </h3>
+                        </div>
+                        <div class="model_content_center">
+                            <ul class="add_model_content">
+                                <li>
+                                    <label> 所属分类：</label>
+                                    <select name="cat_id" id="cat_id" errormsg="请选择分类" datatype="*">
+                                        <option value="">选择所属分类</option>
+                                        <volist name="categorylist" id="categorylist">
+                                           <option value="{$categorylist.cat_id}" <if condition="$categorylist.cat_id == $newslist['cat_id']">selected</if>>{$categorylist.cat_name}{$data}</option>
+                                        </volist>
+                                    </select>
+                                    <a class="Validform_checktip Validform_wrong">*</a>
+                                </li>
+                                <li>
+                                    <label> 标题：</label>
+                                    <input name="news_title" id="news_title" value="{$newslist.news_title}" size="80" maxlength="100" tyep="text" class="inputxt" errormsg="标题不能为空" datatype="*"><a class="Validform_checktip Validform_wrong">*</a>
+                                    <input type="text" name="news_id" id="news_id" value="{$newslist.news_id}">
+                                </li>
+                                <li>
+                                    <label> 来源：</label>
+                                    <input name="news_from" id="news_from" value="{$newslist.news_from}" maxlength="40" size="40" tyep="text" class="inputxt">
+                                    <span class="fclick" rel="网络">网络</span>
+                                    <span class="fclick" rel="www.aspbc.com">{$sys_sitename}</span></li>
+                                <li>
+                                    <label> 作者：</label>
+                                    <input name="news_author" id="news_author" value="{$newslist.news_author}" size="40" maxlength="40" tyep="text" class="inputxt">
+                                    <span class="fclick" rel="佚名">佚名</span>
+                                    <span class="fclick" rel="{$users.username}">{$users.username}</span>
+                                </li>
+                                <li>
+                                    <label> 教程内容：</label>
+                                    <textarea style="width:550px; height:350px;" id="news_content" rows="50" cols="10" name="news_content" errormsg="教程内容不能为空" datatype="*">{$newslist.news_content}</textarea><a class="Validform_checktip Validform_wrong">*</a>
+                                </li>
+                            </ul>
+                            <div class="submit_model_content">
+                                <input type="submit" name="BtnSave" value="提交" class="submit_button" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<script>
+    $(function(){
+        $(".fclick").each(function(){
+            $(this).click(function(){
+                $(this).parent().find("input").val($(this).attr("rel"));
+            })
+        })
+    })
+    $("#theForm").Validform({
+        tiptype:function(msg,o,cssctl){
+            //msg：提示信息;
+            //o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+            //cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+            if(!o.obj.is("form")){
+                var objtip=o.obj.siblings(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+        }
+    })
+</script>
+<!--网站底部结束-->
+</body>
+</html>

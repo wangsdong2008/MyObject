@@ -1,0 +1,54 @@
+<!--  顶部链接  -->
+
+<div class="top_link">
+  <div class="t_l" id="login_status">{$loginstatus}</div>
+  <div class="t_r" style="padding-right: 10px;"><a href="{:U('flow')}">购物车</a> <a href="javascript:void(0)" onclick="javascript:try{this.style.behavior='url(#default#homepage)';this.setHomePage('{$sys_url}');}catch(e){return false;}">设为首页</a> <a href="javascript:void(0)" onclick="javascript:try{window.external.AddFavorite('{$sys_url}','{$sys_title}');}catch(e){return false;}">加入收藏</a></div>
+</div>
+<!--  logo部分  -->
+<div class="logo">
+  <div class="asplogo"><a href="/"><img src="{$img_model_path}/images/logo.gif" alt="{$sys_sitename}" width="152" height="78" border="0" /></a></div>
+  <div class="search_btn">
+    <div class="tab2">
+      <ul id="test2_li_now">
+        <li class="now">教程</li>
+        <li>帖子</li>
+        <li>源码</li>
+        <li>软件</li>
+        <li>资讯</li>
+      </ul>
+    </div>
+    <form method="get" name="searchform" id="searchform" action="http://www.aspbc.com/tech/search_tech.asp" onsubmit="return checksearch()" style="margin:0px;">
+      <div class="tab_bottom">
+        <div id="test2_1" class="tablist bloc">
+          <div class="searchkeyword">
+            <input type="text" name="keyword" id="keyword" class="w350" value="" />
+            <input type="submit" name="" value="搜索" class="search_submit"/>
+          </div>
+          <div class="hot_keyword"><span style="font-weight:bold; color:red;">热门关键字：</span><a title="asp代码生成器" href="http://www.aspbc.com/soft/showsoft.asp?id=196" target="_blank">asp代码生成器</a>&nbsp;&nbsp;<a title="asp简单的采集代码教程" href="http://www.aspbc.com/tech/showtech.asp?id=274" target="_blank">asp采集</a>&nbsp;&nbsp;<a href="http://www.aspbc.com/tech/search_tech.asp?keyword=asp.net%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84" target="_blank">三层架构</a></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!--  导航链接  -->
+<div class="nav_link border">
+  <ul>
+    <volist name="navlist" id="navlist">
+    <li><a href="{$navlist.nav_url}">{$navlist.nav_title}</a>
+    </li></volist>
+  </ul>
+  <div class="clear"></div>
+</div>
+<!--  导航  -->
+<div class="nav m10">
+  <ul>
+    <li class="onlink"><a href="{$sys_url}">首页</a></li>
+    <li><a href="{:U('tech')}">技术教程</a></li>
+    <li><a href="{:U('soft')}">软件下载</a></li>
+    <li><a href="{:U('code')}">源码下载</a></li>
+    <li><a href="{:U('bbs')}">贴吧</a></li>
+    <li><a href="{:U('about')}">关于我们</a></li>
+  </ul>
+  <div style="float:right; width:160px; color:#FFF;">本站QQ交流群：41991607</div>
+</div>
+<script src="{$js_model_path}/js/jquery.js"></script>

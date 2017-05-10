@@ -1,0 +1,95 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/html5.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$DEFAULT_PATH}/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href="{$DEFAULT_PATH}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>下载率</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="iconfont">&#xf012b;</i> 首页 <span class="c-gray en">&gt;</span> 系统统计 <span class="c-gray en">&gt;</span> 下载率 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="icon-refresh"></i></a></nav>
+<div class="pd-20">
+  <div class="text-c">    
+    <form action="" method="post" id="formID">日期范围：
+    <input type="text" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate: '%y-%M-%d'})" id="datemin" name="datemin" class="input-text Wdate" style="width:120px;" value="{$datemin}" >
+    -
+    <input type="text" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate: '%y-%M-%d'})" id="datemax" name="datemax" class="input-text Wdate" style="width:120px;"  value="{$datemax}" >
+    <input type="text" class="input-text" style="width:250px" placeholder="商品名" id="keyword" name="keyword" value="{$keyword}" ><button type="submit" class="btn btn-success" id="" name=""><i class="icon-search"></i> 搜商品</button>
+</form>
+
+  </div>
+  <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>{$count}</strong> 个商品&nbsp;&nbsp;&nbsp;&nbsp;下载量：<strong>{$down_count}</strong>次&nbsp;&nbsp;&nbsp;&nbsp;注册总数：<strong>{$users_count}</strong>人&nbsp;&nbsp;&nbsp;&nbsp;人均下载：<strong>{$down_users_page}</strong>次/人</span></span></div>
+  <table class="table table-border table-bordered table-hover table-bg table-sort">
+    <thead>
+      <tr class="text-c">
+        <th width="80">ID</th>
+        <th width="100">商品名称</th>
+        <th width="100">下载量</th>
+        <th width="100">下载占有比例</th>
+        <th width="100">人均下载量(次/人)</th>
+        <!--<th width="100">操作</th>-->
+      </tr>
+    </thead>
+    <tbody>
+<volist name="down_list" id="downlist">   
+      <tr class="text-c">
+        <td>{$downlist.goods_id}</td>       
+        <td>{$downlist.goods_name}</td>
+        <td>{$downlist.count}</td>
+        <td>{$downlist.down_page}</td>
+        <td>{$downlist.users_page}</td>
+        <!--<td class="f-14 user-manage">
+        <if condition="$userlist.islock == 0">         
+          <a style="text-decoration:none" onClick="user_stop(this,'{$userlist.id}')" href="javascript:;" title="停用"><i class="icon-hand-down"></i></a>
+        <else/>          
+          <a style="text-decoration:none" onClick="user_start(this,'{$userlist.id}')" href="javascript:;" title="启用"><i class="icon-hand-up"></i></a>
+        </if>        
+         <a title="编辑" href="javascript:;" onClick="user_edit('{$userlist.id}','550','560','编辑','useredit?id={$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-edit"></i></a> <a style="text-decoration:none" class="ml-5" onClick="user_password_edit('{$userlist.id}','370','228','修改密码','passwordedit?id={$userlist.id}')" href="javascript:;" title="修改密码"><i class="icon-key"></i></a> <a title="删除" href="javascript:;" onClick="user_del(this,'{$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-trash"></i></a></td>-->
+      </tr>
+ </volist>      
+    </tbody>
+  </table>
+  <div id="pageNav" class="pageNav">{$pagefooter}</div>
+</div>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/jquery.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/layer1.8/layer.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/laypage/laypage.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.js"></script>  
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.doc.js"></script>
+<script type="text/javascript">
+$('.table-sort').dataTable({
+	"lengthMenu":false,//显示数量选择 
+	"bFilter": false,//过滤功能
+	"bPaginate": false,//翻页信息
+	"bInfo": false,//数量信息
+	"aaSorting": [[ 2, "desc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"aoColumnDefs": [
+	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+	  {"orderable":false,"aTargets":[1]}// 制定列不参与排序
+	]
+});
+</script> 
+</body>
+</html>

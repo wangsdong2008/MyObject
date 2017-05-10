@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>核对订单信息-{$sys_sitename}</title>
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+  <style>
+    table td{ text-align: left;
+      padding-left:10px;
+      height:25px;
+    }
+    .t1{
+      font-weight: bold;
+      color: #29478D;
+      border-bottom: 1px solid #ddd;
+    }
+    .nr{
+      font-size: 12px;
+      color:#999;
+    }
+    #goodslist{
+      background-color: #ccc;
+      width: 400px;
+    }
+    #goodslist td{
+      background-color: #fff;
+    }
+    .pay-btn {
+      height: 22px;
+      line-height: 22px;
+      border-radius: 10px;
+      padding: 2px 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      background-color: #FF8301;
+      color:#fff;
+    }
+
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10" style="background-image: none;">
+    <div class="con_left" style="width: 100%">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>  核对订单信息</div>
+      <div class="techlist border">
+        <form action="{:U('Index/addorderinfo')}" method="post" id="theForm">
+        <table style="width: 100%" id="flowlist">
+          <tr><td class="t1">用户信息</td></tr>
+          <tr><td class="nr">用户名：{$users.username}&nbsp;&nbsp;&nbsp;邮箱：{$users.email}</td></tr>
+          <tr><td class="t1">支付方式</td></tr>
+          <tr><td class="nr">积分购买</td></tr>
+          <tr><td class="t1">订单详细</td></tr>
+          <tr><td>
+            <table style="margin: 10px;" border="0" id="goodslist">
+              <tr>
+                <td>产品名称</td>
+                <td>积分</td>
+              </tr>
+              <volist name="flow1list" id="flow1list">
+              <tr>
+                <if condition="$flow1list.root_id == 29">
+                  <td><a href="{:U('showcode',array('id'=>$flow1list['goods_id']))}" target="_blank" title="{$flow1list.goods_name}">{$flow1list.goods_name}</a></td>
+                  <else/>
+                  <td><a href="{:U('showsoft',array('id'=>$flow1list['goods_id']))}" target="_blank" title="{$flow1list.goods_name}">{$flow1list.goods_name}</a></td>
+                </if></td>
+                <td>{$flow1list.goods_price}</td>
+              </tr>
+              </volist>
+            </table>
+          </td>
+          </tr>
+          <tr>
+            <td style="border-top: 1px solid #ccc; width: 100%; position: relative;">
+              <div style="width: 60%; float: left; margin-top: 10px;">
+              <p style="margin-right: 3px;">商品数量：<span class="orangecolor sum" style="margin-right: 6px;">{$count}</span>件</p>
+              <p style="margin-right: 3px;">商品合计：<span class="orangecolor sum" style="margin-right: 6px;">{$sum}</span>元</p>
+                <input type="hidden" name="flowid" id="flowid" value="{$flowid}" >
+              </div>
+              <a class="pay-btn run" id="btBatch" style="float: right;">立即下单</a>
+              <div class="clear"></div>
+
+            </td>
+          </tr>
+
+        </table>
+        </form>
+        <script type="text/javascript">
+          $(function(){
+
+          })
+        </script>
+
+      </div>
+    </div>
+    <div class="clearit"></div>
+  </div>
+  <!--  底部导航  -->
+  <include file="foot" />
+  <script>
+    $(function(){
+      $("#btBatch").click(function(){
+        var flowid =  $("#flowid").val();
+        if(flowid){
+          $("#theForm").submit();
+        }
+      })
+    })
+  </script>
+</div>
+</body>
+</html>

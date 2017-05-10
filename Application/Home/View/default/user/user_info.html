@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>个人信息-会员中心-{$sys_sitename}</title>
+    <meta content="xxxxxxxxx" name="Keywords" />
+    <meta content="xxxxxx" name="Description" />
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="{$css_model_path}/css/Validform_style.css" />
+    <script type="text/javascript" src="{$js_model_path}/js/Validform_v5.3.2_min.js"></script>
+</head>
+<body>
+<script>
+    s = 1;
+</script>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="个人信息">个人信息</a></span><span> &gt; </span><span>修改信息</span></span></div>
+                <div class="model_info_list">
+                    <form name="MainForm" id="theForm" method="post" action="{:U('saveinfo')}">
+                        <div class="model_info_sate mtop10">
+                            <ul>
+                                <li class="hover" id="TabTitle0"><span><a href="javascript:void(0)"> 会员信息</a></span></li>
+                            </ul>
+                        </div>
+
+                        <div class="model_info_content">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="width: 100%; padding-left: 0;" valign="top">
+                                        <table style="width: 100%; table-layout: fixed;" cellspacing="1" cellpadding="0" class="table_style" id="Tabs0">
+                                        <tr class="first">
+                                            <td style="width: 16%;" class="ok_tab"> 会 员 组： </td>
+                                            <td style="width: 38%;"><span id="LblUserGroup">注册会员</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab"> 会员类别： </td>
+                                            <td><span id="LblUserType">{$grouplist.groupname}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab"> 用 户 名： </td>
+                                            <td><span id="LblUserName">{$users.username}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab">头&nbsp;&nbsp;像：</td>
+                                            <td><img src="{$sys_url}/{$sys_upload_img}/{$users.face}" id="img2"/><select name="face" id="userface" onchange="selectface(this.value)">
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic1.gif" <if condition="$users.face == 'face/pic1.gif'">selected</if>>头像1</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic2.gif" <if condition="$users.face == 'face/pic2.gif'">selected</if>>头像2</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic3.gif" <if condition="$users.face == 'face/pic3.gif'">selected</if>>头像3</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic4.gif" <if condition="$users.face == 'face/pic4.gif'">selected</if>>头像4</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic5.gif" <if condition="$users.face == 'face/pic5.gif'">selected</if>>头像5</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic6.gif" <if condition="$users.face == 'face/pic6.gif'">selected</if>>头像6</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic7.gif" <if condition="$users.face == 'face/pic7.gif'">selected</if>>头像7</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic8.gif" <if condition="$users.face == 'face/pic8.gif'">selected</if>>头像8</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic9.gif" <if condition="$users.face == 'face/pic9.gif'">selected</if>>头像9</option>
+
+                                                <option value="{$sys_url}/{$sys_upload_img}/face/pic10.gif" <if condition="$users.face == 'face/pic10.gif'">selected</if>>头像10</option>
+
+                                            </select></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="ok_tab">昵&nbsp;&nbsp;称： </td>
+                                            <td><input name="true_name" type="text" class="inputxt" id="true_name" style="width:200px;" value="{$users.true_name}" maxlength="20" errormsg="昵称不能为空" datatype="*" /><a class="Validform_checktip Validform_wrong">*</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab"> 提示问题： </td>
+                                            <td><input name="question" type="text" class="inputxt" id="question" style="width:200px;" value="{$users.question}" maxlength="50" errormsg="提示问题不能为空" datatype="*" /><a class="Validform_checktip Validform_wrong">*</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab"> 提示答案： </td>
+                                            <td><input name="answer" type="text" class="inputxt" id="answer" style="width:200px;" value="{$users.answer}" maxlength="50" errormsg="答案不能为空" datatype="*"/><a class="Validform_checktip Validform_wrong">*</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab"> 电子邮件： </td>
+                                            <td><input name="Email" type="text" class="inputxt" id="Email" style="width:200px;" value="{$users.email}" maxlength="50" errormsg="邮件格式不正确" datatype="e"/><a class="Validform_checktip Validform_wrong">*</a></td>
+                                        </tr>
+
+                                        <!--<tr>
+                                            <td class="ok_tab"> 偏爱语言： </td>
+                                            <td>
+                                                <input type="checkbox" name="signory" value="asp" checked>asp
+                                                <input type="checkbox" name="signory" value="asp.net">asp.net
+                                                <input type="checkbox" name="signory" value="access" checked>access
+                                                <input type="checkbox" name="signory" value="sqlserver" checked>sqlserver
+                                                <input type="checkbox" name="signory" value="mysql">mysql
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab"> 签名信息： </td>
+                                            <td><input name="Signature" type="text" class="inputxt" id="Signature" value="签名信息sddsfsdf" size="70" maxlength="100" /></td>
+                                        </tr>-->
+                                    </table></td>
+                                </tr>
+                            </table>
+                            <div class="ok_bottom">
+                                <input class="submit_button_six" type="submit" name="EBtnSubmit" value="保存会员信息" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<script type="text/javascript">
+    function selectface(value)
+    {
+        document.getElementById("img2").src = value;
+    }
+    $("#theForm").Validform({
+        tiptype:function(msg,o,cssctl){
+            //msg：提示信息;
+            //o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+            //cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+            if(!o.obj.is("form")){
+                var objtip=o.obj.siblings(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+        }
+    })
+</script>
+<!--网站底部结束-->
+</body>
+</html>

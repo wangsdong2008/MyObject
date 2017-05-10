@@ -1,0 +1,12 @@
+<div class="user_header">
+    <!--菜单定义开始-->
+    <include file="header" />
+    <!--菜单定义结束-->
+    <!--快捷导航开始-->
+    <div class="user_header_guild">
+        <div class="user_header_link"> <a href="/" target="_blank"><img src="{$img_model_path}/images/Home.gif" border="0" title="网站首页"/></a> </div>
+        <div class="user_guild"> <span class="user_header_photo"><a href=""> <img class="smallAvatar" src="{$sys_url}/{$sys_upload_img}/{$users.face}" align="absmiddle" /></a> <a href="{:U('User/index')}" class="rank">{$users.username}</a> </span><span><a href="#" class="sms">短消息<em>(0)</em></a></span> <span><a href="{:U('loginout')}" class="loginout">退出</a></span> </div>
+
+        <!--快捷导航结束-->
+    </div>
+</div>

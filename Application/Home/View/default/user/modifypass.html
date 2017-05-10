@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>修改密码-会员中心-{$sys_sitename}</title>
+    <meta content="xxxxxxxxx" name="Keywords" />
+    <meta content="xxxxxx" name="Description" />
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="{$css_model_path}/css/Validform_style.css" />
+    <script type="text/javascript" src="{$js_model_path}/js/Validform_v5.3.2_min.js"></script>
+</head>
+<body>
+<script>
+    s = 1;
+</script>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="个人信息">个人信息</a></span><span> &gt; </span><span>修改密码</span><a id="YourPosition_SkipLink"></a></span></div>
+                <div class="model_info_list">
+                    <form name="MainForm" id="theForm" method="post" action="{:U('savepassword')}">
+                        <div class="model_info_sate mtop10">
+                            <ul>
+                                <li class="hover" id="TabTitle0"><span><a href="javascript:void(0)">修改密码</a></span></li>
+                            </ul>
+                        </div>
+                        <div class="model_info_content">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="width: 100%; padding-left: 0;" valign="top"><table style="width: 100%; table-layout: fixed;" cellspacing="1" cellpadding="0" class="table_style" id="Tabs0">
+                                        <tr class="first">
+                                            <td style="width: 16%;" class="ok_tab"> 旧 密 码： </td>
+                                            <td style="width: 38%;"><input name="old_password" id="old_password" value="" maxlength="20" type="password" style="width:200px;" class="inputxt" errormsg="旧密码不能为空" datatype="*" /><a class="Validform_checktip Validform_wrong">*</a></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="ok_tab"> 新 密 码： </td>
+                                            <td><span id="LblUserName"><input name="new_password" id="new_password" value="" maxlength="20" type="password" style="width:200px;"  class="inputxt" errormsg="密码范围在6~18位之间！"  datatype="*6-18" /><a class="Validform_checktip Validform_wrong">*</a></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ok_tab">确认密码： </td>
+                                            <td><input name="again_password" id="again_password" value="" maxlength="20" type="password" style="width:200px;" class="inputxt"  datatype="*" recheck="new_password" errormsg="您两次输入的账号密码不一致！" /><a class="Validform_checktip Validform_wrong">*</a></td>
+                                        </tr>
+                                    </table></td>
+                                </tr>
+                            </table>
+                            <div class="ok_bottom">
+                                <input class="submit_button_six" type="submit" name="EBtnSubmit" value="修改密码" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<script>
+    $("#theForm").Validform({
+        tiptype:function(msg,o,cssctl){
+            //msg：提示信息;
+            //o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+            //cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+            if(!o.obj.is("form")){
+                var objtip=o.obj.siblings(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+        }
+    })
+</script>
+<!--网站底部结束-->
+</body>
+</html>

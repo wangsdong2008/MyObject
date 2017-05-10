@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$categorylist.cat_title}-{$sys_sitename}</title>
+<meta name="keywords" content="{$categorylist.cat_keyword}">
+<meta name="description" content="{$categorylist.cat_description}">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+  <style>
+    .border:last-child{ margin-bottom: 0px;}
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position" style="border:1px solid #ccc;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>&nbsp;&nbsp;{$categorylist.cat_name}</div>
+      <div class="black"></div>
+      <div class="tech" style="background-color:#fff">
+        <volist name="subcategorylist" id="subcategorylist" key="k">
+        <div class="tech_box border <if condition='$k % 2 eq 0'>L10</if>">
+          <div class="title"><span><a href="{:U('Index/newslist',array('id'=>$subcategorylist['cat_id']))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/newslist',array('id'=>$subcategorylist['cat_id']))}" target="_blank">{$subcategorylist.cat_name}</a></h4>
+          </div>
+          <div class="pic">
+            <a href="{:U('Index/newslist',array('id'=>$subcategorylist['cat_id']))}" target="_blank"><img src="/{$sys_upload_img}/{$ad_asp.ad_logo}" width="114" height="90" border="0" alt="{$ad_asp.ad_name}" /></a>
+            <h5><a href="{:U('Index/newslist',array('id'=>$subcategorylist['cat_id']))}" target="_blank">{$ad_asp.ad_name}</a></h5>
+            <p>{$ad_asp.intro}</p>
+          </div>
+          <div class="clearit"></div>
+          <ul class="picul">
+            <volist name="subcategorylist.list" id="aspjc">
+              <li><a href="{:U('showcode',array('id'=>$aspjc['goods_id']))}" target="_blank" title="{$aspjc.goods_name}" >{$aspjc.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+        </volist>
+      </div>
+    <div class="clearit"></div>
+    </div>
+    <div class="con_right">
+      <include file="tech_right" />
+    </div>
+
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <!--  底部导航  -->
+
+  <include file="foot" />
+</div>
+</body>
+</html>

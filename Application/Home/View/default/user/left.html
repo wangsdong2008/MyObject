@@ -1,0 +1,65 @@
+<!--会员信息侧边栏目开始-->
+<div class="user_sidebar">
+    <div>
+        <h3><span>个人信息</span></h3>
+        <ul>
+            <li id="f2"><a href="{:U('user_info')}" title="修改个人信息">修改个人信息</a></li>
+            <li id="f3"><a href="{:U('modifypass')}" title="修改密码">修改密码</a></li>
+            <li id="f4"><a href="{:U('myintegralrecord')}" title="我的积分">我的积分</a></li>
+            <li id="f5"><a href="{:U('yqm')}" title="我的邀请码">我的邀请码</a></li>
+            <!--<li id="f15"><a href="user_message.asp" title="短信中心">短信中心</a></li>-->
+        </ul>
+    </div>
+    <div>
+        <h3> <span>订单管理</span></h3>
+        <ul>
+            <li id="f8"><a href="{:U('myorder')}">我的订单</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3> <span>编程教程管理</span></h3>
+        <ul>
+            <li id="f6"><a href="{:U('newslist')}">编程教程管理</a></li>
+            <li id="f7"><a href="{:U('newsadd')}">添加编程教程</a></li>
+        </ul>
+    </div>
+   <!-- <div>
+        <h3> <span>新闻管理</span></h3>
+        <ul>
+            <li id="f8"><a href="user_article.asp?act=list&amp;uid=2">新闻管理</a></li>
+            <li id="f9"><a href="user_article.asp?uid=2">添加新闻</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3> <span>源码管理</span></h3>
+        <ul>
+            <li id="f10"><a href="user_soft.asp?act=list&uid=3">源码管理</a></li>
+            <li id="f11"><a href="user_soft.asp?uid=3">添加源码</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3> <span>软件管理</span></h3>
+        <ul>
+            <li id="f12"><a href="user_soft.asp?act=list&uid=4">软件管理</a></li>
+            <li id="f13"><a href="user_soft.asp?uid=4">添加软件</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3> <span>帖子管理</span></h3>
+        <ul id="left_f">
+            <li id="f14"><a href="user_threads.asp?act=list">帖子管理</a></li>
+        </ul>
+    </div>-->
+</div>
+<script type="text/javascript">
+   $(function(){
+       $(".user_sidebar h3").each(function(){
+          $(this).click(function(){
+              $(this).next().show().parent().siblings("div").find("ul").hide();
+          })
+       })
+       $(".user_sidebar h3").eq(s*1-1).click();
+   })
+
+</script>
+<!--会员信息侧边栏目结束-->

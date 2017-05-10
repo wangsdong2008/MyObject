@@ -1,0 +1,25 @@
+<!--  右侧广告链接部分  -->
+<div class="r_link border">
+    <!--  热门{$data}  -->
+    <div class="title2">
+        <h4>热门{$data}</h4>
+    </div>
+    <ul class="hourul">
+        <volist name="hotnewslist" id="hotnewslist">
+            <li class="onlink"><a href="{:U('showtech',array('id'=>$hotnewslist['news_id']))}" target="_blank" title="{$hotnewslist.news_title}">{$hotnewslist.news_title}</a></li>
+        </volist>
+
+    </ul>
+</div>
+<div class="black"></div>
+<div class="r_link border">
+    <!--  推荐{$data}  -->
+    <div class="title2">
+        <h4>推荐{$data}</h4>
+    </div>
+    <ul class="hourul">
+        <volist name="bestnewslist" id="bestnewslist">
+            <li class="onlink"><a href="{:U('showtech',array('id'=>$bestnewslist['news_id']))}" target="_blank" title="{$bestnewslist.news_title}">{$bestnewslist.news_title}</a></li>
+        </volist>
+    </ul>
+</div>
