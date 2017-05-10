@@ -1,0 +1,394 @@
+@charset "utf-8";
+/*********添加信息页面***********/
+.model_content_wrap
+{
+    padding-left: 18px;
+}
+.model_content_top
+{
+    height: 59px;
+    background: url(../images/model_content_top.gif) no-repeat left bottom;
+}
+.model_content_top h3
+{
+    padding-top: 28px;
+    padding-left: 35px;
+    font-size: 14px;
+}
+.model_content_center
+{
+    border: 1px solid #e2e2e2;
+    border-top: none;
+    height: auto !important;
+    min-height: 200px;
+    height: 200px;
+    width: 776px;
+    padding: 1px;
+    background: #fff url(../images/model_content_center.gif) repeat-x left 1px;
+}
+.add_model_content
+{
+    padding: 10px;
+    padding-left: 135px;
+}
+.add_model_content li
+{
+    line-height: 30px;
+    clear: both;
+    margin: 5px 0px 0;
+}
+.add_model_content li span.ListBoxDescription
+{
+    float: left;
+    color: Green;
+}
+
+.add_model_content li label
+{
+    float: left;
+    width: 130px;
+    margin-left: -140px;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+.add_model_content li table
+{
+    float: left;
+    
+}
+.add_model_content li table td
+{
+    padding: 2px 0;
+    height: 26px;
+}
+
+.add_model_content li table input
+{
+    float: left;
+}
+.add_model_content li table label
+{
+    float: left;
+    width: auto;
+    line-height: 18px;
+    margin-left: 0px;
+    text-align: left;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.add_model_content li.keyword span, .model_author_all span, .model_author_form span
+{
+    padding-left: 10px;
+    color: #cc0000;
+}
+.add_model_content li.keyword span a, .model_author_all span a, .model_author_form span a
+{
+    color: #cc0000;
+}
+.add_model_content li.keyword span a:hover, .model_author_all span a:hover, .model_author_form span a:hover
+{
+    color: #333;
+}
+
+span.add_model_content_radiobuttonlist label, label.add_model_content_radiobutton, table.add_model_content_radiobuttonlist label, span.add_model_content_radiobutton label
+{
+    float: none;
+    width: 130px;
+    margin: 0 8px 0 0;
+    text-align: right;
+    font-weight: normal;
+    padding: 0;
+}
+.model_content_page em, .model_content_automatic_page em
+{
+    color: #009900;
+    padding-left: 5px;
+}
+.default_input
+{
+    float: left;
+    width: 500px;
+}
+.default_input span
+{
+    display: block;
+}
+.model_content
+{
+    height: 300px;
+    width: 600px;
+}
+.model_intro
+{
+    width: 600px;
+    height: 100px;
+}
+.panel_point, .special_point, .model_title_all
+{
+    width: 300px;
+}
+.model_title_master
+{
+    width: 280px;
+}
+.model_title_subhead
+{
+    width: 320px;
+}
+.submit_model_content
+{
+    padding: 10px;
+    text-align: center;
+    clear: both;
+}
+/***********添加信息页面结束*******************/
+/*************信息列表页面**************/
+.model_info_list
+{
+    float: left;
+    margin-left: 15px;
+    display: inline;
+    width: 784px;
+}
+/********列表表格控制开始**********/
+.user_page
+{
+    padding: 10px 0px;
+    text-align: center;
+}
+.model_list_manage
+{
+    margin: 15px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #d5d5d5;
+    width: 763px;
+}
+.clear
+{
+    height: 1px;
+}
+
+/****资金明细定义***/
+.consume_all a
+{
+    padding: 0px 3px;
+    color: #333;
+    text-decoration: underline;
+}
+.consume_all a:hover
+{
+    color: #ae960d;
+}
+.consume_all a.hover
+{
+    font-weight: bold;
+    color: #ae960d;
+}
+/********资金明细订单状态色彩*******/
+
+.model_info_content td span.settle_accounts
+{
+    color: #1c9f49;
+}
+/*****已付清****/
+.model_info_content td span.not_settle_accounts
+{
+    color: #cc0000;
+}
+/*****未付清****/
+.model_info_content td span.wait_buyer_pay
+{
+    color: #8a318e;
+}
+/*****等待买家付款****/
+
+/*************在线支付第一步***************/
+/*********支付金额************/
+.online_pay_number
+{
+    padding: 15px 0px;
+}
+.online_pay_number input
+{
+    width: 50px;
+    margin-right: 5px;
+}
+.online_pay_number ul
+{
+    padding-top: 15px;
+    padding-left: 15px;
+    color: #cc0000;
+}
+/********支付平台***********/
+.member_online
+{
+    padding: 15px 0px;
+}
+.member_online h1, .online_pay_number h1, .ok_pay h1
+{
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+.member_online ul
+{
+    padding: 10px 0px;
+    padding-left: 15px;
+    height: auto !important;
+    height: 100px;
+    min-height: 100px;
+}
+.member_online li
+{
+    float: left;
+    width: 22%;
+    height: 22px;
+    line-height: 22px;
+    padding: 5px 0px;
+    overflow: hidden;
+}
+.member_online li input
+{
+    margin-right: 2px;
+    vertical-align: -2px;
+    _vertical-align: -3px;
+}
+/***************立即支付***********/
+.online_pay_next
+{
+    padding-left: 15px;
+}
+.online_pay_next input
+{
+    width: 108px;
+    height: 32px;
+    line-height: 32px;
+    background: url(../images/pay.gif) no-repeat left center;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+.online_pay_all
+{
+    padding-left: 0px;
+}
+/************在线支付第二步**********/
+.ok_pay
+{
+    padding-top: 15px;
+}
+.ok_pay_all
+{
+    padding: 20px 0px;
+}
+/***********汇款确认支付内容表格控制**********/
+.pay_order_table
+{
+    padding: 10px;
+    padding-left: 0px;
+}
+table.pay_order
+{
+    background: #ccc;
+}
+.pay_order_table table.pay_order td
+{
+    text-align: center;
+    padding-left: 0px;
+}
+.pay_order_table tr
+{
+    height: 27px;
+    line-height: 27px;
+    color: #8a8d8c;
+}
+.order_total
+{
+    padding: 2px;
+    color: #cc0000;
+}
+.order_total input.money_number
+{
+    width: 50px;
+}
+.order_total input.notice
+{
+    vertical-align: -2px;
+    _vertical-align: -3px;
+}
+.ok_pay_all table td.remarks b
+{
+    color: #0066ff;
+    padding: 0px 3px;
+}
+.ok_pay_all table td.remarks span
+{
+    padding: 0px 3px;
+}
+
+/**************通用宽屏列表*************/
+.cryptonym h1
+{
+    font-size: 14px;
+    height: 31px;
+    line-height: 31px;
+}
+.cryptonym ul
+{
+    padding: 10px;
+}
+.cryptonym li
+{
+    margin-bottom: 10px;
+    padding: 2px;
+    padding-left: 70px;
+}
+.cryptonym li label
+{
+    float: left;
+    margin-left: -70px;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.hcss
+{
+    float: left;
+}
+.hcss ul
+{
+    list-style-type: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+.hcss li
+{
+    display: inline;
+    padding: 0 0px;
+}
+
+.vcss
+{
+    float: inherit;
+}
+.vcss ul
+{
+    list-style-type: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+.vcss li
+{
+    padding: 0px 0px 2px 0px;
+}
+li .vcss ul{
+    *margin-top:-40px;
+}
