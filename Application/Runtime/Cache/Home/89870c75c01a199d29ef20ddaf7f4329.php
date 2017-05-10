@@ -119,25 +119,25 @@ function CheckPost() {
                <td width="30" align="center" class="lt_1"><img src="<?php echo ($img_model_path); ?>/images/ztop.gif" alt="全版置顶贴" width="19" height="22" border="0"></td>
                <td width="315" class="lt_2"><a href="<?php echo U('showbbs',array('id'=>$threadslist['threadid']));?>" class="zise" target="_blank" title="<?php echo ($threadslist["topic"]); ?>"><?php echo ($threadslist["topic"]); ?></a></td>
                <td width="85" align="right" class="lt_3">
-               <a href="<?php echo U('users',array('id'=>$threadslist['postuserid']));?>" class="heise" target="_blank"><?php echo ($threadslist["postname"]); ?></a><br>
+               <a href="<?php echo U('users',array('id'=>$threadslist['postuserid']));?>" class="heise" target="_blank"><?php echo (msubstr($threadslist["postname"],0,10,'utf-8',false)); ?></a><br>
                <span class="time"><?php echo (date("Y-m-d H:i:s",$threadslist["posttime"])); ?></span>
                </td>
                <td width="85" align="center" class="lt_4"><span class="green"><?php echo ($threadslist["postnum"]); ?></span>/<?php echo ($threadslist["hits"]); ?></td>
                <td align="left" class="lt_5">
-               <a href="<?php echo U('users',array('id'=>$threadslist['lastuserid']));?>" target="_blank" class="huiz"><?php echo ($threadslist["lastname"]); ?></a><br>
+               <a href="<?php echo U('users',array('id'=>$threadslist['lastuserid']));?>" target="_blank" class="huiz"><?php echo (msubstr($threadslist["lastname"],0,10,'utf-8',false)); ?></a><br>
                <span class="time"><?php echo (date("Y-m-d H:i:s",$threadslist["lasttime"])); ?></span>
                </td>
             </tr>
          </tbody>
       </table><?php endforeach; endif; else: echo "" ;endif; ?>
-
  </div>
       <div class="black"></div>
       <div class="ld">
         <table width="100%" cellspacing="0">
           <tbody>
             <tr>
-              <td colspan="5" class="paddright" align="center" bgcolor="#F4F9FC"><strong>1</strong>&nbsp;<a href="?id=1&page=2">2</a>&nbsp;<a href="?id=1&page=3">3</a>&nbsp;<a href="?id=1&page=2">下一页</a>&nbsp;<a href="?id=1&page=3">最后一页</a>&nbsp;</td>
+              <td colspan="5" class="paddright" align="center" bgcolor="#F4F9FC"><?php echo ($pagefooter); ?>
+                  <div class="clear"></div> </td>
             </tr>
           </tbody>
         </table>
@@ -176,15 +176,14 @@ function CheckPost() {
       </div>
     </div>
     <div class="con_right">
-    <!--  右侧广告链接部分  -->
-    <div class="r_link border">
-        <div class="title2">
-          <h4>热门帖子</h4>
-        </div>
-        <ul class="hourul">
-        <li class="onlink"><a href="/bbs/showbbs.asp?id=83" title="asp开发工具5自带分页功能出错">asp开发工具5自带分页功能出错</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=39" title="VS2010使用三层架构方式开发用户登录">VS2010使用三层架构方式开发用户登录</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=38" title="C#验证码文件的使用教程">C#验证码文件的使用教程</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=22" title="jquery设置文本框value的值">jquery设置文本框value的值</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=29" title="在html页面中，如何避免共同的内容">在html页面中，如何避免共同的内容</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=68" title="就一个JS的编辑器代码">就一个JS的编辑器代码</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=46" title="【求助】asp二级域名自动绑定的实现">【求助】asp二级域名自动绑定的实现</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=58" title="ACCESS数据同时查询两个表怎么写SQL语句">ACCESS数据同时查询两个表怎么写SQL语句</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=33" title="比较数值大小">比较数值大小</a></li><li class="onlink"><a href="/bbs/showbbs.asp?id=42" title="关于判断的问题">关于判断的问题</a></li>
-        </ul>
-      </div>
+        <div class="r_link border">
+    <div class="title2">
+        <h4>热门帖子</h4>
+    </div>
+    <ul class="hourul">
+        <?php if(is_array($hotthreadslist)): $i = 0; $__LIST__ = $hotthreadslist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$hotthreadslist): $mod = ($i % 2 );++$i;?><li class="onlink"><a href="<?php echo U('showbbs',array('id'=>$hotthreadslist['threadid']));?>" title="<?php echo ($hotthreadslist["topic"]); ?>"><?php echo ($hotthreadslist["topic"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+    </ul>
+</div>
     </div>
     <div class="clearit"></div>
   </div>

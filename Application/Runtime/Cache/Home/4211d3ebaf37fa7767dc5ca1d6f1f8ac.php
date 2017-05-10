@@ -101,7 +101,7 @@
                             此区域只可以发布跟<?php echo ($categorylist["cat_name"]); echo ($data); ?>相关的主题帖~~，禁止灌水！<br>
                         </td>
                         <td width="36%" style="line-height: 150%;">
-                            新帖：<a href=""><?php echo ($categorylist["list"]["topic"]); ?></a><br>
+                            新帖：<a href="<?php echo U('showbbs',array('id'=>$categorylist['list']['threadid']));?>"><?php echo ($categorylist["list"]["topic"]); ?></a><br>
                             发帖：<?php echo ($categorylist["list"]["postname"]); ?><br>
                             发帖时间：<span class="time"><?php echo (date("Y-m-d H:i:s",$categorylist["list"]["posttime"])); ?></span><br>
                             主题：<span class="heise"><?php echo ($categorylist["num"]); ?></span>　

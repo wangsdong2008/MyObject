@@ -50,7 +50,7 @@
                             此区域只可以发布跟{$categorylist.cat_name}{$data}相关的主题帖~~，禁止灌水！<br>
                         </td>
                         <td width="36%" style="line-height: 150%;">
-                            新帖：<a href="">{$categorylist.list.topic}</a><br>
+                            新帖：<a href="{:U('showbbs',array('id'=>$categorylist['list']['threadid']))}">{$categorylist.list.topic}</a><br>
                             发帖：{$categorylist.list.postname}<br>
                             发帖时间：<span class="time">{$categorylist.list.posttime|date="Y-m-d H:i:s",###}</span><br>
                             主题：<span class="heise">{$categorylist.num}</span>　

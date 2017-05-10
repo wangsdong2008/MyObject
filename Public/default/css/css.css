@@ -344,3 +344,21 @@ text-decoration: none;
 	height:90px;
 	margin-right:20px;
 }
+.paddright{
+	position: relative;}
+#pagesinfo{
+	margin-left: 10px;
+	float: left;
+	width: auto;
+}
+.paddright #pages{
+	float: right;
+	margin-right: 10px;
+}
+#pages ul{}
+#pages ul li{
+	float: left;
+	width: auto;
+	padding: 0px 3px;
+
+}

@@ -362,9 +362,38 @@ class IndexController extends Controller {
 
 		$threadslist = D('Home/threads')->getPageThreads($id);
 		$this->assign('threadslist',$threadslist);
+		$this->assign('pagefooter',$threadslist['pagefooter']);
 
+		//热门帖子
+		$hotThreadslist = D('Home/threads')->getHotThreads($id);
+		$this->assign('hotthreadslist',$hotThreadslist);
+
+		unset($categorylist,$threadslist,$hotThreadslist);
 
 		$this->display('showbbsclass');
+	}
+
+	//显示贴吧详细
+	public function showbbs(){
+		$id = I('id',0);
+		if($id==0) exit;
+		$threads = D("Home/threads")->showthreads($id);
+		$cat_id = $threads['cat_id'];
+		$this->assign('threads',$threads);
+		unset($threads);
+
+		//热门帖子
+		$hotThreadslist = D('Home/threads')->getHotThreads($cat_id);
+		$this->assign('hotthreadslist',$hotThreadslist);
+		unset($hotThreadslist);
+
+		$page = I('page')?I('page'):1;
+		$pagelist = D('Home/posts')->pagepostslist($page,$id);
+		$this->assign('pagelist',$pagelist);
+		$this->assign('pagefooter',$pagelist['pagefooter']);
+		unset($pagelist);
+
+		$this->display('showbbsdetail');
 	}
 
 	//软件下载

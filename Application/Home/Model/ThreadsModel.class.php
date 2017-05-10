@@ -33,8 +33,19 @@ class ThreadsModel extends Model{
     * 参数：$threads_id为ID
     * @return 单条记录
     */
-    public function showthreads($threads_id = 0){
-
+    public function showthreads($ThreadId = 0){
+        $threads = M('threads');
+        $threads_data[C('DB_PREFIX').'threads.ThreadId'] = array('eq',$ThreadId);
+        $threads_data[C('DB_PREFIX').'threads.IsShow'] = array('eq',2);
+        $threads_data[C('DB_PREFIX').'threads.deleted'] = array('eq',0);
+        $threadslist = $threads
+            ->join('inner join think_category on think_category.cat_id = think_threads.Cat_id')
+            ->where($threads_data)
+            ->field('`think_threads`.`Cat_id`,`think_threads`.`Topic`,`think_threads`.`Description`,`think_category`.`cat_id`,`think_category`.`cat_name`')
+            ->limit(1)
+            ->find();
+        unset($threads,$threads_data);
+        return $threadslist;
     }
 
     /*
@@ -53,7 +64,7 @@ class ThreadsModel extends Model{
         $threadslist = $threads
             ->where($threads_data)
             ->order('LastTime desc')
-            ->field('Topic,PostName,PostUserid,PostTime')
+            ->field('ThreadId,Topic,PostName,PostUserid,PostTime')
             ->limit(1)
             ->find();
         unset($threads,$threads_data);
@@ -89,8 +100,23 @@ class ThreadsModel extends Model{
             ->order('IsTop desc,PostTime desc')
             ->field('`ThreadId`,`Topic`,`PostName`,`PostUserid`,`PostTime`,`LastName`,`LastTime`,`LastUserid`,`postnum`,`hits`')
             ->page($nowPage.','.$Page->listRows)->select();
-        $objPage = array();
+        $objPage = array('id'=>$cat_id);
         $threadslist['pagefooter'] = showpage($nowPage,$count,$objPage);
+        unset($threads,$threads_data);
+        return $threadslist;
+    }
+
+    //热门帖子
+    public function getHotThreads($cat_id=0,$num=10){
+        $threads = M('threads');
+        $threads_data['IsShow'] = array('eq',2);
+        $threads_data['deleted'] = array('eq',0);
+        $threads_data['cat_id'] = array('eq',$cat_id);
+        $threadslist = $threads
+            ->where($threads_data)
+            ->order('`hits` desc')
+            ->field('`ThreadId`,`Topic`,`PostName`,`PostUserid`,`PostTime`,`LastName`,`LastTime`,`LastUserid`,`postnum`,`hits`')
+            ->select();
         unset($threads,$threads_data);
         return $threadslist;
     }
