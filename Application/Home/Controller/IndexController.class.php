@@ -9,6 +9,7 @@ class IndexController extends Controller {
 
 	public function init(){
 		$this->data = '教程';
+		if(session("userid"))  $this->assign('userid',session("userid"));
 		$configlist = S('config');
 		$cache = 0;
 		if(!$cache){

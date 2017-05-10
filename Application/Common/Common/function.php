@@ -27,7 +27,6 @@ function loginstatus(){
   }
   elseif($user['email']) {
    if(strlen($user['email']) > 11) {
-    //$username = substr($user['email'], 8).'...';
     $username = msubstr($user['email'], 0, 8);
    } else {
     $username = $user['email'];
