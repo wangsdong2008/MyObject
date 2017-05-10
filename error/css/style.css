@@ -1,0 +1,115 @@
+/*
+Template Name: Flat Lab Dashboard build with Bootstrap v3.0
+Template Version: 1.0
+Author: Mosaddek Hossain
+Website: http://thevectorlab.net/
+*/
+
+/* Import fonts */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+
+body {
+    color: #797979;
+    background: #f1f2f7;
+    font-family: '微软雅黑', sans-serif;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size:13px;
+}
+
+ul li {
+    list-style: none;
+}
+
+a, a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+::selection {
+    background: #FF6C60;
+    color: #fff;
+}
+::-moz-selection {
+    background: #FF6C60;
+    color: #fff;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    /* Safari and Chrome */
+    .panel-footer.revenue-foot {
+        margin-bottom: -4px;
+    };
+    }
+
+/*404 page*/
+
+.body-404 {
+    background: #18d4cb;
+    color: #fff;
+}
+
+.error-wrapper {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.error-wrapper .icon-404{
+    background: url("../images/404_icon.png") no-repeat;
+    width: 289px;
+    height: 274px;
+    display: inline-block;
+    margin-left: 30px;
+}
+
+
+.error-wrapper h1 {
+    font-size: 70px;
+    font-weight: 300;
+    margin: -50px 0 15px; 0;
+}
+
+.error-wrapper h2 {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0 0 30px 0;
+}
+
+.error-wrapper p, .error-wrapper p a {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.error-wrapper p.page-404  {
+    color: #7dfff7;
+}
+
+.error-wrapper p.page-404 a, .error-wrapper p.page-500 a,  .error-wrapper p.page-404 a:hover, .error-wrapper p.page-500 a:hover {
+    color: #fff;
+}
+
+
+/*500 page*/
+
+.body-500 {
+    background: #188eee;
+    color: #fff;
+}
+
+.error-wrapper p.page-500 {
+    color: #afa5f1;
+}
+
+.error-wrapper .icon-500{
+    background: url("../images/500_icon.png") no-repeat;
+    width: 289px;
+    height: 274px;
+    display: inline-block;
+    margin-left: 55px;
+}
+
