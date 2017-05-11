@@ -9711,3 +9711,50 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004000s ]
 INFO: [ app_end ] --END-- [ RunTime:0.004000s ]
 
+[ 2017-05-11T15:31:08+08:00 ] 127.0.0.1 /Index/showbbsclass/id/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `think_config` [ RunTime:0.0180s ]
+SQL: SELECT * FROM `think_config` left join think_model on think_model.model_id = think_config.sys_model  WHERE `sys_id` = 1 AND `is_show` = 1 AND `isdel` = 0 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `think_nav` [ RunTime:0.0130s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = 0 ORDER BY nav_order asc LIMIT 10   [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '1' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '2' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '3' ORDER BY nav_order asc  [ RunTime:0.0010s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '4' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '6' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '7' ORDER BY nav_order asc  [ RunTime:0.0010s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '8' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '9' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '15' ORDER BY nav_order asc  [ RunTime:0.0010s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url`,`is_show` FROM `think_nav` WHERE `isdel` = 0 AND `is_show` = 1 AND `parent_id` = '18' ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_nav` [ RunTime:0.0090s ]
+SQL: SELECT `nav_id`,`nav_title`,`nav_url` FROM `think_nav` WHERE `is_show` = 1 AND `isdel` = 0 ORDER BY nav_order asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_users` [ RunTime:0.0080s ]
+SQL: SELECT `username`,`phone`,`email` FROM `think_users` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `think_category` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `think_category` [ RunTime:0.0090s ]
+SQL: SELECT `cat_name`,`cat_title`,`cat_keyword`,`cat_description`,`cat_content` FROM `think_category` WHERE `cat_id` = '1' AND `cat_status` = 1 AND `isdel` = 0 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_threads` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `think_threads` [ RunTime:0.0100s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `think_threads` WHERE `IsShow` = 2 AND `deleted` = 0 AND `Cat_id` = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `ThreadId`,`Topic`,`PostName`,`PostUserid`,`PostTime`,`LastName`,`LastTime`,`LastUserid`,`postnum`,`hits`,`IsGood`,`isTop` FROM `think_threads` WHERE `IsShow` = 2 AND `deleted` = 0 AND `Cat_id` = '1' ORDER BY IsTop desc,PostTime desc LIMIT 0,10   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant ADMIN_DEFAULT_PAGENUM - assumed 'ADMIN_DEFAULT_PAGENUM' D:\phpStudy\aspbc\trunk\Application\Home\Common\function.php 第 11 行.
+SQL: SELECT `ThreadId`,`Topic`,`PostName`,`PostUserid`,`PostTime`,`LastName`,`LastTime`,`LastUserid`,`postnum`,`hits` FROM `think_threads` WHERE `IsShow` = 2 AND `deleted` = 0 AND `Cat_id` = '1' ORDER BY `hits` desc  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001001s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
