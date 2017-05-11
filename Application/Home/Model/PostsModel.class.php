@@ -52,7 +52,10 @@ class PostsModel extends Model{
     public function pagepostslist($ThreadID=0,$PageSize = 10){
         $Model = M();
         $sql = "select `think_posts`.`PostContent`,`think_posts`.`PostTime`,`PostName`,`think_users`.`username`,`think_users`.`face` from `think_posts` inner join `think_users` on `think_users`.`id` = `think_posts`.`PostUserid` where `think_posts`.`ThreadID` = '$ThreadID' and `think_posts`.`is_show` = '2' ";
-        $numlist = $Model->query("select count(*) as num from ".explode("from",$sql)[1]);
+        $list = explode("from",$sql);
+        $sql2 = "select count(*) as num from ".$list[1];
+        unset($list);
+        $numlist = $Model->query($sql2);
         $count = $numlist[0]['num'];
         $postslist['count'] = $count;
         $sql .= " order by `think_posts`.`PostID` asc";

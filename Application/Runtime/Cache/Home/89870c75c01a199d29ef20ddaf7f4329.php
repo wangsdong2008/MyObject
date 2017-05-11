@@ -213,7 +213,7 @@
             </tr>
             </tbody>
         </table>
-    </form><?php endif; ?>
+    </form>
     <script>
         $("#theform").Validform({
             tiptype:function(msg,o,cssctl){
@@ -227,7 +227,7 @@
                 }
             }
         });
-    </script>
+    </script><?php endif; ?>
    
   <!--  底部导航  -->
     <!--  底部导航  -->

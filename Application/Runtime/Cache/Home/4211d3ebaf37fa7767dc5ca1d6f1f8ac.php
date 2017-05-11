@@ -68,7 +68,7 @@
         <tbody>
         <tr>
             <td height="50" class="cheng"><img src="<?php echo ($model_path); ?>/images/notice.gif" alt="ASP编程网全面上线了，欢迎大家一起学习交流！！！" width="9" height="9"><b> ASP编程网全面上线了，欢迎大家一起学习交流！！！</b></td>
-            <td style="line-height: 130%;" align="right">共 <b><?php echo ($c_num); ?></b> 篇主题 | <b><?php echo ($c_postsnum); ?></b> 篇帖子 | 今日新帖 <b><?php echo ($c_daypostsnum); ?></b> 帖 &nbsp;&nbsp;</td>
+
         </tr>
         </tbody></table>
 
