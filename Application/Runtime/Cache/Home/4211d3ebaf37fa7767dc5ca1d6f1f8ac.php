@@ -68,8 +68,7 @@
         <tbody>
         <tr>
             <td height="50" class="cheng"><img src="<?php echo ($model_path); ?>/images/notice.gif" alt="ASP编程网全面上线了，欢迎大家一起学习交流！！！" width="9" height="9"><b> ASP编程网全面上线了，欢迎大家一起学习交流！！！</b></td>
-            <td style="line-height: 130%;" align="right"><b>查看全部帖子</b>　今日新帖 <b>0</b> 帖&nbsp;&nbsp; <br>
-                共 <b>57</b> 篇主题 | <b>320</b> 篇帖子 | <b>2296</b> 位会员&nbsp;&nbsp;</td>
+            <td style="line-height: 130%;" align="right">共 <b><?php echo ($c_num); ?></b> 篇主题 | <b><?php echo ($c_postsnum); ?></b> 篇帖子 | 今日新帖 <b><?php echo ($c_daypostsnum); ?></b> 帖 &nbsp;&nbsp;</td>
         </tr>
         </tbody></table>
 
@@ -105,8 +104,8 @@
                             发帖：<?php echo ($categorylist["list"]["postname"]); ?><br>
                             发帖时间：<span class="time"><?php echo (date("Y-m-d H:i:s",$categorylist["list"]["posttime"])); ?></span><br>
                             主题：<span class="heise"><?php echo ($categorylist["num"]); ?></span>　
-                            帖子：<span class="heise">156</span>　
-                            今日：<span class="heise">0</span>
+                            帖子：<span class="heise"><?php echo ($categorylist["postsnum"]); ?></span>　
+                            今日：<span class="heise"><?php echo ($categorylist["daypostsnum"]); ?></span>
                         </td>
                     </tr>
                     <!--------------------------------------- <?php echo ($categorylist["cat_name"]); echo ($data); ?> End --><?php endforeach; endif; else: echo "" ;endif; ?>

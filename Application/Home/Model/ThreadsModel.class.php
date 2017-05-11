@@ -60,6 +60,7 @@ class ThreadsModel extends Model{
     public function getCatTop($Cat_id){
         $threads = M('threads');
         $threads_data['Cat_id'] = array('eq',$Cat_id);
+        $threads_data['deleted'] = array('eq',0);
         unset($Cat_id);
         $threadslist = $threads
             ->where($threads_data)
@@ -75,6 +76,7 @@ class ThreadsModel extends Model{
     public function getCatNum($Cat_id){
         $threads = M('threads');
         $threads_data['Cat_id'] = array('eq',$Cat_id);
+        $threads_data['deleted'] = array('eq',0);
         unset($Cat_id);
         $threadslist = $threads
             ->where($threads_data)
@@ -90,7 +92,7 @@ class ThreadsModel extends Model{
         $threads = M('threads');
         $threads_data['IsShow'] = array('eq',2);
         $threads_data['deleted'] = array('eq',0);
-        $threads_data['cat_id'] = array('eq',$cat_id);
+        $threads_data['Cat_id'] = array('eq',$cat_id);
         $nowPage = I('page')?I('page'):1;
         $count = $threads->where($threads_data)->count();
         $threadslist['count'] = $count;
@@ -111,7 +113,7 @@ class ThreadsModel extends Model{
         $threads = M('threads');
         $threads_data['IsShow'] = array('eq',2);
         $threads_data['deleted'] = array('eq',0);
-        $threads_data['cat_id'] = array('eq',$cat_id);
+        $threads_data['Cat_id'] = array('eq',$cat_id);
         $threadslist = $threads
             ->where($threads_data)
             ->order('`hits` desc')

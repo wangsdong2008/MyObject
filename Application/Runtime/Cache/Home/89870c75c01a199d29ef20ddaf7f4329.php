@@ -194,11 +194,11 @@
             <tbody>
             <tr>
                 <td width="172" height="30" align="right"><b><span style="color: #f00;">*</span> 标题</b>：</td>
-                <td bgcolor="#FFFFFF"><input type="text" name="Topic" id="Topic" size="60" maxlength="100" datatype="*" nullmsg="请填写标题" errormsg="请填写标题" /><a style="left: 100px;top:310px; " class="Validform_checktip"></a></td>
+                <td><input type="text" name="Topic" id="Topic" size="60" maxlength="100" datatype="*" nullmsg="请填写标题" errormsg="请填写标题" /><a style="left: 100px;top:310px; " class="Validform_checktip"></a></td>
             </tr>
             <tr>
                 <td width="172" height="180" align="right"><b><span style="color: #f00;">*</span> 内容</b>：</td>
-                <td bgcolor="#FFFFFF" align="left"><textarea name="content" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a>
+                <td align="left"><textarea name="content" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a>
                     <input type="hidden" value="1" name="id" id="id"/>
                     <input type="hidden" value="1" name="act" id="act" />
                     <input type="hidden" value="1" name="userid" id="userid" /></td>

@@ -6,8 +6,6 @@
     <meta name="Description" content="<?php echo ($threads["topic"]); ?>">
     <meta name="Keywords" content="<?php echo ($threads["topic"]); ?>">
     <link href="<?php echo ($model_path); ?>/css/css.css" rel="stylesheet" type="text/css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo ($model_path); ?>/css/brush.css"/>
-    <link type="text/css" rel="stylesheet" href="<?php echo ($model_path); ?>/css/brush_de.css"/>
 </head>
 <body>
 <div class="wrapper">

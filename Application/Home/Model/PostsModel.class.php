@@ -60,4 +60,24 @@ class PostsModel extends Model{
         return $postslist;
     }
 
+    //获取此分类总帖子数量
+    //$day=1表示今天的帖子数量
+    public function getPostsNum($cat_id,$day=0){
+        $posts = M('posts');
+        $posts_data[C('DB_PREFIX').'posts.is_show'] = array('eq',2);
+        $posts_data[C('DB_PREFIX').'threads.Cat_id'] = array('eq',$cat_id);
+        if($day == 1){
+            $posts_data[C('DB_PREFIX').'posts.posttime'] = array('gt',strtotime(date("Y-m-d 00:00:00")));
+        }
+        $postslist = $posts
+            ->join('inner join think_threads on think_threads.ThreadId = think_posts.ThreadID')
+            ->where($posts_data)
+            ->field('count(*) as num')
+            ->limit(1)
+            ->find();
+        unset($posts,$posts_data);
+        return $postslist['num'];
+    }
+
+
 }

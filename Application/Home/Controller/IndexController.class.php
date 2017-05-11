@@ -344,15 +344,30 @@ class IndexController extends Controller {
 	//贴吧
 	public function bbs(){
 		$categorylist = D('Home/category')->getCategoryList(2);
+		$c_num = 0; //总主题
+		$c_postsnum = 0; //总帖子
+		$c_daypostsnum = 0; //今天帖子
 		foreach($categorylist as $key => $val){
 			$cat_id = $val['cat_id'];
 			$categorylist[$key]['list'] = D('Home/Threads')->getCatTop($cat_id);
 			$categorylist[$key]['num'] = D('Home/Threads')->getCatNum($cat_id);
+			$c_num += D('Home/Threads')->getCatNum($cat_id);
+			$categorylist[$key]['postsnum'] = D('Home/Posts')->getPostsNum($cat_id);
+			$c_postsnum += D('Home/Posts')->getPostsNum($cat_id);
+			$categorylist[$key]['daypostsnum'] = D('Home/Posts')->getPostsNum($cat_id,1);
+			$c_daypostsnum += D('Home/Posts')->getPostsNum($cat_id,1);
 		}
-
 		$this->assign('categorylist',$categorylist);
-
+		$this->assign('c_num',$c_num);
+		$this->assign('c_postsnum',$c_postsnum);
+		$this->assign('c_daypostsnum',$c_daypostsnum);
+		unset($c_num,$c_postsnum,$c_daypostsnum);
 		$this->display('bbs');
+	}
+
+	//发贴
+	public function saveThreads(){
+
 	}
 
 	//贴吧分类
@@ -876,12 +891,7 @@ class IndexController extends Controller {
 					break;
 				}
 			}
-
-
-
-
 		}
-
 		unset($order_infolist);
 	}
 
