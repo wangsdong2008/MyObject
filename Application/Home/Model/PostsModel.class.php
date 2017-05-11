@@ -3,28 +3,31 @@ namespace Home\Model;
 use Think\Model;
 
 class PostsModel extends Model{
-
     /* 自动验证规则 */
     protected $_validate = array(
-        /*
-           array('name', 'require', '标识不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
-           array('name', '', '标识已经存在', self::VALUE_VALIDATE, 'unique', self::MODEL_BOTH),
-           array('title', 'require', '名称不能为空', self::MUST_VALIDATE , 'regex', self::MODEL_BOTH),
-        */
+        array('PostContent', 'require', '回复不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('ThreadID', 'require', '帖子ID不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
     );
 
     /* 自动完成规则 */
     protected $_auto = array(
-        /*
-           array('model', 'arr2str', self::MODEL_BOTH, 'function'),
-           array('model', null, self::MODEL_BOTH, 'ignore'),
-           array('extend', 'json_encode', self::MODEL_BOTH, 'function'),
-           array('extend', null, self::MODEL_BOTH, 'ignore'),
-           array('create_time', NOW_TIME, self::MODEL_INSERT),
-           array('update_time', NOW_TIME, self::MODEL_BOTH),
-           array('status', '1', self::MODEL_BOTH),
-        */
+        array('PostName','getuserName',1,'callback'),
+        array('PostUserid','getuserid',1,'callback'),
+        array('PostTime', NOW_TIME, self::MODEL_INSERT),
+        array('PostIP', 'get_client_ip', self::MODEL_INSERT),
+        array('IsShow', 2, self::MODEL_INSERT),
     );
+
+    //这个函数是取用户账号中的值
+    protected function getuserName(){
+        $users = D('Home/users')->showUsers(session("userid"));
+        return $users['username'];
+    }
+
+    //这个函数获取session里的name值
+    protected function getuserid(){
+        return session("userid");
+    }
 
     //下面是你要定义的函数
 
@@ -46,17 +49,20 @@ class PostsModel extends Model{
      * $pages为当前页数，$pagesize每页数量
      * @return 分页记录
     */
-    public function pagepostslist($pages = 1,$threadid=0,$pagesize = 10){
-        $posts = M('posts');
-        $posts_data['PostID'] = array('gt',0);
-        $posts_data['ThreadID'] = array('eq',$threadid);
-        $count = $posts->where($posts_data)->count();
+    public function pagepostslist($ThreadID=0,$PageSize = 10){
+        $Model = M();
+        $sql = "select `think_posts`.`PostContent`,`think_posts`.`PostTime`,`PostName`,`think_users`.`username`,`think_users`.`face` from `think_posts` inner join `think_users` on `think_users`.`id` = `think_posts`.`PostUserid` where `think_posts`.`ThreadID` = '$ThreadID' and `think_posts`.`is_show` = '2' ";
+        $numlist = $Model->query("select count(*) as num from ".explode("from",$sql)[1]);
+        $count = $numlist[0]['num'];
         $postslist['count'] = $count;
-        $Page = new \Think\Page($count,$pagesize);
-        $postslist['list'] = $posts->where($posts_data)->order('PostID asc')->page($pages.','.$Page->listRows)->select();
-        $objPage = array('id'=>$threadid);
-        $postslist['pagefooter'] = showpage($pages,$count,$objPage);
-        unset($posts,$posts_data,$count,$Page,$objPage);
+        $sql .= " order by `think_posts`.`PostID` asc";
+        $nowPage = I('page')?I('page'):1;
+        $sql .= " limit ".($nowPage-1)*$PageSize. "," . $PageSize;
+        $postslist['list'] = $Model->query($sql);
+        $objPage = array('id'=>$ThreadID);
+        $postslist['pagefooter'] = showpage($nowPage,$count,$objPage);
+        unset($count,$sql,$numlist,$objPage,$PageSize);
+        unset($sql,$Model);
         return $postslist;
     }
 

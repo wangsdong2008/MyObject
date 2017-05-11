@@ -8,6 +8,11 @@
 <link href="<?php echo ($css_model_path); ?>/css/css.css" rel="stylesheet" type="text/css" />
 <link type="text/css" rel="stylesheet" href="<?php echo ($css_model_path); ?>/css/Validform_style.css" />
 <script type="text/javascript" src="<?php echo ($js_model_path); ?>/js/jquery.js"></script>
+    <style>
+        .lt_2 { padding-left: 10px; }
+        .lt_2 a{ margin-left: 10px; }
+        .lt_2 img{ width:19px;height:22px; }
+    </style>
 </head>
 <body>
 <div class="wrapper"> 
@@ -69,12 +74,12 @@
   <div class="m10">
     <div class="con_left"> 
       <!--  左侧正文内容部分  -->
-      <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:6px;">当前位置：<a href="<?php echo ($sys_url); ?>"><?php echo ($sys_sitename); ?></a>><a href="<?php echo U('bbs');?>">贴&nbsp;吧</a>>&nbsp;&nbsp;<?php echo ($categorylist["cat_name"]); ?>吧</div>
+      <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:6px;">当前位置：<a href="<?php echo ($sys_url); ?>"><?php echo ($sys_sitename); ?></a>><a href="<?php echo U('bbs');?>">贴吧</a>>&nbsp;&nbsp;<?php echo ($categorylist["cat_name"]); ?>吧</div>
       <table border="0" cellpadding="0" cellspacing="0" width="100%" height="">
         <tbody>
           <tr>
             <td width="100"><a href="#postbbs"><img src="<?php echo ($img_model_path); ?>/images/postnew.jpg" border="0" width="85" height="26"></a></td>
-            <td width="300" align="left"><img src="<?php echo ($img_model_path); ?>/images/ztop.gif" align="absmiddle" border="0" width="12" height="12"> 置顶帖 <img src="<?php echo ($img_model_path); ?>/images/tuijian.gif" align="absmiddle" border="0" width="12" height="12"> 推荐帖</td>
+            <td width="300" align="left"><img src="<?php echo ($img_model_path); ?>/images/ztop.gif" align="absmiddle" border="0" width="12" height="12"> 置顶帖 <img src="<?php echo ($img_model_path); ?>/images/tuijian.gif" align="absmiddle" border="0" width="12" height="12"> 精华帖</td>
             <td align="right"><!--<img src="<?php echo ($img_model_path); ?>/images/team.gif" align="absmiddle" width="20" height="20"> 版主：<a href="showuser.asp?id=1" target="_blank">wangsdong</a>，<a href="showuser.asp?id=5" target="_blank">loveasp</a>--></td>
           </tr>
           <tr>
@@ -86,7 +91,6 @@
         <table width="100%" cellspacing="0" >
           <tbody>
             <tr class="white" bgcolor="#68A3E5" height="28">
-              <td class="lt_1 lt_tg">状态</td>
               <td class="lt_2 lt_tg" style="text-align:center;">文 章</td>
               <td class="lt_3 lt_tg">作 者</td>
               <td class="lt_4 lt_tg">回复/人气</td>
@@ -98,8 +102,9 @@
           <?php if(is_array($threadslist['list'])): $i = 0; $__LIST__ = $threadslist['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$threadslist): $mod = ($i % 2 );++$i;?><table width="100%" cellspacing="0" class="lt_l">
          <tbody>
             <tr>
-               <td width="30" align="center" class="lt_1"><img src="<?php echo ($img_model_path); ?>/images/ztop.gif" alt="全版置顶贴" width="19" height="22" border="0"></td>
-               <td width="315" class="lt_2"><a href="<?php echo U('showbbs',array('id'=>$threadslist['threadid']));?>" class="zise" target="_blank" title="<?php echo ($threadslist["topic"]); ?>"><?php echo ($threadslist["topic"]); ?></a></td>
+               <td width="315" class="lt_2"> <?php if($threadslist["istop"] == 1): ?><img src="<?php echo ($img_model_path); ?>/images/ztop.gif" alt="置顶贴" border="0"><?php endif; ?>
+                   <?php if($threadslist["isgood"] == 1): ?><img src="<?php echo ($img_model_path); ?>/images/toptj.gif" alt="精华贴" border="0"><?php endif; ?>
+                   <?php if($threadslist["postnum"] == 0): ?><img src="<?php echo ($img_model_path); ?>/images/topicnew.gif" alt="新贴" border="0"><?php else: ?><img src="<?php echo ($img_model_path); ?>/images/topichot.gif" alt="新贴" border="0"><?php endif; ?><a href="<?php echo U('showbbs',array('id'=>$threadslist['threadid']));?>" class="zise" target="_blank" title="<?php echo ($threadslist["topic"]); ?>"><?php echo ($threadslist["topic"]); ?></a></td>
                <td width="85" align="right" class="lt_3">
                <a href="<?php echo U('users',array('id'=>$threadslist['postuserid']));?>" class="heise" target="_blank"><?php echo (msubstr($threadslist["postname"],0,10,'utf-8',false)); ?></a><br>
                <span class="time"><?php echo (date("Y-m-d H:i:s",$threadslist["posttime"])); ?></span>
@@ -176,7 +181,7 @@
         <script>
             var editor;
             KindEditor.ready(function(K) {
-                editor = K.create('textarea[name="content"]', {afterBlur: function(){this.sync();}});
+                editor = K.create('textarea[id="content"]', {afterBlur: function(){this.sync();}});
             });
         </script>
     <table class="tahoma" border="0" cellpadding="5" cellspacing="0" width="100%">
@@ -189,7 +194,7 @@
         </tr>
         </tbody>
     </table>
-    <form action="" method="post" name="theform" id="theform" style="margin:0px;padding:0px;">
+    <form action="<?php echo U('saveThreads');?>" method="post" name="theform" id="theform" style="margin:0px;padding:0px;">
         <table class="tahoma" bgcolor="#E3EBEE" border="0" cellpadding="3" cellspacing="1" width="100%">
             <tbody>
             <tr>
@@ -198,10 +203,9 @@
             </tr>
             <tr>
                 <td width="172" height="180" align="right"><b><span style="color: #f00;">*</span> 内容</b>：</td>
-                <td align="left"><textarea name="content" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a>
-                    <input type="hidden" value="1" name="id" id="id"/>
-                    <input type="hidden" value="1" name="act" id="act" />
-                    <input type="hidden" value="1" name="userid" id="userid" /></td>
+                <td align="left"><textarea name="Description" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a>
+                    <input type="hidden" value="<?php echo ($cat_id); ?>" name="Cat_id" id="Cat_id"/>
+                    </td>
             </tr>
             <tr height="38">
                 <td align="right"></td>

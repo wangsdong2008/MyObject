@@ -367,16 +367,41 @@ class IndexController extends Controller {
 
 	//发贴
 	public function saveThreads(){
+		$threads = D("threads"); // 实例化threads对象
+		if (!$threads->create()){ // 创建数据对象
+			// 如果创建失败 表示验证没有通过 输出错误提示信息
+			exit($threads->getError());
+		}else{
+			// 验证通过 写入新增数据
+			$ThreadID = $threads->add();
+			$PostContent = I("Description");
+			$posts = M('posts');
+			$posts_data['ThreadID'] = $ThreadID;
+			$posts_data['PostContent'] = $PostContent;
 
+			$users = D('Home/users')->showUsers(session("userid"));
+			$posts_data['PostName'] = $users['username'];
+			$posts_data['PostUserid'] = session("userid");
+			$posts_data['PostTime'] = time();
+			$posts_data['is_show'] = 2;
+			$posts_data['PostIP'] = get_client_ip();
+
+			$posts->add($posts_data);
+			unset($users,$ThreadID,$PostContent,$posts,$posts_data);
+		}
+		$this->redirect("showbbsclass",array('id'=>I('Cat_id')));
 	}
 
 	//贴吧分类
 	public function showbbsclass(){
 		$id = I('id',0);
+		$this->assign('cat_id',$id);
 		$categorylist = D('Home/category')->getCategory($id);
 		$this->assign('categorylist',$categorylist);
 
 		$threadslist = D('Home/threads')->getPageThreads($id);
+
+
 		$this->assign('threadslist',$threadslist);
 		$this->assign('pagefooter',$threadslist['pagefooter']);
 
@@ -403,8 +428,7 @@ class IndexController extends Controller {
 		$this->assign('hotthreadslist',$hotThreadslist);
 		unset($hotThreadslist);
 
-		$page = I('page')?I('page'):1;
-		$pagelist = D('Home/posts')->pagepostslist($page,$id);
+		$pagelist = D('Home/posts')->pagepostslist($id);
 		$this->assign('pagelist',$pagelist);
 		$this->assign('pagefooter',$pagelist['pagefooter']);
 		unset($pagelist);

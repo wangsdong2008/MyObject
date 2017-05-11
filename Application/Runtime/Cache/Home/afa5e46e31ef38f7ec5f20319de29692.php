@@ -67,7 +67,7 @@
     <div class="container m10">
         <div class="con_left">
             <!--  左侧正文内容部分  -->
-            <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:10px;">当前位置：<a href="<?php echo ($sys_url); ?>"><?php echo ($sys_sitename); ?></a>><a href="<?php echo U('bbs');?>">贴&nbsp;吧</a>><a href="<?php echo U('showbbsclass',array('id'=>$threads['cat_id']));?>"><?php echo ($threads["cat_name"]); ?>吧</a>>&nbsp;&nbsp;<?php echo ($threads["topic"]); ?></div>
+            <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:10px;">当前位置：<a href="<?php echo ($sys_url); ?>"><?php echo ($sys_sitename); ?></a>><a href="<?php echo U('bbs');?>">贴吧</a>><a href="<?php echo U('showbbsclass',array('id'=>$threads['cat_id']));?>"><?php echo ($threads["cat_name"]); ?>吧</a>>&nbsp;&nbsp;<?php echo ($threads["topic"]); ?></div>
             <div class="black"></div>
             <?php if(is_array($pagelist['list'])): $key = 0; $__LIST__ = $pagelist['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$pagelist): $mod = ($key % 2 );++$key;?><table bgcolor="#ABC8E0" border="0" cellpadding="5" cellspacing="1" width="100%">
                 <tbody>
@@ -80,7 +80,9 @@
                                 <td align="right" class="zise" style="padding-top: 6px; padding-bottom: 6px;"><span class="green"><?php if($key == 1): ?>楼主<?php else: echo ($key); ?>楼<?php endif; ?></span></td>
                             </tr>
                             <tr>
-                                <td height="140" colspan="2"><img src="<?php echo ($model_path); ?>/images/pic5.gif" width="85" height="90" border="0" alt="<?php echo ($pagelist["postname"]); ?>"></td>
+                                <td height="140" colspan="2">
+                                    <img src="/<?php echo ($sys_upload_img); ?>/<?php echo ($pagelist["face"]); ?>" width="85" height="90" border="0" alt="<?php echo ($pagelist["postname"]); ?>">
+                                </td>
                             </tr>
                             </tbody>
                         </table></td>

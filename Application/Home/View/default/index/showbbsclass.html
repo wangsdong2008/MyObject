@@ -8,6 +8,11 @@
 <link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
 <link type="text/css" rel="stylesheet" href="{$css_model_path}/css/Validform_style.css" />
 <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <style>
+        .lt_2 { padding-left: 10px; }
+        .lt_2 a{ margin-left: 10px; }
+        .lt_2 img{ width:19px;height:22px; }
+    </style>
 </head>
 <body>
 <div class="wrapper"> 
@@ -17,12 +22,12 @@
   <div class="m10">
     <div class="con_left"> 
       <!--  左侧正文内容部分  -->
-      <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:6px;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('bbs')}">贴&nbsp;吧</a>>&nbsp;&nbsp;{$categorylist.cat_name}吧</div>
+      <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:6px;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('bbs')}">贴吧</a>>&nbsp;&nbsp;{$categorylist.cat_name}吧</div>
       <table border="0" cellpadding="0" cellspacing="0" width="100%" height="">
         <tbody>
           <tr>
             <td width="100"><a href="#postbbs"><img src="{$img_model_path}/images/postnew.jpg" border="0" width="85" height="26"></a></td>
-            <td width="300" align="left"><img src="{$img_model_path}/images/ztop.gif" align="absmiddle" border="0" width="12" height="12"> 置顶帖 <img src="{$img_model_path}/images/tuijian.gif" align="absmiddle" border="0" width="12" height="12"> 推荐帖</td>
+            <td width="300" align="left"><img src="{$img_model_path}/images/ztop.gif" align="absmiddle" border="0" width="12" height="12"> 置顶帖 <img src="{$img_model_path}/images/tuijian.gif" align="absmiddle" border="0" width="12" height="12"> 精华帖</td>
             <td align="right"><!--<img src="{$img_model_path}/images/team.gif" align="absmiddle" width="20" height="20"> 版主：<a href="showuser.asp?id=1" target="_blank">wangsdong</a>，<a href="showuser.asp?id=5" target="_blank">loveasp</a>--></td>
           </tr>
           <tr>
@@ -34,7 +39,6 @@
         <table width="100%" cellspacing="0" >
           <tbody>
             <tr class="white" bgcolor="#68A3E5" height="28">
-              <td class="lt_1 lt_tg">状态</td>
               <td class="lt_2 lt_tg" style="text-align:center;">文 章</td>
               <td class="lt_3 lt_tg">作 者</td>
               <td class="lt_4 lt_tg">回复/人气</td>
@@ -47,8 +51,9 @@
      <table width="100%" cellspacing="0" class="lt_l">
          <tbody>
             <tr>
-               <td width="30" align="center" class="lt_1"><img src="{$img_model_path}/images/ztop.gif" alt="全版置顶贴" width="19" height="22" border="0"></td>
-               <td width="315" class="lt_2"><a href="{:U('showbbs',array('id'=>$threadslist['threadid']))}" class="zise" target="_blank" title="{$threadslist.topic}">{$threadslist.topic}</a></td>
+               <td width="315" class="lt_2"> <if condition="$threadslist.istop == 1"><img src="{$img_model_path}/images/ztop.gif" alt="置顶贴" border="0"></if>
+                   <if condition="$threadslist.isgood == 1"><img src="{$img_model_path}/images/toptj.gif" alt="精华贴" border="0"></if>
+                   <if condition="$threadslist.postnum == 0"><img src="{$img_model_path}/images/topicnew.gif" alt="新贴" border="0"><else /><img src="{$img_model_path}/images/topichot.gif" alt="新贴" border="0"></if><a href="{:U('showbbs',array('id'=>$threadslist['threadid']))}" class="zise" target="_blank" title="{$threadslist.topic}">{$threadslist.topic}</a></td>
                <td width="85" align="right" class="lt_3">
                <a href="{:U('users',array('id'=>$threadslist['postuserid']))}" class="heise" target="_blank">{$threadslist.postname|msubstr=0,10,'utf-8',false}</a><br>
                <span class="time">{$threadslist.posttime|date="Y-m-d H:i:s",###}</span>
@@ -120,7 +125,7 @@
         <script>
             var editor;
             KindEditor.ready(function(K) {
-                editor = K.create('textarea[name="content"]', {afterBlur: function(){this.sync();}});
+                editor = K.create('textarea[id="content"]', {afterBlur: function(){this.sync();}});
             });
         </script>
     <table class="tahoma" border="0" cellpadding="5" cellspacing="0" width="100%">
@@ -142,10 +147,9 @@
             </tr>
             <tr>
                 <td width="172" height="180" align="right"><b><span style="color: #f00;">*</span> 内容</b>：</td>
-                <td align="left"><textarea name="content" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a>
-                    <input type="hidden" value="1" name="id" id="id"/>
-                    <input type="hidden" value="1" name="act" id="act" />
-                    <input type="hidden" value="1" name="userid" id="userid" /></td>
+                <td align="left"><textarea name="Description" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a>
+                    <input type="hidden" value="{$cat_id}" name="Cat_id" id="Cat_id"/>
+                    </td>
             </tr>
             <tr height="38">
                 <td align="right"></td>

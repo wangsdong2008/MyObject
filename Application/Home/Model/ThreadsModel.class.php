@@ -6,25 +6,44 @@ class ThreadsModel extends Model{
 
     /* 自动验证规则 */
     protected $_validate = array(
-        /*
-            array('name', 'require', '标识不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
-            array('name', '', '标识已经存在', self::VALUE_VALIDATE, 'unique', self::MODEL_BOTH),
-            array('title', 'require', '名称不能为空', self::MUST_VALIDATE , 'regex', self::MODEL_BOTH),
-        */
+        array('Topic', 'require', '主题不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('Topic','','此主题已经存在！',0,'unique',1),
+        array('Description', 'require', '内容不能为空', self::VALUE_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('Cat_id', 'require', '分类不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
     );
 
     /* 自动完成规则 */
     protected $_auto = array(
-        /*
-           array('model', 'arr2str', self::MODEL_BOTH, 'function'),
-           array('model', null, self::MODEL_BOTH, 'ignore'),
-           array('extend', 'json_encode', self::MODEL_BOTH, 'function'),
-           array('extend', null, self::MODEL_BOTH, 'ignore'),
-           array('create_time', NOW_TIME, self::MODEL_INSERT),
-           array('update_time', NOW_TIME, self::MODEL_BOTH),
-           array('status', '1', self::MODEL_BOTH),
-        */
+        array('Channel_id',1, self::MODEL_INSERT),
+        array('PostName','getuserName',1,'callback'),
+        array('PostUserid','getuserid',1,'callback'),
+        array('PostTime', NOW_TIME, self::MODEL_INSERT),
+        array('PostIP', 'get_client_ip',1, 'function'),
+
+        array('LastName','getuserName',1,'callback'),
+        array('LastUserid','getuserid',1,'callback'),
+        array('LastTime', NOW_TIME, self::MODEL_INSERT),
+        array('LastIP', 'get_client_ip', 1,'function'),
+
+        array('IsGood', 0, self::MODEL_INSERT),
+        array('IsTop', 0, self::MODEL_INSERT),
+        array('IsShow', 2, self::MODEL_INSERT),
+        array('deleted', 0, self::MODEL_INSERT),
+        array('data_value', 0, self::MODEL_INSERT),
+        array('postnum', 0, self::MODEL_INSERT),
+        array('hits', 0, self::MODEL_INSERT),
     );
+
+    //这个函数是取用户账号中的值
+    protected function getuserName(){
+        $users = D('Home/users')->showUsers(session("userid"));
+        return $users['username'];
+    }
+
+    //这个函数获取session里的name值
+    protected function getuserid(){
+        return session("userid");
+    }
 
     //下面是你要定义的函数
 
@@ -100,7 +119,7 @@ class ThreadsModel extends Model{
         $threadslist['list'] = $threads
             ->where($threads_data)
             ->order('IsTop desc,PostTime desc')
-            ->field('`ThreadId`,`Topic`,`PostName`,`PostUserid`,`PostTime`,`LastName`,`LastTime`,`LastUserid`,`postnum`,`hits`')
+            ->field('`ThreadId`,`Topic`,`PostName`,`PostUserid`,`PostTime`,`LastName`,`LastTime`,`LastUserid`,`postnum`,`hits`,`IsGood`,`isTop`')
             ->page($nowPage.','.$Page->listRows)->select();
         $objPage = array('id'=>$cat_id);
         $threadslist['pagefooter'] = showpage($nowPage,$count,$objPage);

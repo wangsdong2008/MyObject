@@ -15,7 +15,7 @@
     <div class="container m10">
         <div class="con_left">
             <!--  左侧正文内容部分  -->
-            <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:10px;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('bbs')}">贴&nbsp;吧</a>><a href="{:U('showbbsclass',array('id'=>$threads['cat_id']))}">{$threads.cat_name}吧</a>>&nbsp;&nbsp;{$threads.topic}</div>
+            <div class="position" style="border:1px #A3C4E0 solid; margin-bottom:10px;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('bbs')}">贴吧</a>><a href="{:U('showbbsclass',array('id'=>$threads['cat_id']))}">{$threads.cat_name}吧</a>>&nbsp;&nbsp;{$threads.topic}</div>
             <div class="black"></div>
             <volist name="pagelist['list']" id="pagelist" key="key">
             <table bgcolor="#ABC8E0" border="0" cellpadding="5" cellspacing="1" width="100%">
@@ -29,7 +29,9 @@
                                 <td align="right" class="zise" style="padding-top: 6px; padding-bottom: 6px;"><span class="green"><if condition="$key == 1">楼主<else />{$key}楼</if></span></td>
                             </tr>
                             <tr>
-                                <td height="140" colspan="2"><img src="{$model_path}/images/pic5.gif" width="85" height="90" border="0" alt="{$pagelist.postname}"></td>
+                                <td height="140" colspan="2">
+                                    <img src="/{$sys_upload_img}/{$pagelist.face}" width="85" height="90" border="0" alt="{$pagelist.postname}">
+                                </td>
                             </tr>
                             </tbody>
                         </table></td>
