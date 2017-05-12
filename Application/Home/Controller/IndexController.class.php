@@ -509,13 +509,38 @@ class IndexController extends Controller {
 		$this->assign('bestnewslist',$hotnewslist);
 		unset($hotnewslist);*/
 
-
 		//相关分类
 		$categorylist = D('category')->getCategory($cat_id);
 		$this->assign('categorylist',$categorylist);
 		unset($categorylist);
 
 		$this->display('showsoftclass');
+	}
+
+	public function codelist(){
+		$cat_id = I('id',0,'intval');
+		$nowPage = I('page',1,'intval');
+		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20);
+		$this->assign('goodslist',$goodslsit);
+		$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('id'=>$cat_id),2));
+		unset($page,$goodslsit);
+
+		//热门软件
+		$hotgoodslist = D('goods')->gethotgoods($cat_id);
+		$this->assign('hotgoodslist',$hotgoodslist);
+		unset($hotgoodslist);
+
+		/*//推荐新闻
+		$hotnewslist = D('news')->getBestNumNewsList($cat_id);
+		$this->assign('bestnewslist',$hotnewslist);
+		unset($hotnewslist);*/
+
+		//相关分类
+		$categorylist = D('category')->getCategory($cat_id);
+		$this->assign('categorylist',$categorylist);
+		unset($categorylist);
+
+		$this->display('showcodeclass');
 	}
 
 	public function showsoft(){
