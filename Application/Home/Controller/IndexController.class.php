@@ -10,18 +10,7 @@ class IndexController extends Controller {
 	public function init(){
 		$this->data = '教程';
 		if(session("userid"))  $this->assign('userid',session("userid"));
-		$configlist = S('config');
-		$cache = 0;
-		if(!$cache){
-			$config = M('config');
-			$sys_id = 1;
-			$config_data['sys_id'] = array('eq',$sys_id);
-			$config_data['is_show'] = array('eq',1);
-			$config_data['isdel'] = array('eq',0);
-			$configlist = $config->where($config_data)->join('left join ' . C('DB_PREFIX').'model on '.C('DB_PREFIX').'model.model_id = '.C('DB_PREFIX').'config.sys_model')->limit(1)->find();
-			S('config',$configlist);
-			$configlist = S('config');
-		}
+		$configlist = D("Home/config")->showconfig();
 		$path = "";
 		$sys_url="";
 		$sys_pagenum = 10;
@@ -365,9 +354,21 @@ class IndexController extends Controller {
 		$this->display('bbs');
 	}
 
+	public function savePosts(){
+		$posts = D('Home/posts');
+		if (!$posts->create()){ // 创建数据对象
+			// 如果创建失败 表示验证没有通过 输出错误提示信息
+			exit($posts->getError());
+		}else{
+			// 验证通过 写入新增数据
+			$posts->add();
+		}
+		$this->redirect("showbbs",array('id'=>I('ThreadID')));
+	}
+
 	//发贴
 	public function saveThreads(){
-		$threads = D("threads"); // 实例化threads对象
+		$threads = D("Home/threads"); // 实例化threads对象
 		if (!$threads->create()){ // 创建数据对象
 			// 如果创建失败 表示验证没有通过 输出错误提示信息
 			exit($threads->getError());
@@ -418,6 +419,7 @@ class IndexController extends Controller {
 	public function showbbs(){
 		$id = I('id',0);
 		if($id==0) exit;
+		else $this->assign('ThreadID',$id);
 		$threads = D("Home/threads")->showthreads($id);
 		$cat_id = $threads['cat_id'];
 		$this->assign('threads',$threads);

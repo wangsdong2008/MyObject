@@ -14,8 +14,8 @@ class PostsModel extends Model{
         array('PostName','getuserName',1,'callback'),
         array('PostUserid','getuserid',1,'callback'),
         array('PostTime', NOW_TIME, self::MODEL_INSERT),
-        array('PostIP', 'get_client_ip', self::MODEL_INSERT),
-        array('IsShow', 2, self::MODEL_INSERT),
+        array('PostIP', 'get_client_ip', 'function'),
+        array('is_show', 2, self::MODEL_INSERT),
     );
 
     //这个函数是取用户账号中的值
@@ -62,6 +62,9 @@ class PostsModel extends Model{
         $nowPage = I('page')?I('page'):1;
         $sql .= " limit ".($nowPage-1)*$PageSize. "," . $PageSize;
         $postslist['list'] = $Model->query($sql);
+        foreach($postslist['list'] as $key => $val){
+            $postslist['list'][$key]['postcontent'] = D('Home/config')->shielding($postslist['list'][$key]['postcontent']); //过滤屏蔽词
+        }
         $objPage = array('id'=>$ThreadID);
         $postslist['pagefooter'] = showpage($nowPage,$count,$objPage);
         unset($count,$sql,$numlist,$objPage,$PageSize);

@@ -6,6 +6,7 @@
     <meta name="Description" content="<?php echo ($threads["topic"]); ?>">
     <meta name="Keywords" content="<?php echo ($threads["topic"]); ?>">
     <link href="<?php echo ($model_path); ?>/css/css.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo ($css_model_path); ?>/css/Validform_style.css" />
 </head>
 <body>
 <div class="wrapper">
@@ -133,16 +134,54 @@
     </div>
     <br />
 
-    <table class="tahoma" border="0" cellpadding="5" cellspacing="0" width="100%">
-        <tbody>
-        <tr>
-            <td height="30" background="<?php echo ($model_path); ?>/images/bg_re.gif" bgcolor="#5F9DE0" class="white" style="padding-left: 8px;"><img src="<?php echo ($model_path); ?>/images/huifu.gif" align="absmiddle" width="16" height="16" alt="快速回复"> <b>快速回复</b></td>
-        </tr>
-        <tr>
-            <td bgcolor="#D0E5F5" height="3"></td>
-        </tr>
-        </tbody>
-    </table>
+    <?php if($userid > 0): ?><script src="<?php echo ($js_model_path); ?>/js/Validform_v5.3.2_min.js" type="text/javascript"></script>
+        <script type="text/javascript" charset="utf-8" src="<?php echo ($js_model_path); ?>/kindeditor/kindeditor-min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="<?php echo ($js_model_path); ?>/kindeditor/lang/zh_CN.js"></script>
+        <script>
+            var editor;
+            KindEditor.ready(function(K) {
+                editor = K.create('textarea[id="content"]', {afterBlur: function(){this.sync();}});
+            });
+        </script>
+        <table class="tahoma" border="0" cellpadding="5" cellspacing="0" width="100%">
+            <tbody>
+            <tr>
+                <td height="30" background="<?php echo ($img_model_path); ?>/images/bg_re.gif" bgcolor="#5F9DE0" class="white" style="padding-left: 8px;"><img src="<?php echo ($img_model_path); ?>/images/huifu.gif" align="absmiddle" width="16" height="16"> <b>快速回复话题</b><a name="postbbs"></a></td>
+            </tr>
+            <tr>
+                <td bgcolor="#D0E5F5" height="3"></td>
+            </tr>
+            </tbody>
+        </table>
+        <form action="<?php echo U('savePosts');?>" method="post" name="theform" id="theform" style="margin:0px;padding:0px;">
+            <table class="tahoma" bgcolor="#E3EBEE" border="0" cellpadding="3" cellspacing="1" width="100%">
+                <tbody>
+                <tr>
+                    <td width="172" height="180" align="right"><b><span style="color: #f00;">*</span> 内容</b>：</td>
+                    <td align="left"><textarea name="PostContent" id="content" class="w770" style="width:655px; height:300px;" datatype="*" nullmsg="请填写内容" errormsg="请填写内容"></textarea><a style="left: 100px;top:310px;" class="Validform_checktip"></a><input type="hidden" value="<?php echo ($ThreadID); ?>" name="ThreadID" id="ThreadID"/>
+                    </td>
+                </tr>
+                <tr height="38">
+                    <td align="right"></td>
+                    <td><input name="Submit" value=" 发表帖子 " style="font-size: 14px;" type="Submit"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <script>
+            $("#theform").Validform({
+                tiptype:function(msg,o,cssctl){
+                    //msg：提示信息;
+                    //o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+                    //cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+                    if(!o.obj.is("form")){
+                        var objtip=o.obj.siblings(".Validform_checktip");
+                        cssctl(objtip,o.type);
+                        objtip.text(msg);
+                    }
+                }
+            });
+        </script><?php endif; ?>
     <!--  底部导航  -->
     <div class="foot_nav m10 border">
 <p><a href="/about/">关于我们</a>-网站帮助-广告合作-诚聘英才-下载声明-<a href="http://www.aspbc.com/sitemap.xml">网站地图</a></p>
