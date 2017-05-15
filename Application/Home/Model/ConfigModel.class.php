@@ -72,7 +72,10 @@ class ConfigModel extends Model{
      * 去掉屏蔽词功能
      */
     public function shielding($str){
-        return preg_replace("/".$this->showconfig()['sys_shielding']."/", "***", $str); //过滤屏蔽词
+        $config = $this->showconfig();
+        $str1 = preg_replace("/".$config['sys_shielding']."/", "***", $str);
+        unset($config);
+        return  $str1; //过滤屏蔽词
     }
 
 }
