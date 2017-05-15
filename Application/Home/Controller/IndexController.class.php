@@ -211,11 +211,6 @@ class IndexController extends Controller {
 	}
 
 	private function tech_public_function(){
-		//首页友情链接
-		$linkslist = D('links')->showlinks();
-		$this->assign('linkslist',$linkslist);
-		unset($linkslist);
-
 		//显示asp教程
 		$aspjc = D('news')->getNumNewsList(1,5);
 		$this->assign('aspjc',$aspjc);
@@ -639,6 +634,12 @@ class IndexController extends Controller {
 		$this->assign('hdp_ad',$ad);
 		unset($ad);
 
+		//首页友情链接
+		$linkslist = D('links')->showlinks();
+		$this->assign('linkslist',$linkslist);
+		unset($linkslist);
+
+
 		$this->display('index');
 
 	}
@@ -649,11 +650,74 @@ class IndexController extends Controller {
 		$this->assign('categorylist',$category);
 
 		//小分类
-		$sub_category = D('category')->getSubCategory(29);
+		/*$sub_category = D('category')->getSubCategory(29);
 		foreach($sub_category as $key => $val){
 			$sub_category[$key]['list'] = D('goods')->getTopGoodsList(10,$val['cat_id']);
 		}
-		$this->assign('subcategorylist',$sub_category);
+		$this->assign('subcategorylist',$sub_category);*/
+
+		$aspist = D('Home/goods')->getTopGoodsList(10,17);
+		$this->assign('aspist',$aspist);
+		unset($aspist);
+		//asp源码下面的广告
+		$ad_asp = D('ad')->showAd(50);
+		$this->assign('ad_asp',$ad_asp);
+		unset($ad_asp);
+
+		$phpist = D('Home/goods')->getTopGoodsList(10,18);
+		$this->assign('phpist',$phpist);
+		unset($phpist);
+		//php源码下面的广告
+		$ad_php = D('ad')->showAd(51);
+		$this->assign('ad_php',$ad_php);
+		unset($ad_php);
+
+
+
+		//php教程下面的广告
+		/*$ad_php = D('ad')->showAd(28);
+		$this->assign('ad_php',$ad_php);
+		unset($ad_php);
+
+		//html5教程下面的广告
+		$ad_html = D('ad')->showAd(29);
+		$this->assign('ad_html',$ad_html);
+		unset($ad_html);
+
+		//css3教程下面的广告
+		$ad_css = D('ad')->showAd(30);
+		$this->assign('ad_css',$ad_css);
+		unset($ad_css);
+
+		//js教程下面的广告
+		$ad_js = D('ad')->showAd(31);
+		$this->assign('ad_js',$ad_js);
+		unset($ad_js);
+
+		//ajax教程下面的广告
+		$ad_ajax = D('ad')->showAd(32);
+		$this->assign('ad_ajax',$ad_ajax);
+		unset($ad_ajax);
+
+		//db教程下面的广告
+		$ad_db = D('ad')->showAd(33);
+		$this->assign('ad_db',$ad_db);
+		unset($ad_db);
+
+		//net教程下面的广告
+		$ad_net = D('ad')->showAd(34);
+		$this->assign('ad_net',$ad_net);
+		unset($ad_net);
+
+		//xml教程下面的广告
+		$ad_xml = D('ad')->showAd(35);
+		$this->assign('ad_xml',$ad_xml);
+		unset($ad_xml);
+
+		//linux教程下面的广告
+		$ad_linux = D('ad')->showAd(36);
+		$this->assign('ad_linux',$ad_linux);
+		unset($ad_linux);*/
 
 		$this->display('code');
 	}

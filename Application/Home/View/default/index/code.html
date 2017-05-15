@@ -20,24 +20,48 @@
       <div class="position" style="border:1px solid #ccc;">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>&nbsp;&nbsp;{$categorylist.cat_name}</div>
       <div class="black"></div>
       <div class="tech" style="background-color:#fff">
-        <volist name="subcategorylist" id="subcategorylist" key="k">
-        <div class="tech_box border <if condition='$k % 2 eq 0'>L10</if>">
-          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>$subcategorylist['cat_id']))}" target="_blank">更多>></a></span>
-            <h4><a href="{:U('Index/codelist',array('id'=>$subcategorylist['cat_id']))}" target="_blank">{$subcategorylist.cat_name}</a></h4>
+        <!--asp源码-->
+        <div class="tech_box border">
+          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>17))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/codelist',array('id'=>17))}" target="_blank">asp源码</a></h4>
           </div>
           <div class="pic">
-            <a href="{:U('Index/codelist',array('id'=>$subcategorylist['cat_id']))}" target="_blank"><img src="/{$sys_upload_img}/{$ad_asp.ad_logo}" width="114" height="90" border="0" alt="{$ad_asp.ad_name}" /></a>
-            <h5><a href="{:U('Index/codelist',array('id'=>$subcategorylist['cat_id']))}" target="_blank">{$ad_asp.ad_name}</a></h5>
+            <a href="{:U('Index/codelist',array('id'=>17))}" target="_blank">
+              <img src="/{$sys_upload_img}/{$ad_asp.ad_logo}" width="114" height="90" border="0" alt="{$ad_asp.ad_name}" />
+            </a>
+            <h5><a href="{:U('Index/codelist',array('id'=>17))}" target="_blank">{$ad_asp.ad_name}</a></h5>
             <p>{$ad_asp.intro}</p>
           </div>
+
           <div class="clearit"></div>
           <ul class="picul">
-            <volist name="subcategorylist.list" id="aspjc">
+            <volist name="aspist" id="aspjc">
               <li><a href="{:U('showcode',array('id'=>$aspjc['goods_id']))}" target="_blank" title="{$aspjc.goods_name}" >{$aspjc.goods_name}</a></li>
             </volist>
           </ul>
         </div>
-        </volist>
+        <!--php源码-->
+        <div class="tech_box border L10">
+          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>18))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/codelist',array('id'=>18))}" target="_blank">php源码</a></h4>
+          </div>
+          <div class="pic">
+            <a href="{:U('Index/codelist',array('id'=>18))}" target="_blank">
+              <img src="/{$sys_upload_img}/{$ad_php.ad_logo}" width="114" height="90" border="0" alt="{$ad_php.ad_name}" />
+            </a>
+            <h5><a href="{:U('Index/codelist',array('id'=>18))}" target="_blank">{$ad_php.ad_name}</a></h5>
+            <p>{$ad_php.intro}</p>
+          </div>
+
+          <div class="clearit"></div>
+          <ul class="picul">
+            <volist name="phpist" id="phpjc">
+              <li><a href="{:U('showcode',array('id'=>$phpjc['goods_id']))}" target="_blank" title="{$phpjc.goods_name}" >{$phpjc.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+
+
       </div>
     <div class="clearit"></div>
     </div>
