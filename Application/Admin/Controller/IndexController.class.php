@@ -2587,6 +2587,10 @@ class IndexController extends Controller {
 		$this->assign('sys_email',$sys_list['sys_email']);
 		$this->assign('sys_weixin',$sys_list['sys_weixin']);
 		$this->assign('sys_upload_img',$sys_upload_img);
+
+		$this->assign('sys_baidu_send',$sys_list['sys_baidu_send']);
+		$this->assign('sys_baidu_api',$sys_list['sys_baidu_api']);
+
 		
 		
 		$this->assign('sys_switch',$sys_list['sys_switch']);
