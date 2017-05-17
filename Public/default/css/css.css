@@ -36,7 +36,8 @@ a:visited{ color:#29478d;}
 .tablist{width:775px;height:33px; padding:7px 5px 0 5px; font-size:14px;line-height:24px;border:1px solid #e8e8e8; display:none;}
 .bloc{display:block;}
 .red{color:#BD0A01;}
-.w350{ width:350px; height:21px; line-height:21px; border:1px solid #bcbdbf;}
+.w350{ width:340px; height:21px; line-height:21px; border:1px solid #bcbdbf;
+	padding-left: 10px;}
 .tijiao{ background:url(../images/index_06.jpg) no-repeat; width:68px; height:27px; border:0;}
 .w770{ width:788px; height:183px;}
 .search_submit{width:70px; height:27px; }

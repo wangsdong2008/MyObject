@@ -15,10 +15,11 @@
         <li>源码</li>
       </ul>
     </div>
-    <form method="get" name="searchform" id="searchform" action="{:U('search')}" onsubmit="return checksearch()" style="margin:0px;">
+    <form method="get" name="searchform" id="searchform" action="{:U('search')}" style="margin:0px;">
       <div class="tab_bottom">
         <div id="test2_1" class="tablist bloc">
           <div class="searchkeyword">
+            <input type="hidden" name="searchtype" id="searchtype" value="1">
             <input type="text" name="keyword" id="keyword" class="w350" value="" />
             <input type="submit" name="" value="搜索" class="search_submit"/>
           </div>
@@ -51,6 +52,7 @@
     <li><a href="{:U('bbs')}">贴吧</a></li>
     <li><a href="{:U('about')}">关于我们</a></li>
   </ul>
-  <div style="float:right; width:160px; color:#FFF;">本站QQ交流群：41991607</div>
+  <div style="float:right; width:100px; color:#FFF; margin-top:7px;"><a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=5dddcdcbe8abc196772d54a143d572f3332ae6da9faa1f41fd9cbe527d297546"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Asp编程网官方群" title="Asp编程网官方群"></a></div>
 </div>
 <script src="{$js_model_path}/js/jquery.js"></script>
+<script src="{$js_model_path}/js/top.js"></script>
