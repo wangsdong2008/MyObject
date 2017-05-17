@@ -90,6 +90,9 @@ class IndexController extends Controller {
 
 		$this->assign('data',$this->data);
 
+		//顶部搜索词
+		$this->assign('searchad',D('Home/ad')->getAdlist(35));
+
 		//导航
 		$this->assign('navlist',D('Home/nav')->getNavList());
 
@@ -709,45 +712,6 @@ class IndexController extends Controller {
 		$ad_web = D('ad')->showAd(55);
 		$this->assign('ad_web',$ad_web);
 		unset($ad_web);
-
-
-
-		//php教程下面的广告
-		/*$ad_php = D('ad')->showAd(28);
-		$this->assign('ad_php',$ad_php);
-		unset($ad_php);
-
-		//html5教程下面的广告
-		$ad_html = D('ad')->showAd(29);
-		$this->assign('ad_html',$ad_html);
-		unset($ad_html);
-
-		//css3教程下面的广告
-		$ad_css = D('ad')->showAd(30);
-		$this->assign('ad_css',$ad_css);
-		unset($ad_css);
-
-
-		//ajax教程下面的广告
-		$ad_ajax = D('ad')->showAd(32);
-		$this->assign('ad_ajax',$ad_ajax);
-		unset($ad_ajax);
-
-		//db教程下面的广告
-		$ad_db = D('ad')->showAd(33);
-		$this->assign('ad_db',$ad_db);
-		unset($ad_db);
-
-
-		//xml教程下面的广告
-		$ad_xml = D('ad')->showAd(35);
-		$this->assign('ad_xml',$ad_xml);
-		unset($ad_xml);
-
-		//linux教程下面的广告
-		$ad_linux = D('ad')->showAd(36);
-		$this->assign('ad_linux',$ad_linux);
-		unset($ad_linux);*/
 
 		$this->display('code');
 	}

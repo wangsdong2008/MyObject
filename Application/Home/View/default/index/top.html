@@ -23,9 +23,9 @@
             <input type="submit" name="" value="搜索" class="search_submit"/>
           </div>
           <div class="hot_keyword"><span style="font-weight:bold; color:red;">热门关键字：</span>
-            <a title="asp代码生成器" href="http://www.aspbc.com/soft/showsoft.asp?id=196" target="_blank">asp代码生成器</a>&nbsp;&nbsp;
-            <a title="asp简单的采集代码教程" href="http://www.aspbc.com/tech/showtech.asp?id=274" target="_blank">asp采集</a>&nbsp;&nbsp;
-            <a href="http://www.aspbc.com/tech/search_tech.asp?keyword=asp.net%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84" target="_blank">三层架构</a>
+            <volist name="searchad" id="searchad">
+            <a title="{$searchad.ad_name}" href="{$searchad.ad_url}" target="_blank">{$searchad.ad_name}</a>&nbsp;&nbsp;
+            </volist>
           </div>
         </div>
       </div>
