@@ -76,12 +76,12 @@
             <li class="hover" rel="1">
               <div><img src="{$img_model_path}/images/pay0.png"></div>
             </li>
-            <li rel="2">
+            <!--<li rel="2">
               <div><img src="{$img_model_path}/images/pay1.jpg"></div>
             </li>
             <li rel="3">
               <div><img src="{$img_model_path}/images/pay2.jpg"></a></div>
-            </li>
+            </li>-->
           </ul>
         </div>
         <div class="clear"></div>
@@ -89,8 +89,8 @@
       <div class="techlist border">
         <form action="{:U('payorderinfo')}" method="post">
           <input type="submit" value="提交订单" id="button">
-          <input type="text" name="order_id" value="{$order_id}">
-          <input type="text" id="pays" name="pays" value="1">
+          <input type="hidden" name="order_id" value="{$order_id}">
+          <input type="hidden" id="pays" name="pays" value="1">
         </form>
       </div>
     </div>
