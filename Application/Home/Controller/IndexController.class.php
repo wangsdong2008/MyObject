@@ -9,6 +9,8 @@ class IndexController extends Controller {
 
 	public function init(){
 		$this->data = '教程';
+		$this->assign('keyword',I('keyword',''));
+		$this->assign('searchtype',I('searchtype',1));
 		if(session("userid"))  $this->assign('userid',session("userid"));
 		$configlist = D("Home/config")->showconfig();
 		$path = "";
@@ -492,7 +494,7 @@ class IndexController extends Controller {
 	public function softlist(){
 		$cat_id = I('id',0,'intval');
 		$nowPage = I('page',1,'intval');
-		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20);
+		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20,30);
 		$this->assign('goodslist',$goodslsit);
 		$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('id'=>$cat_id),2));
 		unset($page,$goodslsit);
@@ -518,7 +520,7 @@ class IndexController extends Controller {
 	public function codelist(){
 		$cat_id = I('id',0,'intval');
 		$nowPage = I('page',1,'intval');
-		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20);
+		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20,29);
 		$this->assign('goodslist',$goodslsit);
 		$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('id'=>$cat_id),2));
 		unset($page,$goodslsit);
@@ -1002,6 +1004,43 @@ class IndexController extends Controller {
 			}
 		}
 		unset($order_infolist);
+	}
+
+	public function search(){
+		$searchtype = I('searchtype',1);
+		$keyword = I('keyword',0);
+
+		$model = '';
+		switch($searchtype){
+			case 1:{
+				$nowPage = I('page',1,'intval');
+				$newslsit = D('news')->getPageNews(0,$nowPage,20,$keyword);
+				$this->assign('newslist',$newslsit);
+				$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('keyword'=>$keyword),1));
+				unset($page,$newslsit);
+				$model = 'tech_search';
+				break;
+			}
+			case 2:{
+				$nowPage = I('page',1,'intval');
+				$goodslsit = D('goods')->getPageGoods(0,$nowPage,20,30,$keyword);
+				$this->assign('goodslist',$goodslsit);
+				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword),1));
+				unset($nowPage,$page,$goodslsit);
+				$model = 'soft_search';
+				break;
+			}
+			case 3:{
+				$nowPage = I('page',1,'intval');
+				$goodslsit = D('goods')->getPageGoods(0,$nowPage,20,29,$keyword);
+				$this->assign('goodslist',$goodslsit);
+				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword),1));
+				unset($nowPage,$page,$goodslsit);
+				$model = 'code_search';
+				break;
+			}
+		}
+		$this->display($model);
 	}
 
 }

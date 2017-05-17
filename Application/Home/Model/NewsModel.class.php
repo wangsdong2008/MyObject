@@ -167,14 +167,18 @@ class NewsModel extends Model{
      * 分页显示某分类新闻
      * $cat_id 分类ID
      * $page 当前页
+     * $keyword 查询某个关键词
      * @return 返回多条记录集
      */
-    public function getPageNews($cat_id,$nowPage,$pagenum){
+    public function getPageNews($cat_id,$nowPage,$pagenum,$keyword=''){
         $fname = 'news_id,news_title,news_time';
         $news = M('news');
         $news_data['is_show'] = array('eq',1);
         if($cat_id > 0){
             $news_data['cat_id'] = array('eq',$cat_id);
+        }
+        if($keyword!=''){
+            $news_data['news_title'] = array('like','%'.$keyword.'%');
         }
         $news_data['isdel'] = array('eq',0);
         $nowPage = $nowPage?$nowPage:1;

@@ -163,20 +163,25 @@ class GoodsModel extends Model{
     * 分页显示某分类产品
     * $cat_id 分类ID
     * $page 当前页
+     * $keyword 为查询关键词
     * @return 返回多条记录集
     */
-    public function getPageGoods($cat_id,$nowPage,$pagenum){
+    public function getPageGoods($cat_id,$nowPage,$pagenum,$pid=29,$keyword=''){
         $fname = 'goods_id,goods_name,goods_time';
         $goods = M('goods');
-        $goods_data['is_show'] = array('eq',1);
+        $goods_data['think_goods.is_show'] = array('eq',1);
+        $goods_data['root_id'] = array('eq',$pid);
         if($cat_id > 0){
-            $goods_data['cat_id'] = array('eq',$cat_id);
+            $goods_data['think_goods.cat_id'] = array('eq',$cat_id);
         }
-        $goods_data['isdel'] = array('eq',0);
+        if($keyword != ''){
+            $goods_data['goods_name'] = array('like','%'.$keyword.'%');
+        }
+        $goods_data['think_goods.isdel'] = array('eq',0);
         $nowPage = $nowPage?$nowPage:1;
-        $count = $goods->where($goods_data)->count();
+        $count = $goods->join('think_category on think_category.cat_id=think_goods.cat_id')->where($goods_data)->count();
         $Page = new \Think\Page($count,$pagenum);
-        $goodslist['list'] = $goods->where($goods_data)->order('goods_time desc')->field($fname)->page($nowPage.','.$Page->listRows)->select();
+        $goodslist['list'] = $goods->join('think_category on think_category.cat_id=think_goods.cat_id')->where($goods_data)->order('goods_time desc')->field($fname)->page($nowPage.','.$Page->listRows)->select();
         $goodslist['count'] = $count;
         $goodslist['pagecount'] = getpagenum($count,$pagenum);
         unset($goods,$goods_data,$nowPage,$count,$fname);
