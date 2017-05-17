@@ -10,6 +10,5 @@ $(function(){
             $("#searchtype").val(index*1+1);
         });
     })
-})/**
- * Created by admin on 2017/5/17.
- */
+})
+
