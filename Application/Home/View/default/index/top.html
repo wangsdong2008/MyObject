@@ -11,20 +11,22 @@
     <div class="tab2">
       <ul id="test2_li_now">
         <li class="now">教程</li>
-        <li>帖子</li>
-        <li>源码</li>
         <li>软件</li>
-        <li>资讯</li>
+        <li>源码</li>
       </ul>
     </div>
-    <form method="get" name="searchform" id="searchform" action="http://www.aspbc.com/tech/search_tech.asp" onsubmit="return checksearch()" style="margin:0px;">
+    <form method="get" name="searchform" id="searchform" action="{:U('search')}" onsubmit="return checksearch()" style="margin:0px;">
       <div class="tab_bottom">
         <div id="test2_1" class="tablist bloc">
           <div class="searchkeyword">
             <input type="text" name="keyword" id="keyword" class="w350" value="" />
             <input type="submit" name="" value="搜索" class="search_submit"/>
           </div>
-          <div class="hot_keyword"><span style="font-weight:bold; color:red;">热门关键字：</span><a title="asp代码生成器" href="http://www.aspbc.com/soft/showsoft.asp?id=196" target="_blank">asp代码生成器</a>&nbsp;&nbsp;<a title="asp简单的采集代码教程" href="http://www.aspbc.com/tech/showtech.asp?id=274" target="_blank">asp采集</a>&nbsp;&nbsp;<a href="http://www.aspbc.com/tech/search_tech.asp?keyword=asp.net%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84" target="_blank">三层架构</a></div>
+          <div class="hot_keyword"><span style="font-weight:bold; color:red;">热门关键字：</span>
+            <a title="asp代码生成器" href="http://www.aspbc.com/soft/showsoft.asp?id=196" target="_blank">asp代码生成器</a>&nbsp;&nbsp;
+            <a title="asp简单的采集代码教程" href="http://www.aspbc.com/tech/showtech.asp?id=274" target="_blank">asp采集</a>&nbsp;&nbsp;
+            <a href="http://www.aspbc.com/tech/search_tech.asp?keyword=asp.net%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84" target="_blank">三层架构</a>
+          </div>
         </div>
       </div>
     </form>

@@ -60,7 +60,86 @@
             </volist>
           </ul>
         </div>
+        <!--net源码-->
+        <div class="tech_box border">
+          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>19))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/codelist',array('id'=>19))}" target="_blank">net源码</a></h4>
+          </div>
+          <div class="pic">
+            <a href="{:U('Index/codelist',array('id'=>19))}" target="_blank">
+              <img src="/{$sys_upload_img}/{$ad_net.ad_logo}" width="114" height="90" border="0" alt="{$ad_net.ad_name}" />
+            </a>
+            <h5><a href="{:U('Index/codelist',array('id'=>19))}" target="_blank">{$ad_net.ad_name}</a></h5>
+            <p>{$ad_net.intro}</p>
+          </div>
 
+          <div class="clearit"></div>
+          <ul class="picul">
+            <volist name="netist" id="netjc">
+              <li><a href="{:U('showcode',array('id'=>$netjc['goods_id']))}" target="_blank" title="{$netjc.goods_name}" >{$netjc.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+        <!--javascript源码-->
+        <div class="tech_box border L10">
+          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>20))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/codelist',array('id'=>20))}" target="_blank">javascript源码</a></h4>
+          </div>
+          <div class="pic">
+            <a href="{:U('Index/codelist',array('id'=>20))}" target="_blank">
+              <img src="/{$sys_upload_img}/{$ad_js.ad_logo}" width="114" height="90" border="0" alt="{$ad_js.ad_name}" />
+            </a>
+            <h5><a href="{:U('Index/codelist',array('id'=>20))}" target="_blank">{$ad_js.ad_name}</a></h5>
+            <p>{$ad_js.intro}</p>
+          </div>
+
+          <div class="clearit"></div>
+          <ul class="picul">
+            <volist name="jsist" id="jsjc">
+              <li><a href="{:U('showcode',array('id'=>$jsjc['goods_id']))}" target="_blank" title="{$jsjc.goods_name}" >{$jsjc.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+        <!--ajax源码-->
+        <div class="tech_box border">
+          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>21))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/codelist',array('id'=>21))}" target="_blank">ajax源码</a></h4>
+          </div>
+          <div class="pic">
+            <a href="{:U('Index/codelist',array('id'=>21))}" target="_blank">
+              <img src="/{$sys_upload_img}/{$ad_ajax.ad_logo}" width="114" height="90" border="0" alt="{$ad_ajax.ad_name}" />
+            </a>
+            <h5><a href="{:U('Index/codelist',array('id'=>21))}" target="_blank">{$ad_ajax.ad_name}</a></h5>
+            <p>{$ad_ajax.intro}</p>
+          </div>
+
+          <div class="clearit"></div>
+          <ul class="picul">
+            <volist name="ajaxist" id="ajaxjc">
+              <li><a href="{:U('showcode',array('id'=>$ajaxjc['goods_id']))}" target="_blank" title="{$ajaxjc.goods_name}" >{$ajaxjc.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
+        <!--整站源码-->
+        <div class="tech_box border L10">
+          <div class="title"><span><a href="{:U('Index/codelist',array('id'=>23))}" target="_blank">更多>></a></span>
+            <h4><a href="{:U('Index/codelist',array('id'=>23))}" target="_blank">整站源码</a></h4>
+          </div>
+          <div class="pic">
+            <a href="{:U('Index/codelist',array('id'=>23))}" target="_blank">
+              <img src="/{$sys_upload_img}/{$ad_web.ad_logo}" width="114" height="90" border="0" alt="{$ad_web.ad_name}" />
+            </a>
+            <h5><a href="{:U('Index/codelist',array('id'=>23))}" target="_blank">{$ad_web.ad_name}</a></h5>
+            <p>{$ad_web.intro}</p>
+          </div>
+
+          <div class="clearit"></div>
+          <ul class="picul">
+            <volist name="webist" id="webjc">
+              <li><a href="{:U('showcode',array('id'=>$webjc['goods_id']))}" target="_blank" title="{$webjc.goods_name}" >{$webjc.goods_name}</a></li>
+            </volist>
+          </ul>
+        </div>
 
       </div>
     <div class="clearit"></div>

@@ -656,6 +656,7 @@ class IndexController extends Controller {
 		}
 		$this->assign('subcategorylist',$sub_category);*/
 
+		//asp
 		$aspist = D('Home/goods')->getTopGoodsList(10,17);
 		$this->assign('aspist',$aspist);
 		unset($aspist);
@@ -664,6 +665,7 @@ class IndexController extends Controller {
 		$this->assign('ad_asp',$ad_asp);
 		unset($ad_asp);
 
+		//php
 		$phpist = D('Home/goods')->getTopGoodsList(10,18);
 		$this->assign('phpist',$phpist);
 		unset($phpist);
@@ -671,6 +673,42 @@ class IndexController extends Controller {
 		$ad_php = D('ad')->showAd(51);
 		$this->assign('ad_php',$ad_php);
 		unset($ad_php);
+
+		//net
+		$netist = D('Home/goods')->getTopGoodsList(10,19);
+		$this->assign('netist',$netist);
+		unset($netist);
+		//net源码下面的广告
+		$ad_net = D('ad')->showAd(52);
+		$this->assign('ad_net',$ad_net);
+		unset($ad_net);
+
+		//js
+		$jsist = D('Home/goods')->getTopGoodsList(10,20);
+		$this->assign('jsist',$jsist);
+		unset($jsist);
+		//js源码下面的广告
+		$ad_js = D('ad')->showAd(53);
+		$this->assign('ad_js',$ad_js);
+		unset($ad_js);
+
+		//ajax
+		$ajaxist = D('Home/goods')->getTopGoodsList(10,21);
+		$this->assign('ajaxist',$ajaxist);
+		unset($ajaxist);
+		//ajax源码下面的广告
+		$ad_ajax = D('ad')->showAd(54);
+		$this->assign('ad_ajax',$ad_ajax);
+		unset($ad_ajax);
+
+		//整站源码
+		$webist = D('Home/goods')->getTopGoodsList(10,23);
+		$this->assign('webist',$webist);
+		unset($webist);
+		//web源码下面的广告
+		$ad_web = D('ad')->showAd(55);
+		$this->assign('ad_web',$ad_web);
+		unset($ad_web);
 
 
 
@@ -689,10 +727,6 @@ class IndexController extends Controller {
 		$this->assign('ad_css',$ad_css);
 		unset($ad_css);
 
-		//js教程下面的广告
-		$ad_js = D('ad')->showAd(31);
-		$this->assign('ad_js',$ad_js);
-		unset($ad_js);
 
 		//ajax教程下面的广告
 		$ad_ajax = D('ad')->showAd(32);
@@ -704,10 +738,6 @@ class IndexController extends Controller {
 		$this->assign('ad_db',$ad_db);
 		unset($ad_db);
 
-		//net教程下面的广告
-		$ad_net = D('ad')->showAd(34);
-		$this->assign('ad_net',$ad_net);
-		unset($ad_net);
 
 		//xml教程下面的广告
 		$ad_xml = D('ad')->showAd(35);
