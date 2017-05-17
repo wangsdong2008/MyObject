@@ -62,7 +62,7 @@ class UsersModel extends Model{
     public function getusernews($uid=0){
         if($uid == 0) exit;
         $users_browse_history = M('users_browse_history');
-        $users_browse_history_data['userid'] = array('eq',$uid);
+        $users_browse_history_data[C('DB_PREFIX').'news.userid'] = array('eq',$uid);
         $users_browse_history_data['ptype'] = array('eq',1);
         unset($userid);
         $users_browse_historylist = $users_browse_history
