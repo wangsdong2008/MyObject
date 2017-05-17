@@ -10,17 +10,17 @@
   <div class="search_btn">
     <div class="tab2">
       <ul id="test2_li_now">
-        <li class="now">教程</li>
-        <li>软件</li>
-        <li>源码</li>
+        <li <if condition="$searchtype==1"> class="now"</if>>教程</li>
+        <li <if condition="$searchtype==2"> class="now"</if>>软件</li>
+        <li <if condition="$searchtype==3"> class="now"</if>>源码</li>
       </ul>
     </div>
     <form method="get" name="searchform" id="searchform" action="{:U('search')}" style="margin:0px;">
       <div class="tab_bottom">
         <div id="test2_1" class="tablist bloc">
           <div class="searchkeyword">
-            <input type="hidden" name="searchtype" id="searchtype" value="1">
-            <input type="text" name="keyword" id="keyword" class="w350" value="" />
+            <input type="hidden" name="searchtype" id="searchtype" value="{$searchtype}">
+            <input type="text" name="keyword" id="keyword" class="w350" value="{$keyword}" />
             <input type="submit" name="" value="搜索" class="search_submit"/>
           </div>
           <div class="hot_keyword"><span style="font-weight:bold; color:red;">热门关键字：</span>
