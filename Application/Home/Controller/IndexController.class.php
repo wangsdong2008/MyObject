@@ -190,7 +190,7 @@ class IndexController extends Controller {
 		$nowPage = I('page',1,'intval');
 		$newslsit = D('news')->getPageNews($cat_id,$nowPage,20);
 		$this->assign('newslist',$newslsit);
-		$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('id'=>$cat_id),2));
+		$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('id'=>$cat_id),1));
 		unset($page,$newslsit);
 
 		//热门新闻
