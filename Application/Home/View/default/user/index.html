@@ -134,74 +134,8 @@
                 <div class="item">
                   <div class="itemcontent">
                     <div class="Header">
-                      <h3 id="WidTitle5" ><a href='User_Message.asp'>我的短消息-共0条</a></h3>
-                      <a class="more" href="User_Message.asp" title="更多信息">更多</a></div>
-                    <div class="content">
-                      <div>
-                        <table cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
-                          <thead>
-                          <tr class="model_info_title">
-                            <th scope="col" style="width:40px;">ID</th>
-                            <th scope="col">标题</th>
-                            <th scope="col" style="width:80px; text-align:center;">时间</th>
-                            <th class="operate" scope="col" style="width:50px;">状态</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-
-                          <tr class="listbg1">
-                            <td>22</td>
-                            <td class="content_left"><div class="linkType"><a href="user_message.asp?id=22&act=edit" title="xml添加子节点">xml添加子节点</a></div></td>
-                            <td style="width:80px;">2013-06-17</td>
-                            <td><span style='color:#0f0;'>已阅</span></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>20</td>
-                            <td class="content_left"><div class="linkType"><a href="user_message.asp?id=20&act=edit" title="对不起，帖子发重复了">对不起，帖子发重复了</a></div></td>
-                            <td style="width:80px;">2013-02-18</td>
-                            <td><span style='color:#0f0;'>已阅</span></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>18</td>
-                            <td class="content_left"><div class="linkType"><a href="user_message.asp?id=18&act=edit" title="js定时器">js定时器</a></div></td>
-                            <td style="width:80px;">2013-01-17</td>
-                            <td><span style='color:#0f0;'>已阅</span></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>17</td>
-                            <td class="content_left"><div class="linkType"><a href="user_message.asp?id=17&act=edit" title="3">3</a></div></td>
-                            <td style="width:80px;">2012-11-27</td>
-                            <td><span style='color:#0f0;'>已阅</span></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>16</td>
-                            <td class="content_left"><div class="linkType"><a href="user_message.asp?id=16&act=edit" title="3">3</a></div></td>
-                            <td style="width:80px;">2012-11-27</td>
-                            <td><span style='color:#0f0;'>已阅</span></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>15</td>
-                            <td class="content_left"><div class="linkType"><a href="user_message.asp?id=15&act=edit" title="11111">11111</a></div></td>
-                            <td style="width:80px;">2012-11-27</td>
-                            <td><span style='color:#0f0;'>已阅</span></td>
-                          </tr>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="itemcontent">
-                    <div class="Header">
-                      <h3><a href='user_article.asp?act=list&uid=1' >我发表的编程教程</a></h3>
-                      <a class="more" href="user_article.asp?act=list&uid=1" title="更多信息">更多</a></div>
+                      <h3><a href="{:U('newslist')}" >我发表的编程教程</a></h3>
+                      <a class="more" href="{:U('newslist')}" title="更多信息">更多</a></div>
                     <div class="content">
                       <div>
                         <table cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
@@ -214,49 +148,22 @@
                           </tr>
                           </thead>
                           <tbody>
-
+                          <volist name="mynewslist" id="mynewslist">
                           <tr class="listbg1">
-                            <td>1364</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="数据库教程" href="user_article.asp?act=list&cat_id=7&uid=1"><strong>[数据库教程]</strong></a>--><a href="/tech/showtech.asp?id=1364" title="解决mysql自增长为什么会每次加2的办法" target="_blank">解决mysql自增长为什么会每次加2...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=1&id=1364">修改</a></td>
+                            <td>{$mynewslist.news_id}</td>
+                            <td class="content_left"><div class="linkType"><a href="{:U('Index/showtech',array('id'=>$mynewslist['news_id']))}" title="{$mynewslist.news_title}" target="_blank">{$mynewslist.news_title}</a></div></td>
+                            <td>
+                              <if condition="$mynewslist.is_show eq 1">
+                                <span style='color:#0f0;' title='审核通过'>√</span>
+                                <elseif condition="$mynewslist.is_show eq 0" />
+                                  <span style='color:#ccc;' title='审核中'>⊙</span>
+                                  <else />
+                                  <span style='color:#f00;' title='审核不通过'>X</span>
+                                </if>
+                            </td>
+                            <td><a href="{:U('newsedit',array('id'=>$mynewslist['news_id']))}">修改</a></td>
                           </tr>
-
-                          <tr class="listbg1">
-                            <td>1363</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="Js教程" href="user_article.asp?act=list&cat_id=4&uid=1"><strong>[Js教程]</strong></a>--><a href="/tech/showtech.asp?id=1363" title="JS和PHP判断访问终端是否是微信浏览器" target="_blank">JS和PHP判断访问终端是否是微信浏...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=1&id=1363">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1362</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="Js教程" href="user_article.asp?act=list&cat_id=4&uid=1"><strong>[Js教程]</strong></a>--><a href="/tech/showtech.asp?id=1362" title="JQuery判断是否包含某个class的简单方法" target="_blank">JQuery判断是否包含某个clas...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=1&id=1362">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1359</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="Asp教程" href="user_article.asp?act=list&cat_id=1&uid=1"><strong>[Asp教程]</strong></a>--><a href="/tech/showtech.asp?id=1359" title="使用ASP查询QQ在线状态功能的代码" target="_blank">使用ASP查询QQ在线状态功能的代码</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=1&id=1359">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1356</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="Asp教程" href="user_article.asp?act=list&cat_id=1&uid=1"><strong>[Asp教程]</strong></a>--><a href="/tech/showtech.asp?id=1356" title="asp代码实现限制一个ip只能访问网站一次的方法" target="_blank">asp代码实现限制一个ip只能访问网...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=1&id=1356">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1355</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="Js教程" href="user_article.asp?act=list&cat_id=4&uid=1"><strong>[Js教程]</strong></a>--><a href="/tech/showtech.asp?id=1355" title="js动态引用另一个js" target="_blank">js动态引用另一个js</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=1&id=1355">修改</a></td>
-                          </tr>
-
+                          </volist>
                           </tbody>
                         </table>
                       </div>
@@ -266,11 +173,11 @@
                 <div class="item">
                   <div class="itemcontent">
                     <div class="Header">
-                      <h3><a href='user_article.asp?act=list&uid=2' >我发表的新闻</a></h3>
-                      <a class="more" href="user_article.asp?act=list&uid=2" title="更多信息">更多</a></div>
+                      <h3 id="WidTitle3" ><a href="">我发布的源码</a></h3>
+                      <a class="more" href="" title="更多信息">更多</a></div>
                     <div class="content">
                       <div>
-                        <table id="UserWidgetShow_ctl01_EgvContent" cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
+                        <table cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
                           <thead>
                           <tr class="model_info_title">
                             <th scope="col" style="width:40px;">ID</th>
@@ -280,50 +187,22 @@
                           </tr>
                           </thead>
                           <tbody>
-
-                          <tr class="listbg1">
-                            <td>1202</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="互联网新闻" href="user_article.asp?act=list&cat_id=10&uid=2"><strong>[互联网新闻]</strong></a>--><a href="/news/shownews.asp?id=1202" title="法国黑客发现iOS短信漏洞称影响严重" target="_blank">法国黑客发现iOS短信漏洞称影响严重</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=2&id=1202">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1201</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="互联网新闻" href="user_article.asp?act=list&cat_id=10&uid=2"><strong>[互联网新闻]</strong></a>--><a href="/news/shownews.asp?id=1201" title="苹果“去谷歌化”是一个巨大的失误" target="_blank">苹果“去谷歌化”是一个巨大的失误</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=2&id=1201">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1200</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="互联网新闻" href="user_article.asp?act=list&cat_id=10&uid=2"><strong>[互联网新闻]</strong></a>--><a href="/news/shownews.asp?id=1200" title="搜狗称360搜索整体效果略优于搜搜" target="_blank">搜狗称360搜索整体效果略优于搜搜</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=2&id=1200">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1195</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="互联网新闻" href="user_article.asp?act=list&cat_id=10&uid=2"><strong>[互联网新闻]</strong></a>--><a href="/news/shownews.asp?id=1195" title="谷歌收购旅游指南服务Frommer 强化本地业务" target="_blank">谷歌收购旅游指南服务Frommer&nbsp;...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=2&id=1195">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1194</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="互联网新闻" href="user_article.asp?act=list&cat_id=10&uid=2"><strong>[互联网新闻]</strong></a>--><a href="/news/shownews.asp?id=1194" title="360软件惨遭封杀 控告金山索赔220万" target="_blank">360软件惨遭封杀&nbsp;控告金山索赔22...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=2&id=1194">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>1120</td>
-                            <td class="content_left"><div class="linkType"><!--<a title="人物新闻" href="user_article.asp?act=list&cat_id=11&uid=2"><strong>[人物新闻]</strong></a>--><a href="/news/shownews.asp?id=1120" title="传原盛大云CEO何刚加盟京东商城" target="_blank">传原盛大云CEO何刚加盟京东商城</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_article.asp?act=edit&uid=2&id=1120">修改</a></td>
-                          </tr>
-
-                          </tbody>
+                          <volist name="mycodelist" id="mycodelist">
+                            <tr class="listbg1">
+                              <td>{$mycodelist.goods_id}</td>
+                              <td class="content_left"><div class="linkType"><a href="{:U('Index/showcode',array('id'=>$mycodelist['goods_id']))}" title="{$mycodelist.goods_name}" target="_blank">{$mycodelist.goods_name}</a></div></td>
+                              <td>
+                                <if condition="$mycodelist.is_show eq 1">
+                                  <span style='color:#0f0;' title='审核通过'>√</span>
+                                  <elseif condition="$mycodelist.is_show eq 0" />
+                                  <span style='color:#ccc;' title='审核中'>⊙</span>
+                                  <else />
+                                  <span style='color:#f00;' title='审核不通过'>X</span>
+                                </if>
+                              </td>
+                              <td><a href="#">修改</a></td>
+                            </tr>
+                          </volist>
                         </table>
                       </div>
                     </div>
@@ -357,71 +236,6 @@
                 <div class="item">
                   <div class="itemcontent">
                     <div class="Header">
-                      <h3 id="WidTitle3" ><a href='/users/user_soft.asp?act=list&uid=3'>我发布的源码</a></h3>
-                      <a class="more" href="/users/user_soft.asp?act=list&uid=3" title="更多信息">更多</a></div>
-                    <div class="content">
-                      <div>
-                        <table cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
-                          <thead>
-                          <tr class="model_info_title">
-                            <th scope="col" style="width:40px;">ID</th>
-                            <th scope="col">标题</th>
-                            <th scope="col" style="width:50px;">已审核</th>
-                            <th class="operate" scope="col" style="width:50px;">操作</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-
-                          <tr class="listbg1">
-                            <td>209</td>
-                            <td class="content_left"><div class="linkType"><a title="Js源码" href="user_soft.asp?act=list&cat_id=17&uid=3"><strong>[Js源码]</strong></a><a href="/code/showcode.asp?id=209" title="jquery仿百度图片浏览效果代码" target="_blank">jquery仿百度图片浏览效果代码</a></div></td>
-                            <td><span style='' title='审核中...'>·</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=3&id=209">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>206</td>
-                            <td class="content_left"><div class="linkType"><a title="Js源码" href="user_soft.asp?act=list&cat_id=17&uid=3"><strong>[Js源码]</strong></a><a href="/code/showcode.asp?id=206" title="美丽的zDialog弹出层插件" target="_blank">美丽的zDialog弹出层插件</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=3&id=206">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>202</td>
-                            <td class="content_left"><div class="linkType"><a title="Js源码" href="user_soft.asp?act=list&cat_id=17&uid=3"><strong>[Js源码]</strong></a><a href="/code/showcode.asp?id=202" title="js框架mootools" target="_blank">js框架mootools</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=3&id=202">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>199</td>
-                            <td class="content_left"><div class="linkType"><a title="Asp源码" href="user_soft.asp?act=list&cat_id=14&uid=3"><strong>[Asp源码]</strong></a><a href="/code/showcode.asp?id=199" title="kuaidi100快递查询接口asp代码" target="_blank">kuaidi100快递查询接口asp...</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=3&id=199">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>197</td>
-                            <td class="content_left"><div class="linkType"><a title="Js源码" href="user_soft.asp?act=list&cat_id=17&uid=3"><strong>[Js源码]</strong></a><a href="/code/showcode.asp?id=197" title="js屏蔽幻灯片flash上在右键代码" target="_blank">js屏蔽幻灯片flash上在右键代码</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=3&id=197">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>191</td>
-                            <td class="content_left"><div class="linkType"><a title="Js源码" href="user_soft.asp?act=list&cat_id=17&uid=3"><strong>[Js源码]</strong></a><a href="/code/showcode.asp?id=191" title="商城图片javascript瀑布效果" target="_blank">商城图片javascript瀑布效果</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=3&id=191">修改</a></td>
-                          </tr>
-
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="itemcontent">
-                    <div class="Header">
                       <h3 id="WidTitle" ><a href='/users/user_soft.asp?act=list&uid=4'>我发布的软件</a></h3>
                       <a class="more" href="/users/user_soft.asp?act=list&uid=4" title="更多信息">更多</a></div>
                     <div class="content">
@@ -437,47 +251,24 @@
                           </thead>
                           <tbody>
 
-                          <tr class="listbg1">
-                            <td>196</td>
-                            <td class="content_left"><div class="linkType"><a title="开发软件" href="user_soft.asp?act=list&cat_id=22&uid=4"><strong>[开发软件]</strong></a><a href="/code/showcode.asp?id=196" title="asp开发工具5" target="_blank">asp开发工具5</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=4&id=196">修改</a></td>
-                          </tr>
+                          <volist name="mysoftlist" id="mysoftlist">
+                            <tr class="listbg1">
+                              <td>{$mysoftlist.goods_id}</td>
+                              <td class="content_left"><div class="linkType"><a href="{:U('Index/showsoft',array('id'=>$mysoftlist['goods_id']))}" title="{$mysoftlist.goods_name}" target="_blank">{$mysoftlist.goods_name}</a></div></td>
+                              <td>
+                                <if condition="$mysoftlist.is_show eq 1">
+                                  <span style='color:#0f0;' title='审核通过'>√</span>
+                                  <elseif condition="$mysoftlist.is_show eq 0" />
+                                  <span style='color:#ccc;' title='审核中'>⊙</span>
+                                  <else />
+                                  <span style='color:#f00;' title='审核不通过'>X</span>
+                                </if>
+                              </td>
+                              <td><a href="#">修改</a></td>
+                            </tr>
+                          </volist>
 
-                          <tr class="listbg1">
-                            <td>181</td>
-                            <td class="content_left"><div class="linkType"><a title="开发软件" href="user_soft.asp?act=list&cat_id=22&uid=4"><strong>[开发软件]</strong></a><a href="/code/showcode.asp?id=181" title="asp开发工具4.0版本" target="_blank">asp开发工具4.0版本</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=4&id=181">修改</a></td>
-                          </tr>
 
-                          <tr class="listbg1">
-                            <td>168</td>
-                            <td class="content_left"><div class="linkType"><a title="开发文档" href="user_soft.asp?act=list&cat_id=23&uid=4"><strong>[开发文档]</strong></a><a href="/code/showcode.asp?id=168" title="html5学习手册" target="_blank">html5学习手册</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=4&id=168">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>156</td>
-                            <td class="content_left"><div class="linkType"><a title="开发软件" href="user_soft.asp?act=list&cat_id=22&uid=4"><strong>[开发软件]</strong></a><a href="/code/showcode.asp?id=156" title="数据库SQL智能提示工具" target="_blank">数据库SQL智能提示工具</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=4&id=156">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>130</td>
-                            <td class="content_left"><div class="linkType"><a title="开发软件" href="user_soft.asp?act=list&cat_id=22&uid=4"><strong>[开发软件]</strong></a><a href="/code/showcode.asp?id=130" title="asp开发工具3.0版" target="_blank">asp开发工具3.0版</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=4&id=130">修改</a></td>
-                          </tr>
-
-                          <tr class="listbg1">
-                            <td>126</td>
-                            <td class="content_left"><div class="linkType"><a title="开发软件" href="user_soft.asp?act=list&cat_id=22&uid=4"><strong>[开发软件]</strong></a><a href="/code/showcode.asp?id=126" title="asp开发工具2.5版" target="_blank">asp开发工具2.5版</a></div></td>
-                            <td><span style='color:#0f0;' title='审核通过'>√</span></td>
-                            <td><a href="user_soft.asp?act=edit&uid=4&id=126">修改</a></td>
-                          </tr>
 
                         </table>
                       </div>

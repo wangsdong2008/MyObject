@@ -188,6 +188,23 @@ class GoodsModel extends Model{
         return $goodslist;
     }
 
+    //以下是个人发布的源码
+    public function getMyNumGoods($userid,$root_id=29,$num=10){
+        $goods = M('goods');
+        $goods_data[C('DB_PREFIX').'goods.user_id'] = array('eq',$userid);
+        $goods_data[C('DB_PREFIX').'goods.isdel'] = array('eq',0);
+        $goods_data[C('DB_PREFIX').'category.root_id'] = array('eq',$root_id);
+        $goodslist = $goods
+            ->join('inner join think_category on think_category.cat_id = think_goods.cat_id')
+            ->where($goods_data)
+            ->order(C('DB_PREFIX').'goods.goods_id desc')
+            ->field('`think_goods`.`goods_id`,`think_goods`.`goods_name`,`think_goods`.`is_show`')
+            ->limit(10)
+            ->select();
+        unset($nowPage,$count,$Page,$goods,$goods_data);
+        return $goodslist;
+    }
+
 
 
 }

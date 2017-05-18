@@ -201,6 +201,21 @@ class NewsModel extends Model{
         unset($news,$news_data);
     }
 
+    //以下是获取会员个人教程
+    public function getUserNumNews($userid,$num=10){
+        $news = M('news');
+        $news_data['userid'] = array('eq',$userid);
+        $news_data['isdel'] = array('eq',0);
+        $newslist = $news
+            ->where($news_data)
+            ->order('news_time desc')
+            ->field('`news_id`,`news_title`,`is_show`')
+            ->limit($num)
+            ->select();
+        unset($nowPage,$count,$Page,$news,$news_data);
+        return $newslist;
+    }
+
 
 
 

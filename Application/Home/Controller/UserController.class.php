@@ -23,6 +23,23 @@ class UserController extends Controller {
 		unset($year,$month);
 		$this->assign('currtime',json_encode($curr));
 		unset($users,$users_data,$userslist);
+
+		//我发布的教程
+		$mynewslist = D("Home/news")->getUserNumNews(session("userid"));
+		$this->assign('mynewslist',$mynewslist);
+		unset($mynewslist);
+
+		//我发布的源码
+		$mycodelist = D("Home/goods")->getMyNumGoods(session("userid"),29);
+		$this->assign('mycodelist',$mycodelist);
+		unset($mycodelist);
+
+		//我发布的软件
+		$mysoftlist = D("Home/goods")->getMyNumGoods(session("userid"),30);
+		$this->assign('mysoftlist',$mysoftlist);
+		unset($mysoftlist);
+
+
 		$this->display('index');
     }
 
