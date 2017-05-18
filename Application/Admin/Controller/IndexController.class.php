@@ -1561,6 +1561,7 @@ class IndexController extends Controller {
 //				$this->delfiles($old_article_img,$sys_upload_img . "/" .$article_img);
 			}
 			unset($article, $article_data, $articlelist);
+		}
 
 
 			$cat_id = I('cat_id', 0);
@@ -1594,7 +1595,6 @@ class IndexController extends Controller {
 				$article->save($article_data);
 			}
 			$this->closewindows();
-		}
 	}
 	
 	

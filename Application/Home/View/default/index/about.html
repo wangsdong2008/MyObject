@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$article.article_title}-{$article.cat_name}-{$sys_sitename}</title>
+<meta name="Description" content="{$article.article_title} ">
+<meta name="Keywords" content="{$article.article_title} ">
+<link href="{$model_path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  <!--  顶部链接  -->
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>&nbsp;{$article.article_title}&nbsp;>&nbsp;&nbsp;正文</div>
+      <div class="techlist border">
+        <div class="con_main">
+          <h1>{$article.article_title}</h1>
+          <div class="abstract">{$article.article_time|date="Y-m-d H:i:s",###}&nbsp;&nbsp;&nbsp;来源：{$sys_sitename} </div>
+          <div class="main_text">{$article.article_content|htmlspecialchars_decode}</div>
+          
+          <div class="lastnext">  </div>
+        </div>
+      </div>          
+    </div>
+    <div class="con_right" style="border-top: 1px solid #D7E1EA;">
+    </div>
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <!--  底部导航  -->
+    <include file="foot" />
+</div>
+</body>
+</html>

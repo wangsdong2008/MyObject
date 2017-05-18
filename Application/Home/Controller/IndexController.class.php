@@ -1043,4 +1043,11 @@ class IndexController extends Controller {
 		$this->display($model);
 	}
 
+	public function about(){
+		$id = I('id',45);
+		$article = D('Home/article')->showarticle($id);
+		$this->assign('article',$article);
+		$this->display('about');
+	}
+
 }
