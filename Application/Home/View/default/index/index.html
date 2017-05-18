@@ -196,7 +196,7 @@
         <div class="download_con">
           <ul>
             <volist name="goods_list" id="goods_list">
-            <li><a href="{:U('showcode',array('id'=>$goods_list['goods_id']))}" target="_blank" title="{$goods_list.goods_name}"><img src="{$sys_upload_img}/{$goods_list.goods_img}" width="120" height="106" alt="{$goods_list.goods_name}"></a><br><a href="{:U('goods',array('id'=>$goods_list['goods_id']))}" target="_blank" title="{$goods_list.goods_name}">{$goods_list.goods_name|msubstr=0,10,"utf-8", false}</a></li>
+            <li><a href="{:U('showcode',array('id'=>$goods_list['goods_id']))}" target="_blank" title="{$goods_list.goods_name}"><img src="{$sys_upload_img}/{$goods_list.goods_img}" width="120" height="106" alt="{$goods_list.goods_name}"></a><br><a href="{:U('showcode',array('id'=>$goods_list['goods_id']))}" target="_blank" title="{$goods_list.goods_name}">{$goods_list.goods_name|msubstr=0,10,"utf-8", false}</a></li>
             </volist>
           </ul>
         </div>

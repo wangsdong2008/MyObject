@@ -468,7 +468,7 @@ class UserController extends Controller {
 					//下载此文件
 					$configlist = S('config');
 					//$url = $configlist['sys_upload_img']."/".$sy_url;
-					$url = "../db/".$sy_url;
+					$url = "../others/".$sy_url;
 					echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 					download($url);
 
