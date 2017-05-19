@@ -1298,6 +1298,8 @@ class IndexController extends Controller {
 		}else{
 			$this->getrolelist(21);
 		}
+		$news_data['news_id'] = array('eq',$news_id);
+		$this->assign('news_id',$news_id);
 
 		$news_img = I('news_img');
 		if($this->movefiles($news_img)*1 == 1) {
@@ -1308,8 +1310,6 @@ class IndexController extends Controller {
 			$sys_baidu_api = $sys_list['sys_baidu_api'];
 
 			$news = M('news');
-			$news_data['news_id'] = array('eq',$news_id);
-			$this->assign('news_id',$news_id);
 			$newslist = $news->where($news_data)->field('news_img')->limit(1)->find();
 			if($newslist){
 				$old_news_img = $sys_upload_img . "/" . $newslist['news_img'];
@@ -1317,6 +1317,7 @@ class IndexController extends Controller {
 				$this->delfiles($old_news_img, $sys_upload_img . "/" . $news_img);
 			}
 			unset($news, $news_data, $newslist);
+		}
 
 			$cat_id = I('cat_id', 0);
 			$news_title = I('news_title');
@@ -1358,7 +1359,7 @@ class IndexController extends Controller {
 				}
 			}
 			$this->closewindows();
-		}
+
 	}
 	
 	/*会员等级管理*/	

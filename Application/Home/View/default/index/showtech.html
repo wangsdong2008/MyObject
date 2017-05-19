@@ -26,8 +26,7 @@
           <h1>{$news_title}</h1>
           <div class="abstract">{$news_time|date="Y-m-d H:i:s",###}&nbsp;&nbsp;&nbsp;来源：{$news_from}&nbsp;&nbsp;&nbsp;作者：{$news_author}&nbsp;&nbsp;&nbsp;浏览量:{$news_hits}</div>
           
-          <div class="main_text"> {$news_content|htmlspecialchars_decode}<div class="thinks">感谢wangsdong投稿</div>
-</div>
+          <div class="main_text"> {$news_content|htmlspecialchars_decode}</div>
 
           <div class="lastnext">
             <volist name="news_about" id="news_about" key="k">

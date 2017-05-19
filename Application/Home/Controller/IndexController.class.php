@@ -138,7 +138,8 @@ class IndexController extends Controller {
 		$cat_id = 0;
 		if($newslist){
 			$this->assign('news_title',$newslist['news_title']);
-			$this->assign('news_content',$newslist['news_content']);
+			$a = preg_replace("/\&lt;div class=\&quot;thinks\&quot;\&gt;.+?\&lt;\/div\&gt;/is", "", $newslist['news_content']);
+			$this->assign('news_content',$a);
 			$this->assign('news_author',$newslist['news_author']);
 			$this->assign('news_from',$newslist['news_from']);
 			$this->assign('news_time',$newslist['news_time']);
