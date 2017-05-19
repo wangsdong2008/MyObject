@@ -371,6 +371,14 @@ class UserController extends Controller {
 	//教程保存
 	public function newssave(){
 		$news_id = I('news_id',0);
+		if($news_id>0){
+			$newslist = D('news')->getNews($news_id,session("userid"));
+			if($newslist['is_show']*1 == 1){
+				echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+				echo '此教程已经审核通过，不可修改';exit;
+			}
+		}
+
 		$news = D("news"); // 实例化User对象
 		$data = $news->create();
 		if($data['news_id']>0){
