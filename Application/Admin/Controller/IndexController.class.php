@@ -1280,7 +1280,8 @@ class IndexController extends Controller {
 			$this->assign('is_show',$newslist['is_show']);	
 			$this->assign('news_author',$newslist['news_author']);	
 			$this->assign('news_from',$newslist['news_from']);	
-			$this->assign('is_show',$newslist['is_show']);	
+			$this->assign('is_show',$newslist['is_show']);
+			$this->assign('is_best',$newslist['is_best']);
 			$this->assign('news_keyword',$newslist['news_keyword']);	
 			$this->assign('news_description',$newslist['news_description']);
 			$this->assign('news_time',$newslist['news_time']);
@@ -1293,14 +1294,20 @@ class IndexController extends Controller {
 	/*新闻保存*/
 	public function newssave(){
 		$news_id = I('news_id',0);
+		$userid = 0;
 		if($news_id > 0){
 			$this->getrolelist(20);
+			$news = M('news');
+			$news_data['news_id'] = $news_id;
+			$news_data['isdel'] = 0;
+			$newslist = $news->where($news_data)->limit(1)->find();
+			$userid = $newslist['userid'];
 		}else{
 			$this->getrolelist(21);
 		}
+
 		$news_data['news_id'] = array('eq',$news_id);
 		$this->assign('news_id',$news_id);
-
 		$news_img = I('news_img');
 		if($this->movefiles($news_img)*1 == 1) {
 			$sys_list = S('config');
@@ -1318,48 +1325,63 @@ class IndexController extends Controller {
 			}
 			unset($news, $news_data, $newslist);
 		}
+		$is_best = I('is_best',0);
+		$cat_id = I('cat_id', 0);
+		$news_title = I('news_title');
+		$news_img = I('news_img');
+		$news_content = I('news_content');
+		$news_author = I('news_author');
+		$news_from = I('news_from');
+		$is_show = I('is_show', 0);
+		$news_keyword = I('news_keyword');
+		$news_description = I('news_description');
 
-			$cat_id = I('cat_id', 0);
-			$news_title = I('news_title');
-			$news_img = I('news_img');
-			$news_content = I('news_content');
-			$news_author = I('news_author');
-			$news_from = I('news_from');
-			$is_show = I('is_show', 0);
-			$news_keyword = I('news_keyword');
-			$news_description = I('news_description');
-
-			$news = M('news');
-			$news_data['cat_id'] = $cat_id;
-			$news_data['news_title'] = $news_title;
-			$news_data['news_img'] = $news_img;
-			$news_data['news_content'] = $news_content;
-			$news_data['news_from'] = $news_from;
-			$news_data['news_author'] = $news_author;
-			$news_data['is_show'] = $is_show;
-			$news_data['news_keyword'] = $news_keyword;
-			$news_data['news_description'] = $news_description;
-			$news_data['news_time'] = strtotime(I('news_time', ''));
-			if ($news_id == 0) {
-
-				$news_id = $news->add($news_data);
-			} else {
-				$news_data['news_id'] = $news_id;
-				$news->save($news_data);
-			}
-			if ($sys_baidu_send == 1) {
-				//推送
-				$url = $sys_url . "/Newslist/news/id/" . $news_id . ".html";
-				$data = $this->sendbaidu($url, $sys_baidu_api);
-				$obj = json_decode($data);
-				if ($obj->success == "1") {
-				} else {
-					echo '推送百度出错';
-					exit;
+		$news = M('news');
+		$news_data['cat_id'] = $cat_id;
+		$news_data['news_title'] = $news_title;
+		$news_data['news_img'] = $news_img;
+		$news_data['news_content'] = $news_content;
+		$news_data['news_from'] = $news_from;
+		$news_data['news_author'] = $news_author;
+		$news_data['is_show'] = $is_show;
+		$news_data['is_best'] = $is_best;
+		$news_data['news_keyword'] = $news_keyword;
+		$news_data['news_description'] = $news_description;
+		$news_data['news_time'] = strtotime(I('news_time', ''));
+		if ($news_id == 0) {
+			$news_id = $news->add($news_data);
+		} else {
+			$news_data['news_id'] = $news_id;
+			$news->save($news_data);
+			if($is_show == 1){ //审核通过，赠送积分
+				//检查此教程是否已经送过积分
+				$pid = D('Home/integral_record')->check_news_integory_record(43,$news_id,$userid);
+				if($pid == 0){
+					//赠送积分
+					D('Home/integral_record')->OpIntegral(43,$userid,0,'',$news_id);
 				}
 			}
-			$this->closewindows();
-
+			if($is_best==1){ //设为精华，赠送积分
+                //检查此教程是否已经送过积分
+				$pid = D('Home/integral_record')->check_news_integory_record(44,$news_id,$userid);
+				if($pid == 0){
+					//赠送积分
+					D('Home/integral_record')->OpIntegral(44,$userid,0,'',$news_id);
+				}
+			}
+		}
+		if ($sys_baidu_send == 1) {
+			//推送
+			$url = $sys_url . "/Newslist/news/id/" . $news_id . ".html";
+			$data = $this->sendbaidu($url, $sys_baidu_api);
+			$obj = json_decode($data);
+			if ($obj->success == "1") {
+			} else {
+				echo '推送百度出错';
+				exit;
+			}
+		}
+		$this->closewindows();
 	}
 	
 	/*会员等级管理*/	

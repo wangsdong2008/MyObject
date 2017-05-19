@@ -110,13 +110,9 @@ KindEditor.ready(function(K) {
       <label class="form-label col-3"><span class="c-red">*</span>状态：</label>
       <div class="formControls col-5 skin-minimal">
         <div class="radio-box">
-          <input type="radio" name="is_show" value="0" id="is_show_0" <if condition="$is_show == 0">checked</if> >
-          <label for="is_show-2">待审核</label>
-        </div>
-        <div class="radio-box">
           <label>
-                <input name="is_show" type="radio" id="is_show_1" value="1" <if condition="$is_show == 1">checked</if> >
-           </label>
+            <input name="is_show" type="radio" id="is_show_1" value="1" <if condition="$is_show == 1">checked</if> >
+          </label>
           <label for="is_show-1">通过</label>
         </div>
         <div class="radio-box">
@@ -125,7 +121,26 @@ KindEditor.ready(function(K) {
           </label>
           <label for="is_show-1">不通过</label>
         </div>
-
+        <div class="radio-box">
+          <input type="radio" name="is_show" value="0" id="is_show_0" <if condition="$is_show == 0">checked</if> >
+          <label for="is_show-2">待审核</label>
+        </div>
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>精华：</label>
+      <div class="formControls col-5 skin-minimal">
+        <div class="radio-box">
+          <label>
+            <input name="is_best" type="radio" id="is_best_1" value="1" <if condition="$is_best == 1">checked</if> >
+          </label>
+          <label for="is_best-1">是</label>
+        </div>
+        <div class="radio-box">
+          <input type="radio" name="is_best" value="0" id="is_best_0" <if condition="$is_best == 0">checked</if> >
+          <label for="is_best-0">否</label>
+        </div>
       </div>
       <div class="col-4"> </div>
     </div>

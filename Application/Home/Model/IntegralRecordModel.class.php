@@ -99,7 +99,7 @@ class IntegralRecordModel extends Model{
             }
             $unit = 1;
             //准备双倍积分
-            if ($rule_id != 30) { //邀请好友不进行双倍积分
+            /*if ($rule_id != 30) { //邀请好友不进行双倍积分   //暂时去掉双倍积分
                 $users = M('users');
                 $users_data['id'] = array('eq', $user_id);
                 $userslist = $users->where($users_data)->field('info')->limit(1)->find();
@@ -116,7 +116,7 @@ class IntegralRecordModel extends Model{
                     }
                 }
                 unset($users, $users_data, $userslist);
-            }
+            }*/
             $value = 0;
             if ($user_id) {
                 $integral_rule = M('integral_rule');
@@ -225,6 +225,9 @@ class IntegralRecordModel extends Model{
                             break;
                         }
                         case 0: { //不限制
+                            if($jf == 0){
+                                $jf = $rule_integral;
+                            }
                             $rule_integral = $jf;
                             $integral_record2 = M('integral_record');
                             $integral_record2_data['integral'] = $rule_integral;
@@ -265,6 +268,12 @@ class IntegralRecordModel extends Model{
                 exit;
             }
             unset($newslist);
+        }
+        if($rule_integral == 0){
+            $integral_rule = M('integral_rule');
+            $integral_rule_data['rule_id'] = array('eq', $rule_id);
+            $integral_rulelist = $integral_rule->where($integral_rule_data)->field('rule_id,rule_name,rule_max_integral,rule_integral,rule_operate,rule_day')->limit(1)->find();
+            $rule_integral = $rule_integral = $integral_rulelist['rule_integral']*1;
         }
         $integral_record2 = M('integral_record');
         $integral_record2_data['integral'] = $rule_integral;
@@ -341,11 +350,21 @@ class IntegralRecordModel extends Model{
         //$integral_record_data['addtime'] = array('gt',time()-24*60*60*30);
         $count = $integral_record->where($integral_record_data)->count();
         $Page = new \Think\Page($count,10);
-        $integrallist = $integral_record->where($integral_record_data)->join('think_integral_rule on think_integral_record.rule_id=think_integral_rule.rule_id')->order('addtime desc')->page($nowPage.','.$Page->listRows)->field('id,addtime,goodsname,rule_name,integral')->select();
+        $integrallist = $integral_record->where($integral_record_data)->join('think_integral_rule on think_integral_record.rule_id=think_integral_rule.rule_id')->order('addtime desc')->page($nowPage.','.$Page->listRows)->field('id,addtime,goodsname,news_id,rule_name,integral')->select();
         foreach ($integrallist as $key => $value) {
             $integral = str_replace('-', '', $integrallist[$key]['integral']);
-            $integrallist[$key]['rule_name'] = str_replace('$integral_num', $integral, $integrallist[$key]['rule_name']);
-            $integrallist[$key]['rule_name'] = str_replace('$name', $value['goodsname'], $integrallist[$key]['rule_name']);
+            $rule_name = $integrallist[$key]['rule_name'];
+            $rule_name = str_replace('$integral_num', $integral,$rule_name );
+            if($value['goodsname']!=""){
+                $rule_name = str_replace('$name', "《".$value['goodsname']."》", $rule_name);
+            }
+            if($value['news_id']*1>0){
+                $news = D("Home/news")->getNews($value['news_id'],$user_id);
+                $rule_name  =  str_replace('$name', "《".$news['news_title']."》", $rule_name);
+                unset($news);
+            }
+            $integrallist[$key]['rule_name'] = $rule_name;
+            unset($rule_name);
         }
 
         if($integrallist[0]!=""){
@@ -354,6 +373,25 @@ class IntegralRecordModel extends Model{
 
         unset($Page,$count,$integral_record,$nowPage,$pagecount,$integral);
         return $integrallist;
+    }
+
+    //检查此教程是否送过积分
+    //43 审核通过 44 精华
+    public function check_news_integory_record($rule_id,$news_id,$userid){
+        $integral_record = M('integral_record');
+        $integral_record_data['rule_id'] = array('eq',$rule_id);
+        $integral_record_data['userid'] = array('eq',$userid);
+        $integral_record_data['news_id'] = array('eq',$news_id);
+        $integral_recordlist = $integral_record
+            ->where($integral_record_data)
+            ->field('`id`')
+            ->limit(1)
+            ->find();
+        unset($nowPage,$count,$Page,$integral_record,$integral_record_data);
+        if($integral_recordlist)
+            return 1;
+        else
+            return 0;
     }
   	
 }
