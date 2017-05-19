@@ -50,7 +50,7 @@
         <th width="120">推荐人</th>
         <th width="130">加入时间</th>
         <th width="70">状态</th>
-        <th width="100">操作</th>
+        <th width="140">操作</th>
       </tr>
     </thead>
     <tbody>
@@ -72,12 +72,7 @@
             </if>
         </td>
         <td class="f-14 user-manage">
-        <if condition="$userlist.islock == 0">         
-          <a style="text-decoration:none" onClick="user_stop(this,'{$userlist.id}')" href="javascript:;" title="停用"><i class="icon-hand-down"></i></a>
-        <else/>          
-          <a style="text-decoration:none" onClick="user_start(this,'{$userlist.id}')" href="javascript:;" title="启用"><i class="icon-hand-up"></i></a>
-        </if>        
-         <a title="编辑" href="javascript:;" onClick="user_edit('{$userlist.id}','550','560','编辑','useredit?id={$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-edit"></i></a> <a style="text-decoration:none" class="ml-5" onClick="user_password_edit('{$userlist.id}','370','228','修改密码','passwordedit?id={$userlist.id}')" href="javascript:;" title="修改密码"><i class="icon-key"></i></a> <a title="删除" href="javascript:;" onClick="user_del(this,'{$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-trash"></i></a></td>
+            <a title="充值" href="javascript:;" onClick="user_edit('{$userlist.id}','550','400','充值','user_recharge?id={$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-heart"></i></a>&nbsp;<if condition="$userlist.islock == 0"><a style="text-decoration:none" onClick="user_stop(this,'{$userlist.id}')" href="javascript:;" title="停用"><i class="icon-hand-down"></i></a>&nbsp;<else/><a style="text-decoration:none" onClick="user_start(this,'{$userlist.id}')" href="javascript:;" title="启用"><i class="icon-hand-up"></i></a>&nbsp;</if><a title="编辑" href="javascript:;" onClick="user_edit('{$userlist.id}','550','560','编辑','useredit?id={$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-edit"></i></a> <a style="text-decoration:none" class="ml-5" onClick="user_password_edit('{$userlist.id}','370','228','修改密码','passwordedit?id={$userlist.id}')" href="javascript:;" title="修改密码"><i class="icon-key"></i></a> <a title="删除" href="javascript:;" onClick="user_del(this,'{$userlist.id}')" class="ml-5" style="text-decoration:none"><i class="icon-trash"></i></a> <a title="进入会员中心" target="_blank" href="enteruser?id={$userlist.id}" class="ml-5" style="text-decoration:none"><i class="icon-play"></i></a></td>
       </tr>
  </volist>      
     </tbody>

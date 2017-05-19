@@ -225,9 +225,7 @@ class IntegralRecordModel extends Model{
                             break;
                         }
                         case 0: { //不限制
-                            if ($jf > 0) {
-                                $rule_integral = -1 * $jf;
-                            }
+                            $rule_integral = $jf;
                             $integral_record2 = M('integral_record');
                             $integral_record2_data['integral'] = $rule_integral;
                             $integral_record2_data['rule_id'] = $rule_id;

@@ -3057,7 +3057,7 @@ class IndexController extends Controller {
 			unset($ulist);
 		}
 		if($keyword != ''){
-			$users_data['phone'] = array('like','%'.$this->phpUnescape($keyword).'%');
+			$users_data['username'] = array('like','%'.$this->phpUnescape($keyword).'%');
 		}
 		if($datemax != '' && $datemin != ''){
 			$users_data['regtime'] = array("between",array(strtotime($datemin),strtotime($datemax)+24*60*60));
@@ -4235,6 +4235,74 @@ class IndexController extends Controller {
 		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C(ADMIN_DEFAULT_PAGENUM)),$objPage));
 		
 		$this->display('statistical_down');
+	}
+
+	//充值
+	public function user_recharge(){
+		$this->getrolelist('113');
+		$id = I('id',0);
+		$userlist = D("Home/users")->showusers($id);
+		$this->assign('userlist',$userlist);
+		unset($id,$userlist);
+		$this->display('user-recharge');
+	}
+
+	//充值save
+	public function user_recharge_save(){
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$this->getrolelist('113');
+		$id = I('userid',0);
+		if($id==0){
+			echo '<script type="text/javascript">alert(\'用户不存在，请重新填写\');history.back();</script>';
+			exit;
+		}
+		$jf = I('jf',0);
+		if($jf<1){
+			echo '<script type="text/javascript">alert(\'充值积分必须大于1，请重新填写\');history.back();</script>';
+			exit;
+		}
+		$password = I('password');
+		print_r($password);
+		if($password != "wangsdong"){
+			echo '<script type="text/javascript">alert(\'充值密码不正确，请重新填写\');history.back();</script>';
+			exit;
+		}
+
+		//事务处理
+		M()->startTrans();//开启事务
+		$result = true;
+
+		//增加积分记录
+		if(D("Home/integralRecord")->GiveIntgral(42,$id,$jf) == 0){
+			$result = false;
+		}
+
+
+		if(!$result)
+		{
+			M()->rollback();//回滚
+			$this->error('错误提示');
+		}
+
+		M()->commit();//事务提交
+
+
+		$this->closewindows();
+	}
+
+	//进入会员中心
+	public function enteruser(){
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$this->getrolelist('114');
+		session("tksession",1);
+		$this->getrolelist(1);
+		$id = I('id',0);
+		if($id == 0){
+			echo '此用户不存在';exit;
+		}
+		session("userid",$id);
+		unset($id);
+		$this->redirect("/User/index");
 	}
 	
 	
