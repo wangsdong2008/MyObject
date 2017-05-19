@@ -4286,7 +4286,7 @@ class IndexController extends Controller {
 		}
 		$password = I('password');
 		print_r($password);
-		if($password != "wangsdong"){
+		if($password != "123456"){
 			echo '<script type="text/javascript">alert(\'充值密码不正确，请重新填写\');history.back();</script>';
 			exit;
 		}
