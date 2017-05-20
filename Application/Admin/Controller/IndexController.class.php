@@ -1222,6 +1222,41 @@ class IndexController extends Controller {
 	/*新闻*/
 	public function newslist(){
 		$this->getrolelist(19);
+		$cat_id = I("cat_id",0,'intval');
+		$this->assign('cat_id',$cat_id);
+		$keyword = I("keyword");
+		$this->assign('keyword',$keyword);
+		$objPage['cat_id'] = $cat_id;
+		$objPage['keyword'] = $keyword;
+		if($cat_id > 0){
+			$news_data[C('DB_PREFIX').'news.cat_id'] = $cat_id;
+		}
+		//分类
+		$categorylist1 = $this->getcategorylist(2);
+		$this->assign('category_list',$categorylist1);
+		if($keyword != ""){
+			$news_data[C('DB_PREFIX').'news.news_title'] = array('like','%'.$keyword.'%');
+		}
+
+		$nowPage = I('page')?I('page'):1;
+		$news = M('news');
+		$news_data[C('DB_PREFIX').'news.isdel'] = 0;
+		$count = $news->where($news_data)->join('left join ' . C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news.cat_id')->count();
+		$this->assign('count',$count);
+		$this->assign('pagecount',$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')));
+
+		$Page = new \Think\Page($count,C('ADMIN_DEFAULT_PAGENUM'));
+		$newslist = $news->where($news_data)->join('left join ' .C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news.cat_id')->order('news_id desc')->page($nowPage.','.$Page->listRows)->select();
+		foreach ($newslist as $key => $value) {
+			if($value['cat_id'] == 241) {
+				$newslist[$key]['praisenum'] = D('Home/praise')->news_tmp_num($value['news_id']);
+			}
+		}
+		$this->assign('news_list',$newslist);
+		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));
+		unset($nowPage,$news,$news_data,$count,$Page,$newslist);
+		/*
+
 		$nowPage = I('page')?I('page'):1;		
 		$news = M('news');
 		$news_data[C('DB_PREFIX').'news.isdel'] = 0;				
@@ -1232,7 +1267,7 @@ class IndexController extends Controller {
 		$Page = new \Think\Page($count,C('ADMIN_DEFAULT_PAGENUM'));		
 		$newslist = $news->where($news_data)->join('left join ' .C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news.cat_id')->order('news_id desc')->page($nowPage.','.$Page->listRows)->select();
 		$this->assign('news_list',$newslist);	
-		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));
+		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));*/
 		$this->display('news-list');
 	}
 	
@@ -1353,20 +1388,22 @@ class IndexController extends Controller {
 		} else {
 			$news_data['news_id'] = $news_id;
 			$news->save($news_data);
-			if($is_show == 1){ //审核通过，赠送积分
-				//检查此教程是否已经送过积分
-				$pid = D('Home/integral_record')->check_news_integory_record(43,$news_id,$userid);
-				if($pid == 0){
-					//赠送积分
-					D('Home/integral_record')->OpIntegral(43,$userid,0,'',$news_id);
+			if($userid>0) {
+				if ($is_show == 1) { //审核通过，赠送积分
+					//检查此教程是否已经送过积分
+					$pid = D('Home/integral_record')->check_news_integory_record(43, $news_id, $userid);
+					if ($pid == 0) {
+						//赠送积分
+						D('Home/integral_record')->OpIntegral(43, $userid, 0, '', $news_id);
+					}
 				}
-			}
-			if($is_best==1){ //设为精华，赠送积分
-                //检查此教程是否已经送过积分
-				$pid = D('Home/integral_record')->check_news_integory_record(44,$news_id,$userid);
-				if($pid == 0){
-					//赠送积分
-					D('Home/integral_record')->OpIntegral(44,$userid,0,'',$news_id);
+				if ($is_best == 1) { //设为精华，赠送积分
+					//检查此教程是否已经送过积分
+					$pid = D('Home/integral_record')->check_news_integory_record(44, $news_id, $userid);
+					if ($pid == 0) {
+						//赠送积分
+						D('Home/integral_record')->OpIntegral(44, $userid, 0, '', $news_id);
+					}
 				}
 			}
 		}
