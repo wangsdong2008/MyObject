@@ -622,7 +622,7 @@ class IndexController extends Controller {
 		$this->tech_public_function();
 
 		//网站公告
-		$gonggao = D('news')->getNumNewsList(25,5);
+		$gonggao = D('news')->getNumNewsList(27,5);
 		$this->assign('gonggao',$gonggao);
 
 		//最新用户
