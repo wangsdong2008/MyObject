@@ -1409,7 +1409,7 @@ class IndexController extends Controller {
 		}
 		if ($sys_baidu_send == 1) {
 			//推送
-			$url = $sys_url . "/Newslist/news/id/" . $news_id . ".html";
+			$url = $sys_url . "/Index/showtech/id/" . $news_id . ".html";
 			$data = $this->sendbaidu($url, $sys_baidu_api);
 			$obj = json_decode($data);
 			if ($obj->success == "1") {
@@ -3817,7 +3817,7 @@ class IndexController extends Controller {
 	public function getusername($userid){
 		$users = M('users');
 		$users_data['id'] = array('eq',$userid);
-		$this->assign('id',$id);
+		$this->assign('id',$userid);
 		$userslist = $users->where($users_data)->field('username')->limit(1)->find();
 		$username = '';
 		if($userslist){
