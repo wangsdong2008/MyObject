@@ -119,6 +119,19 @@ class UsersModel extends Model{
         return $users_browse_historylist;
     }
 
+    //判断邀请码
+    public function checkmycode($code)
+    {
+        $where_data['mycode'] = $code;
+        $where_data['isdel'] = 0;
+        $list = M('users')->where($where_data)->field('id')->find();
+        unset($where_data);
+        if (!$list) {
+            return 0;
+        }else{
+            return 1;
+        }
+    }
 
 
 }

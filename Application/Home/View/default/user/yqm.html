@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>邀请码-会员中心-{$sys_sitename}</title>
+    <title>邀请好友-会员中心-{$sys_sitename}</title>
     <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
     <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
@@ -30,7 +30,7 @@
                     <div class="model_info_sate mtop10">
                         <ul>
                             <!-- CSS Tabs -->
-                            <li id="EliteAudited" class="hover"><span> <a id="LinkAudited" href="?act=list2">我的邀请码</a></span> </li>
+                            <li id="EliteAudited" class="hover"><span> <a id="LinkAudited" href="?act=list2">邀请好友</a></span> </li>
                         </ul>
                     </div>
                     <!--模型内容列表开始-->
@@ -41,11 +41,12 @@
                                 <thead>
                                 <tr>
                                     <td style="text-align:center; line-height:40px; padding-left:20px; padding-top:10px; padding-bottom:10px;">
-                                        <span style="font-size:20px; color:#f00; font-weight:bold;">邀请码:{$users.mycode}</span>
+                                        <span style="font-size:20px; color:#f00; font-weight:bold;">邀请地址: <a
+                                                href="{$sys_url}/User/reg/mycode/{$users.mycode}.html" target="_blank">{$sys_url}/User/reg/mycode/{$users.mycode}.html</a></span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>请让您的朋友在注册页面邀请码框中填写上面的邀请码<br /></td>
+                                    <td>通过此地址注册本站会员的，都属于您的邀请好友<br /></td>
                                 </tr>
                                 </thead>
                             </table>

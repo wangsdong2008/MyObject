@@ -143,6 +143,10 @@ class UserController extends Controller {
 		session("token",$token);
 		$this->assign('token',$token);
 		unset($this,$token);
+
+		$mycode = I('mycode');
+		$this->assign('mycode',$mycode);
+
 		$this->display('register');
 	}
 
@@ -175,6 +179,13 @@ class UserController extends Controller {
 			// 如果创建失败 表示验证没有通过 输出错误提示信息
 		    exit($users->getError());
 	  }else{
+		    //查看邀请人
+		    $code=I('mycode','');
+		    $tj = 0;
+		    if($code !=''){
+				$tj = D('Home/Users')->checkmycode($code) ;
+		    }
+		    $users_data['tj'] = $tj;
 		    $users_data['true_name'] = $username;
   		    $users_data['username'] = $username;
 			$users_data['password'] = md5($password);
@@ -184,6 +195,13 @@ class UserController extends Controller {
 			$users_data['isdel'] = $isdel;
 		    $users_data['mycode'] = $mycode;
 			$users->add($users_data);
+
+		    if($tj>0){
+			    //邀请好友赠送积分
+				D("Integral_record")->OpIntegral(30,$tj,5,'',0,$username);//给推荐会员送积分
+		    }
+		    unset($tj);
+
 			$this->redirect("login");
 	  }
 	}

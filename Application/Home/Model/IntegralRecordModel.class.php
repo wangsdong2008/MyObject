@@ -252,8 +252,8 @@ class IntegralRecordModel extends Model{
     }
 
     //购买产品扣除积分，文章审核，精华积分
-    public function OpIntegral($rule_id,$userid,$rule_integral,$goodsname='',$news_id=0){//积分操作
-        if($goodsname=="" && $news_id==0) exit; //两个都不存在
+    public function OpIntegral($rule_id,$userid,$rule_integral,$goodsname='',$news_id=0,$username=''){//积分操作
+        if($goodsname=="" && $news_id==0 && $username=='') exit; //三个都不存在
         if($news_id>0){
             //判断这个文章是否存在
             $news = M('news');
@@ -268,6 +268,9 @@ class IntegralRecordModel extends Model{
                 exit;
             }
             unset($newslist);
+        }
+        if($username!=''){
+            $integral_record2_data['username'] = $username;
         }
         if($rule_integral == 0){
             $integral_rule = M('integral_rule');
@@ -290,7 +293,7 @@ class IntegralRecordModel extends Model{
         $pid = $integral_record2->add($integral_record2_data);
         unset($integral_record2, $integral_record2_data);
 
-        $this->UpdateUserIntegral($rule_integral);
+        $this->UpdateUserIntegral($rule_integral,$userid);
         return $pid;
     }
 
@@ -350,18 +353,21 @@ class IntegralRecordModel extends Model{
         //$integral_record_data['addtime'] = array('gt',time()-24*60*60*30);
         $count = $integral_record->where($integral_record_data)->count();
         $Page = new \Think\Page($count,10);
-        $integrallist = $integral_record->where($integral_record_data)->join('think_integral_rule on think_integral_record.rule_id=think_integral_rule.rule_id')->order('addtime desc')->page($nowPage.','.$Page->listRows)->field('id,addtime,goodsname,news_id,rule_name,integral')->select();
+        $integrallist = $integral_record->where($integral_record_data)->join('think_integral_rule on think_integral_record.rule_id=think_integral_rule.rule_id')->order('addtime desc')->page($nowPage.','.$Page->listRows)->field('id,addtime,goodsname,news_id,rule_name,integral,username')->select();
         foreach ($integrallist as $key => $value) {
             $integral = str_replace('-', '', $integrallist[$key]['integral']);
             $rule_name = $integrallist[$key]['rule_name'];
             $rule_name = str_replace('$integral_num', $integral,$rule_name );
-            if($value['goodsname']!=""){
+            if($value['goodsname'] != ""){
                 $rule_name = str_replace('$name', "《".$value['goodsname']."》", $rule_name);
             }
             if($value['news_id']*1>0){
                 $news = D("Home/news")->getNews($value['news_id'],$user_id);
                 $rule_name  =  str_replace('$name', "《".$news['news_title']."》", $rule_name);
                 unset($news);
+            }
+            if($value['username'] != ""){
+                $rule_name  =  str_replace('$username', "“".$value['username']."”", $rule_name);
             }
             $integrallist[$key]['rule_name'] = $rule_name;
             unset($rule_name);
