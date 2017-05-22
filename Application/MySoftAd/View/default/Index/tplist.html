@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tp代码生成器</title>
+	<meta http-equiv="x-ua-compatible" content="IE=9" >
+    <meta http-equiv="x-ua-compatible" content="IE=8" >
+    <meta http-equiv="x-ua-compatible" content="IE=7" >
+    <style>
+        *{padding: 0px; margin: 0px;}
+        img{ width:180px; height: 503px;}
+        div.main{width: 180px;overflow: hidden;}
+        ul{width: 900px; list-style-type: none;}
+        li{float: left;}
+        .clear{ clear: both; }
+    </style>
+    <script src="{$js_model_path}/js/jquery.js"></script>
+    <script>
+    $(function(){
+        var j = 1;
+        var i=1;
+        //setInterval为自动重复。
+        //clearInterval(对象) 清除已设置的setInterval对象
+        var intervalId;
+        intervalId = setInterval(function(){
+            $("ul").animate({"marginLeft":-1*j*180+"px"},300);
+            if(i==0){
+                j--;
+            }else{
+                j++;
+            }
+            if(j==4){
+                i=0;
+            }
+            if(j==0){
+                i=1;
+            }
+        },5000);
+    });
+    </script>
+</head>
+<body>
+<div class="main">
+    <ul>
+        <volist name="tplist" id="tplist">
+        <li><a href="{$tplist.ad_url}" target="_blank"><img src="/{$sys_upload_img}/{$tplist.ad_logo}" alt="{$tplist.ad_name}"></a></li>
+        </volist>
+    </ul>
+
+
+</div><div class="clear"></div>
+</body>
+</html>
