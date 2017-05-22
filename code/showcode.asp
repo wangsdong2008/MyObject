@@ -1,4 +1,5 @@
 <%
 id = request("id")
-response.redirect "/Index/showcode/id/"&id&".html"
+Response.Status="301 Moved Permanently"
+Response.AddHeader "Location", "/Index/showcode/id/"&id&".html"
 %>

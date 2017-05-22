@@ -1,5 +1,6 @@
 <%
 id = request("id")
 id = cint(id)+3
-response.redirect "/Index/softlist/id/"&id&".html"
+Response.Status="301 Moved Permanently"
+Response.AddHeader "Location", "/Index/softlist/id/"&id&".html"
 %>

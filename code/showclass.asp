@@ -5,5 +5,6 @@ id = 23
 else
 id = cint(id)+3
 end if
-response.redirect "/Index/codelist/id/"&id&".html"
+Response.Status="301 Moved Permanently"
+Response.AddHeader "Location", "/Index/codelist/id/"&id&".html"
 %>

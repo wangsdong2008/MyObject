@@ -34,9 +34,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Application/Home/View/default/index/showcodeclass.html" />
-        <option value="$PROJECT_DIR$/Application/Home/View/default/index/code.html" />
-        <option value="$PROJECT_DIR$/Application/Home/Model/AdModel.class.php" />
         <option value="$PROJECT_DIR$/Application/Home/View/default/index/showclass.html" />
         <option value="$PROJECT_DIR$/Public/default/js/top.js" />
         <option value="$PROJECT_DIR$/Application/Home/View/default/index/tech_search.html" />
@@ -44,19 +41,12 @@
         <option value="$PROJECT_DIR$/Application/Home/View/default/index/soft_search.html" />
         <option value="$PROJECT_DIR$/tech/shwotech.asp" />
         <option value="$PROJECT_DIR$/tech/1.asp" />
-        <option value="$PROJECT_DIR$/tech/showtech.asp" />
         <option value="$PROJECT_DIR$/bbs/showbbsclass.asp" />
-        <option value="$PROJECT_DIR$/tech/showclass.asp" />
-        <option value="$PROJECT_DIR$/bbs/showbbs.asp" />
-        <option value="$PROJECT_DIR$/bbs/showuser.asp" />
         <option value="$PROJECT_DIR$/Application/Home/Model/UsersModel.class.php" />
         <option value="$PROJECT_DIR$/Application/Home/View/default/index/showuser.html" />
         <option value="$PROJECT_DIR$/code/index.php" />
-        <option value="$PROJECT_DIR$/code/showcode.asp" />
         <option value="$PROJECT_DIR$/soft/index.php" />
         <option value="$PROJECT_DIR$/soft/showcode.asp" />
-        <option value="$PROJECT_DIR$/soft/showclass.asp" />
-        <option value="$PROJECT_DIR$/code/showclass.asp" />
         <option value="$PROJECT_DIR$/Application/Home/View/default/index/pay.html" />
         <option value="$PROJECT_DIR$/Application/Home/View/default/index/index.html" />
         <option value="$PROJECT_DIR$/Application/Home/Model/ArticleModel.class.php" />
@@ -84,7 +74,17 @@
         <option value="$PROJECT_DIR$/Application/Admin/View/admin/Index/news-add.html" />
         <option value="$PROJECT_DIR$/Application/Home/Controller/UserController.class.php" />
         <option value="$PROJECT_DIR$/Application/Home/Model/IntegralRecordModel.class.php" />
+        <option value="$PROJECT_DIR$/Application/Home/View/default/index/showbbsclass.html" />
         <option value="$PROJECT_DIR$/Application/Admin/Controller/IndexController.class.php" />
+        <option value="$PROJECT_DIR$/bbs/showbbs.asp" />
+        <option value="$PROJECT_DIR$/bbs/showclass.asp" />
+        <option value="$PROJECT_DIR$/code/showclass.asp" />
+        <option value="$PROJECT_DIR$/code/showcode.asp" />
+        <option value="$PROJECT_DIR$/bbs/showuser.asp" />
+        <option value="$PROJECT_DIR$/soft/showclass.asp" />
+        <option value="$PROJECT_DIR$/soft/showsoft.asp" />
+        <option value="$PROJECT_DIR$/tech/showclass.asp" />
+        <option value="$PROJECT_DIR$/tech/showtech.asp" />
       </list>
     </option>
   </component>
@@ -101,10 +101,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1376" />
-    <option name="height" value="744" />
+    <option name="x" value="233" />
+    <option name="y" value="58" />
+    <option name="width" value="977" />
+    <option name="height" value="612" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -129,6 +129,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -149,7 +150,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -207,10 +207,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
+    <frame x="233" y="58" width="977" height="612" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19558823" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.276795" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -248,27 +248,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Application/Home/View/default/index/showclass.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63212436">
-          <caret line="29" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Public/default/js/top.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Home/View/default/index/code_search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.964285">
-          <caret line="46" column="10" selection-start-line="46" selection-start-column="6" selection-end-line="46" selection-end-column="133" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Home/View/default/index/tech_search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.785714">
@@ -290,34 +269,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tech/showtech.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.098445594">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bbs/showclass.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bbs/showbbs.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bbs/showuser.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6785714">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Home/Model/UsersModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.575592">
@@ -336,55 +287,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49222797">
           <caret line="42" column="66" selection-start-line="42" selection-start-column="66" selection-end-line="42" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3571428">
-          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tech/showclass.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/showcode.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0328152">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/showsoft.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/showclass.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/showclass.asp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22970639">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -427,7 +329,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="224" column="41" selection-start-line="224" selection-start-column="41" selection-end-line="224" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -484,7 +385,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.5">
           <caret line="197" column="32" selection-start-line="197" selection-start-column="24" selection-end-line="197" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -492,7 +392,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="39" column="52" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -500,7 +399,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.4">
           <caret line="269" column="19" selection-start-line="269" selection-start-column="1" selection-end-line="269" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -508,7 +406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="71.25">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -516,7 +413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.464286">
           <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -524,10 +420,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.142858">
           <caret line="74" column="90" selection-start-line="74" selection-start-column="90" selection-end-line="74" selection-end-column="90" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#td#8;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#4;n#td#8;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -535,7 +427,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47408828">
           <caret line="46" column="124" selection-start-line="46" selection-start-column="124" selection-end-line="46" selection-end-column="124" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -543,11 +434,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.857142">
           <caret line="55" column="195" selection-start-line="55" selection-start-column="195" selection-end-line="55" selection-end-column="195" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#if#0;n#td#5;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#if#0;n#td#5;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#2;n#if#0;n#td#5;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -555,7 +441,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45941278">
           <caret line="60" column="84" selection-start-line="60" selection-start-column="84" selection-end-line="60" selection-end-column="108" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -563,9 +448,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6234888">
           <caret line="96" column="59" selection-start-line="96" selection-start-column="59" selection-end-line="96" selection-end-column="59" />
-          <folding>
-            <element signature="n#style#0;n#textarea#0;n#li#4;n#ul#0;n#div#1;n#div#0;n#form#0;n#if#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -573,9 +455,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.892857">
           <caret line="140" column="43" selection-start-line="140" selection-start-column="43" selection-end-line="140" selection-end-column="43" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#8;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -583,9 +462,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33205375">
           <caret line="282" column="63" selection-start-line="282" selection-start-column="48" selection-end-line="282" selection-end-column="63" />
-          <folding>
-            <marker date="1495178129119" expanded="true" signature="-1:-1" placeholder="update think..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -593,10 +469,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31088084">
           <caret line="352" column="288" selection-start-line="352" selection-start-column="288" selection-end-line="352" selection-end-column="288" />
-          <folding>
-            <element signature="e#4190#5688#0#PHP" expanded="false" />
-            <marker date="1495179004704" expanded="true" signature="-1:-1" placeholder="SELECT FROM_..think_integral_record..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -604,7 +476,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.60103625">
           <caret line="59" column="31" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -612,7 +483,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.656304">
           <caret line="20" column="34" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -620,9 +490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.761658">
           <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding>
-            <marker date="1495089819143" expanded="true" signature="-1:-1" placeholder="update think..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -630,19 +497,111 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.575592">
           <caret line="182" column="52" selection-start-line="182" selection-start-column="34" selection-end-line="182" selection-end-column="52" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Home/View/default/index/showbbsclass.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Admin/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58733207">
-          <caret line="1284" column="68" selection-start-line="1284" selection-start-column="68" selection-end-line="1284" selection-end-column="68" />
-          <folding>
-            <marker date="1495179478253" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1495179478253" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1495179478253" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="-5.448276">
+          <caret line="4295" column="23" selection-start-line="4295" selection-start-column="23" selection-end-line="4295" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/about/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="1" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbs/showbbs.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3571428">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbs/showclass.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3571428">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3571428">
+          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/showclass.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.75">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12751678">
+          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/showcode.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3571428">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbs/showuser.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12751678">
+          <caret line="3" column="60" selection-start-line="3" selection-start-column="60" selection-end-line="3" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/showclass.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0357144">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/showsoft.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3571428">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tech/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tech/showclass.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0357144">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tech/showtech.asp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12751678">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
         </state>
       </provider>
     </entry>
