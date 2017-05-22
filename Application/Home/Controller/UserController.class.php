@@ -76,17 +76,25 @@ class UserController extends Controller {
 		$users_data['username'] = array('eq',$v);
 		$userslist = $users->where($users_data)->field('id')->limit(1)->find();
 		if(!$userslist){
-		   $result = 'yes';
+		   $result = 1;
 		}else{
-		   $result = 'no';
+		   $result = 0;
 		}
 		return $result;
 	}
 
 	//检查用户名
 	public function checkusersname(){
-		$username = I('username','');
-		echo $this->checkuname($username);
+		$param = I('param','');
+		$result = $this->checkuname($param);
+		if($result == 1){
+			$data['info'] = '验证通过！';
+			$data['status'] = 'y';
+		}else{
+			$data['info'] = '用户名已经存在';
+			$data['status'] = 'n';
+		}
+		echo json_encode($data);
 	}
 
 
@@ -131,6 +139,10 @@ class UserController extends Controller {
 
 	//注册
 	public function reg(){
+		$token = md5(uniqid(rand(), true));
+		session("token",$token);
+		$this->assign('token',$token);
+		unset($this,$token);
 		$this->display('register');
 	}
 
@@ -138,9 +150,6 @@ class UserController extends Controller {
 	//注册写入数据库
 	public function register(){
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-	  if($this->checkv() == 'no'){
-		  $this->error("亲，验证码输错了哦！");
-	  }
 	  $username = I("username");
 	  $password = I("password");
 	  $usecpwd = I("usecpwd");
@@ -148,32 +157,32 @@ class UserController extends Controller {
 		  $this->error("两次密码不一样哦！");
 	  }
 	  //检测用户名是否存在
-	  if($this->checkuname($username)=='no'){
-		  $this->error("亲，此用户名已经存在！");
-	  }
 	  $question = I("question");
 	  $answer = I("answer");
 	  $regtime = time();
 	  $isdel = 0;
 	  $users = M('users');
+	  $mycode = myRands(4);
 	  $validate = array(
 			array('username','require','会员名必须填写！',1), // 仅仅需要进行验证码的验证 1为必须验证 2为有才验证
-		    //array('username','','会员名已经存2在！',0,'unique',1), // 在新增的时候验证name字段是否唯一
+		    array('username','','会员名已经存在！',0,'unique',1), // 在新增的时候验证name字段是否唯一
 			array('password','require','密码必须填写！',1),
 			array('question','require','问题必须填写！',1),
-			array('answer','require','答案必须填写！',1),/**/
+			array('answer','require','答案必须填写！',1),
 	  );
 	  $users->setProperty("_validate",$validate);
 	  if (!$users->create()){
 			// 如果创建失败 表示验证没有通过 输出错误提示信息
 		    exit($users->getError());
 	  }else{
+		    $users_data['true_name'] = $username;
   		    $users_data['username'] = $username;
 			$users_data['password'] = md5($password);
 			$users_data['question'] = $question;
 			$users_data['answer'] = $answer;
 			$users_data['regtime'] = $regtime;
 			$users_data['isdel'] = $isdel;
+		    $users_data['mycode'] = $mycode;
 			$users->add($users_data);
 			$this->redirect("login");
 	  }
