@@ -357,14 +357,17 @@ class IndexController extends Controller {
 
 	public function savePosts(){
 		$posts = D('Home/posts');
+		$id = I('ThreadID');
 		if (!$posts->create()){ // 创建数据对象
 			// 如果创建失败 表示验证没有通过 输出错误提示信息
 			exit($posts->getError());
 		}else{
 			// 验证通过 写入新增数据
 			$posts->add();
+			//更新回复数
+			D("Home/threads")->updateThreadsPostnum($id);
 		}
-		$this->redirect("showbbs",array('id'=>I('ThreadID')));
+		$this->redirect("showbbs",array('id'=>$id));
 	}
 
 	//发贴
@@ -422,6 +425,9 @@ class IndexController extends Controller {
 		if($id==0) exit;
 		else $this->assign('ThreadID',$id);
 		$threads = D("Home/threads")->showthreads($id);
+		//更新点击数
+		D("Home/threads")->updateThreadsHits($id);
+
 		$cat_id = $threads['cat_id'];
 		$this->assign('threads',$threads);
 		unset($threads);

@@ -142,6 +142,24 @@ class ThreadsModel extends Model{
         return $threadslist;
     }
 
+    //更新点击量
+    public function updateThreadsHits($threads_id=0){
+        if($threads_id == 0) exit;
+        $Model = M();
+        $sql = "update ".C('DB_PREFIX')."threads set `hits` = `hits`+1 where `ThreadId` = '$threads_id'";
+        $Model->execute($sql);
+        unset($sql,$Model);
+    }
+
+    //更新回复数
+    public function updateThreadsPostnum($threads_id=0){
+        if($threads_id == 0) exit;
+        $Model = M();
+        $sql = "update ".C('DB_PREFIX')."threads set `postnum` = `postnum`+1 where `ThreadId` = '$threads_id'";
+        $Model->execute($sql);
+        unset($sql,$Model);
+    }
+
 
     //以下是个人用户信息
     //本人发布的帖子
