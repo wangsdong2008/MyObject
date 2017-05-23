@@ -1413,7 +1413,7 @@ class IndexController extends Controller {
 				}
 			}
 		}
-		if ($sys_baidu_send == 1) {
+		if ($sys_baidu_send == 1 && $is_show == 1) { //通过审核的，并且填写的baiapi的地址才能推送
 			//推送
 			$url = $sys_url . "/Index/showtech/id/" . $news_id . ".html";
 			$data = $this->sendbaidu($url, $sys_baidu_api);
