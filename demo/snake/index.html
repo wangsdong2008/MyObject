@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>snake</title>
+<script>
+function Snake(canvas){
+	this.canvas = canvas;
+	this.length = 0;
+	this.direction = 'down';
+	this.body = [],
+	this.head = function(){
+		return this.length == 0 ? null : this.body[0];
+	};
+	this.isAlive = true;
+	this.onDie = null;
+	this.onEat = null;
+	this.speed = 300;
+	this.auto = null;
+	this.turned = false;
+	this.turn = function(d){
+		if(this.turned){
+			return;
+		}else{
+			switch(d){
+				case 'left':
+				case 'right':
+					if(this.direction == 'left' || this.direction == 'right'){
+						return;
+					}
+					break;
+				case 'up':
+				case 'down':
+					if(this.direction == 'up' || this.direction == 'down'){
+						return;
+					}
+					break;
+			}
+			this.direction = d;
+			this.turned = true;
+		}
+	}
+	this.turnLeft = function(){this.turn('left');};
+	this.turnRight = function(){this.turn('right')};
+	this.turnUp = function(){this.turn('up')};
+	this.turnDown = function(){this.turn('down')};
+	this.moveTo = function(x, y){
+		this.canvas.clsCanvas(this);
+		this.body.pop();
+		this.length--;
+		this.grow(x, y);
+		this.canvas.drawSnake(this);
+		this.turned = false;
+	};
+	this.grow = function(bX, bY){
+		var head = {
+			x : bX,
+			y : bY
+		};
+		this.body.unshift(head);
+		this.length++;
+	};
+	this.stepWalk = function(){
+		if(!this.isAlive){return;}
+		if(!this.head()){
+			throw new Error('this snake is not initialized');
+		}
+		var nextBlock, head = this.head();
+		var nX = head.x, nY = head.y;
+		switch(this.direction){
+			case 'down':
+				nY = head.y + 1;
+				break;
+			case 'up':
+				nY = head.y - 1;
+				break;
+			case 'left':
+				nX = head.x - 1;
+				break;
+			case 'right':
+				nX = head.x + 1;
+				break;
+		}
+		if(nX < 1 || nY < 1 || nX > canvas.width || nY > canvas.height || this.contains(nX, nY)){
+			this.isAlive = false;
+			if(this.onDie){this.onDie();}
+		}else{
+			nextBlock = this.canvas.getBlock(nX, nY);
+			if(this.canvas.isFoodBlock(nextBlock)){
+				nextBlock.setAttribute('food','');	// the food has been eaten
+				this.grow(nX, nY);
+				if(this.onEat){this.onEat();}
+				var t = this;
+				setTimeout(function(){t.stepWalk();},80 );
+			}else{
+				this.moveTo(nX, nY);
+			}
+		}
+	};
+	this.autoWalk = function(){
+		var snake = this;
+		this.auto = setInterval(function(){
+								if(snake.isAlive){
+									snake.stepWalk();
+								}else{
+									clearInterval(snake.auto);
+								}
+							}, this.speed );
+	};
+	this.contains = function(x,y){
+			var len = this.length, snakeBody = this.body, b;
+			for(var i=0;i<len;i++){
+				b = snakeBody[i];
+				if(b.x == x && b.y == y){
+					return true;
+				}
+			}
+			return false;
+	};
+	this.init = function(length){
+		if(length<this.canvas.height){
+			for(var i=0; i<length;i++){
+				this.grow(1, i+1);
+			}
+		};
+		this.canvas.drawSnake(this);
+		this.canvas.createFood();
+	},
+	this.pause = function(){
+		if(this.auto){
+			clearInterval(this.auto);
+			this.auto = null;
+		}
+	};	
+}
+function SnakeCanvas(div){
+	this.target = div;
+	this.createView();
+}
+SnakeCanvas.prototype = {
+	width: 20,
+	height: 16,
+	currentSnake : null,
+	createView : function(){
+		var i = 0, span;
+		addClass(this.target, 'target');
+		
+		while(i < 320){
+			span = document.createElement('span');
+			span.id = 'span_' + (++i);
+			addClass(span, 'blocks');
+			this.target.appendChild( span );
+		}
+	},
+	getBlock : function(x, y){
+		return document.getElementById('span_' + (y ? ((y-1) * this.width + x) : (x+1)));
+	},
+	activateBlock : function(block){
+		block.setAttribute('act', 'true');
+		addClass(block, 'snake-body');
+	},
+	inActivateBlock: function(block){
+		block.setAttribute('act', '');
+		removeClass(block, 'snake-body');
+	},
+	switchBlock: function(block){
+		var active = block.getAttribute('act');
+		if(active){
+			this.inActivateBlock(block);
+		}else{
+			this.activateBlock(block);
+		}
+	},
+	isFoodBlock: function(block){
+		return !!(block.getAttribute('food'));
+	},
+	createFood : function(){
+		var posX = 0, posY = 0, done = false, block;
+		while( !done){
+			posX = Math.floor(Math.random() * (this.width + 1));
+			posY = Math.floor(Math.random() * (this.height + 1));
+			if(posX == 0){ posX = 1;} if(posY == 0){ posY = 1;}
+			block = this.getBlock(posX, posY);
+			if(!this.currentSnake || (!this.currentSnake.contains(posX, posY))){
+				block.setAttribute('food', 'true');
+				this.switchBlock(block);
+				done = true;
+			}
+		}
+	},
+	clsCanvas : function(snake){
+		var snakeBlock, i = 0;
+		if(snake){
+			for(;i<snake.length;i++){
+				snakeBlock = snake.body[i];
+				this.inActivateBlock(this.getBlock(snakeBlock.x, snakeBlock.y));
+			}
+		}else{
+			while(i< this.width * this.height){
+				this.inActivateBlock(this.getBlock(i));
+			}
+		}
+	},
+	drawSnake : function(snake){
+		var snakeBlock;
+		for(var i=0;i<snake.length;i++){
+			snakeBlock = snake.body[i];
+			this.activateBlock(this.getBlock(snakeBlock.x, snakeBlock.y));
+		}
+		this.currentSnake = snake;
+	}
+};
+//---------------------------//
+
+function trim(text){
+	var	rnotwhite = /\S/,
+	// Used for trimming whitespace
+	trimLeft = /^\s+/,
+	trimRight = /\s+$/;	
+
+	// IE doesn't match non-breaking spaces with \s
+	if ( rnotwhite.test( "\xA0" ) ) {
+		trimLeft = /^[\s\xA0]+/;
+		trimRight = /[\s\xA0]+$/;
+	}
+	
+	return text.toString().replace( trimLeft, "" ).replace( trimRight, "" );
+}
+
+function addClass(elem, className){
+	var setClass;
+	if ( elem.nodeType === 1 ) {
+		if ( !elem.className ) {
+			elem.className = className;
+
+		} else {
+			setClass = " " + elem.className + " ";
+			if ( !~setClass.indexOf( " " + className + " " ) ) {
+				setClass += className + " ";
+			}
+			elem.className = trim(setClass);
+		}
+	}
+}
+
+function removeClass(elem, value){
+	var className;
+	if ( elem.nodeType === 1 && elem.className ) {
+		if ( value ) {
+			className = (" " + elem.className + " ").replace( /[\n\t\r]/g, " " );
+			className = className.replace(" " + value + " ", " ");
+			elem.className = trim( className );
+		} else {
+			elem.className = "";
+		}
+	}
+}
+ function keyDown(e){
+	if(!snake || !snake.isAlive) {
+		return;
+	}
+	e=e||window.event;
+	var keyCode = e.keyCode||e.which||e.charCode;
+	switch(keyCode){
+		case 37://左
+			snake.turnLeft();
+			break;
+		case 38://上
+			snake.turnUp();
+			break;
+		case 39://右
+			snake.turnRight();
+			break;
+		case 40://下
+			snake.turnDown();
+			break;
+		case 80://p 暂停or开始
+		case 229:
+			if(snake.auto){
+				snake.pause();
+			}else{
+				snake.autoWalk();
+			}
+			break;
+	}
+}
+if(document.attachEvent){
+	document.attachEvent('onkeydown', keyDown);
+}else if(document.addEventListener){
+	document.addEventListener('keydown', keyDown, false);
+}
+</script>
+<style>
+div{
+	margin: 20px auto;
+}
+.target{
+	display:block;
+	width: 400px;
+	height: 320px;
+	border: 1px solid black;
+	overflow: hidden;
+}
+.blocks{
+	display:block;
+	width: 18px;
+	height: 18px;
+	border: 1px dotted #ddd;
+	float:left;
+}
+.snake-body{
+	background-color: #111;
+	border-style: solid;
+}
+</style>
+</head>
+<body>
+<h1>Snake</h1>
+<div id='t'></div>
+<div>您的得分是：<span id="s">0</span></div>
+<div>
+操作提示：按上下左右键操作，按 P 键暂停或继续
+</div>
+<script>
+var canvas = new SnakeCanvas( document.getElementById('t') );
+var snake = new Snake( canvas );
+var score = 0, initSpeed = snake.speed;
+snake.onDie = function(){
+	alert('game over');
+};
+snake.onEat = function(){
+	snake.canvas.createFood();
+	score++;
+	var speed = initSpeed;
+	if(score % 5 == 0){
+		speed -= 10;
+	}
+	if(speed < 100){
+		speed = 100;
+	}
+	snake.speed = speed;
+	document.getElementById('s').innerHTML = score * 100 ;
+};
+snake.init(3);
+snake.autoWalk();
+// snake.pause();
+</script>
+
+</html>

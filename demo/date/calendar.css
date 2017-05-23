@@ -1,0 +1,15 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td,hr,span,strong,img,em,object,option,select{margin:0;padding:0;}
+
+.zk_container { width:175px; position:relative;  background:#fff; padding:5px;border:#E6E6E6 solid 1px;}
+.zk_container .cal_container dl{ width:175px;font-size:12px; font-family:Tahoma, Geneva, sans-serif;}
+.zk_container .cal_container dt{ float:left; width:25px; height:25px; line-height:25px; text-align:center;background:#E6E6E6;}
+.zk_container .cal_container .cal_top{ height:25px; width:175px; font-weight:bold; background:#E6E6E6; position:relative;}
+.zk_container .cal_container .cal_top a{ cursor:pointer;  font-size:12px; display:block; width:20px; height:20px; position:absolute; top:0px;}
+.zk_container .cal_container .cal_top .l-arrow{ left:5px;}
+.zk_container .cal_container .cal_top .r-arrow{ right:5px;}
+.zk_container .cal_container dd{ font-weight:normal; color:#555;clear:both;}
+.zk_container .cal_container dd a{ width:22px; height:22px; display:block; background:#FFFFFF; text-align:center; line-height:25px; float:left; border:#E6E6E6 solid 1px;cursor:pointer; margin:1px 1px 0 0;}
+.zk_container .cal_container dd a.disabled{ color:#CCCCCC;cursor:auto; background:#F0F0F0;}
+.zk_container .cal_container dd a.mouseover{ background:#C63;color:#fff;}
+.zk_container .cal_container dd a.today{ background:#C63; font-weight:bold; color:#FFFFFF;}
+.zk_container .cal_container dd a.log{ color:#C63;}

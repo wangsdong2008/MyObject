@@ -1,0 +1,12 @@
+body{ padding:0px; margin:0px; margin:0 auto;}
+img{ border:0px;}
+
+/* 产品一级分类页css begin */
+.h2_pronav_title{ width:175px; height:30px; background:url(../images/Product_l_top.png) no-repeat; margin-top:8px; font-size:14px; padding:5px 0px 0px 15px; color:#B00000;}
+.Product_nav_l { width:190px;}
+.Product_nav_l dl{ width:188px; height:auto; overflow:hidden; border:1px solid #FECF64;}
+.Product_nav_l dt{ color:#8A3C00; height:30px; line-height:30px; vertical-align:middle; padding-left:15px; clear:both; position:relative; cursor:pointer;}
+.Product_nav_l dd{ clear:both; width:188px; overflow:hidden; margin-left:25px;}
+.Product_nav_l a{color:#666; display:block; display:inline; float:left; width:80px; height:20px; font-size:12px;}
+.Product_nav_l dt i{ display:block; position:absolute; right:10px; top:4px; width:12px; height:12px;}
+.pro_nav_font{ color:#03F; font-size:14px;background:url(../images/nav_ico1.gif) no-repeat 4px 10px; margin-left:0px;}

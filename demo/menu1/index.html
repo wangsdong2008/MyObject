@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="style/product.css" rel="stylesheet" type="text/css" />
+<title>无标题文档</title>
+</head>
+<body>
+<div class="Product_nav_l">
+  <h2 class="h2_pronav_title">工业电器</h2>
+  <dl id="aaa2">
+    <dt class="pro_nav_font">低压电器: <i><img src="images/close.gif" width="12" height="12" /></i> </dt>
+    <dd style="display:none;"><a href="#">控制器</a> <a href="#">工业防水插头</a> <a href="#">电抗器</a> <a href="#">电磁铁</a> <a href="#">磁力起动器</a> <a href="#">警示灯</a> <a href="#">电抗器</a> <a href="#">蜂鸣器</a> <a href="#">电涌保护器</a></dd>
+    
+    <dt class="pro_nav_font">低压电器2: <i><img src="images/close.gif" width="12" height="12" /></i> </dt>
+    <dd style="display:none;"><a href="#">控制器2</a> <a href="#">工业防水插头</a> <a href="#">电抗器</a> <a href="#">电磁铁</a> <a href="#">磁力起动器</a> <a href="#">警示灯</a> <a href="#">电抗器</a> <a href="#">蜂鸣器</a> <a href="#">电涌保护器</a></dd>
+    
+  </dl>
+</div>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#aaa2").find('dt').each(function(){
+	    $(this).click(
+		  function() { 
+			str=$(this).html();	
+			t=200;
+			if(str.indexOf("close.gif")>0){				
+				str=str.replace("close.gif","open.gif");
+				$(this).next().slideDown(t);
+			}
+			else
+			{
+				str=str.replace("open.gif","close.gif");				
+				$(this).next().slideUp(t);
+			}
+			$(this).html(str);	
+		  }); 
+	});	
+});
+</script>
+</body>
+</html>
