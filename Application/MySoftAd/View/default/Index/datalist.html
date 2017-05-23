@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据库结构导出工具</title>
+    <meta http-equiv="x-ua-compatible" content="IE=11" >
+    <meta http-equiv="x-ua-compatible" content="IE=10" >
+    <meta http-equiv="x-ua-compatible" content="IE=9" >
+    <style>
+        *{padding: 0px; margin: 0px;}
+        img{ width:175px; height: 370px;}
+        div.main{width: 175px;overflow: hidden;}
+        ul{width: 875px; list-style-type: none;}
+        li{float: left;}
+        .clear{ clear: both; }
+    </style>
+    <script src="{$js_model_path}/js/jquery.js"></script>
+    <script>
+    $(function(){
+        var j = 1;
+        var i=1;
+        //setInterval为自动重复。
+        //clearInterval(对象) 清除已设置的setInterval对象
+        var intervalId;
+        intervalId = setInterval(function(){
+            $("ul").animate({"marginLeft":-1*j*175+"px"},300);
+            if(i==0){
+                j--;
+            }else{
+                j++;
+            }
+            if(j==4){
+                i=0;
+            }
+            if(j==0){
+                i=1;
+            }
+        },5000);
+    });
+    </script>
+</head>
+<body>
+<div class="main">
+    <ul>
+        <volist name="datalist" id="datalist">
+        <li><a href="{$datalist.ad_url}" target="_blank"><img src="/{$sys_upload_img}/{$datalist.ad_logo}" alt="{$datalist.ad_name}"></a></li>
+        </volist>
+    </ul>
+</div><div class="clear"></div>
+</body>
+</html>

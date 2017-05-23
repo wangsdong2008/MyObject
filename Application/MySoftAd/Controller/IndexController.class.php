@@ -23,4 +23,12 @@ class IndexController extends Controller {
         unset($tplist);
         $this->display('tplist');
     }
+
+    //数据库结构导出广告
+    public function DataExport(){
+        $datalist = D("Home/ad")->getAdlist(40);
+        $this->assign('datalist',$datalist);
+        unset($datalist);
+        $this->display('datalist');
+    }
 }
