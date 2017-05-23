@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的贴子-会员中心-{$sys_sitename}</title>
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <script>
+                s=4;
+            </script>
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span><a title="贴子">贴子</a></span><span> &gt; </span><span>我的贴子</span><a id="YourPosition_SkipLink"></a></span></div>
+                <div class="model_info_list">
+                    <div class="model_info_sate mtop10">
+                        <ul>
+                            <!-- CSS Tabs -->
+                            <li id="EliteContentList" class="hover"><span> <a id="LinkContentList" href="{:U('user_threads',array('flg'=>3))}">所有贴子</a></span> </li>
+                            <li id="ElitePending"><span> <a id="LinkPending" href="{:U('user_threads',array('flg'=>1))}">待审核的贴子</a></span> </li>
+                            <li id="EliteAudited"><span> <a id="LinkAudited" href="{:U('user_threads',array('flg'=>2))}">已审核的贴子</a></span> </li>
+                            <li id="EliteAudited2"><span> <a id="LinkAudited2" href="{:U('user_threads',array('flg'=>0))}">未通过的贴子</a></span> </li>
+                        </ul>
+                    </div>
+                    <!--模型内容列表开始-->
+                    <div class="model_info_content">
+                        <!--列表开始-->
+                        <div>
+                            <table id="EgvContent" cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
+                                <thead>
+                                <tr class="model_info_title">
+                                    <th scope="col">标题</th>
+                                    <th style="width:120px;" scope="col">发布时间</th>
+                                    <th scope="col" style="width:10%;">最后回复</th>
+                                    <th scope="col" style="width:120px;">回复时间</th>
+                                    <th scope="col" style="width:10%;">状态</th>
+                                </tr>
+                                <volist name="Threadslist.list" id="Threadslist">
+                                <tr class="listbg1">
+                                    <td class="content_left"><div class="linkType"><a href="{:U('Index/showbbs',array('id'=>$Threadslist['threadid']))}" target="_blank">{$Threadslist.topic}</a></div></td>
+                                    <td>{$Threadslist.posttime|date="Y-m-d H:i:s",###}</td>
+                                    <td>{$Threadslist.lastname|msubstr=0,10}</td>
+                                    <td>{$Threadslist.lasttime|date="Y-m-d H:i:s",###}</td>
+                                    <td><font color="green">通过</font></td>
+                                    </td>
+                                </tr>
+                                </volist>
+                                </thead>
+                            </table>
+                            <div class="list_page">{$pagefooter}</div>
+
+                        </div>
+                        <!--列表结束-->
+                    </div>
+                    <!--模型内容列表结束-->
+                </div>
+                <div class="clear"> </div>
+                <!--<div class="model_list_manage">
+                    <form name="search" action="?act=list&uid=6" method="post">
+                        &nbsp;&nbsp;搜索标题：<select name="cat_id" id="cat_id">
+                        <option value="0">选择所属分类</option>
+                        <option value="24">Net版块</option><option value="25">Css版块</option><option value="26">Js版块</option><option value="27">Ajax版块</option><option value="28">Xml版块</option><option value="29">数据库版块</option><option value="30">Html版块</option><option value="31">软件使用版块</option>
+                    </select>
+                        <input name="keyword" type="text" id="keyword" class="inputxt" />
+                        <input type="submit" name="BtnSearch" value="搜索" id="BtnSearch" class="input_button" />
+                    </form>
+                </div>-->
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<!--网站底部结束-->
+</body>
+</html>

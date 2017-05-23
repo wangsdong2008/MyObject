@@ -405,7 +405,6 @@ class UserController extends Controller {
 				echo '此教程已经审核通过，不可修改';exit;
 			}
 		}
-
 		$news = D("news"); // 实例化User对象
 		$data = $news->create();
 		if($data['news_id']>0){
@@ -413,7 +412,7 @@ class UserController extends Controller {
 		}else{
 			$news->add();
 		}
-        $this->redirect("newslist");
+		$this->redirect('newslist',array('flg'=>0));
 	}
 
 	//教程修改
@@ -441,14 +440,16 @@ class UserController extends Controller {
 
 	//教程列表
 	public function newslist(){
-		$isshow = I('flg',1);
+		$isshow = I('flg',3);
 		$this->assign('flg',$isshow);
 		$cat_id = I('cat_id',0);
 		$keyword = I('keyword');
 		$news = M('news');
 		$userid = session('userid');
 		$news_data['userid'] = array('eq',$userid);
-		$news_data[C(DB_PREFIX).'news.is_show'] = array('eq',$isshow);
+		if($isshow<3){
+			$news_data[C(DB_PREFIX).'news.is_show'] = array('eq',$isshow);
+		}
 		if($cat_id > 0){
 			$news_data[C(DB_PREFIX).'news.cat_id'] = array('eq',$cat_id);
 			$this->assign('cat_id',$cat_id);
@@ -535,6 +536,17 @@ class UserController extends Controller {
 		}
 		unset($orderstatus);
 
+	}
+
+	//帖子列表
+	public function user_threads(){
+		$flg = I('flg',3);
+		$this->assign('flg',$flg);
+		$userThreadslist = D("Home/threads")->getUserPageThreads(session("userid"),10);
+		$this->assign('Threadslist',$userThreadslist);
+		$this->assign('pagefooter',$userThreadslist['pagefooter']);
+
+		$this->display('user_threads');
 	}
 
 }

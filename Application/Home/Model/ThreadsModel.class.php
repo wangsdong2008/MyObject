@@ -142,4 +142,26 @@ class ThreadsModel extends Model{
         return $threadslist;
     }
 
+
+    //以下是个人用户信息
+    //本人发布的帖子
+    public function getUserPageThreads($userid,$pagesize=10){
+        $threads = M('threads');
+        $threads_data['deleted'] = array('eq',0);
+        $threads_data['PostUserid'] = array('eq',$userid);
+        $nowPage = I('page')?I('page'):1;
+        $count = $threads->where($threads_data)->count();
+        $threadslist['count'] = $count;
+        $Page = new \Think\Page($count,$pagesize);
+        $threadslist['list'] = $threads
+            ->where($threads_data)
+            ->order('PostTime desc')
+            ->field('`ThreadId`,`Topic`,`PostTime`,`LastName`,`LastTime`')
+            ->page($nowPage.','.$Page->listRows)->select();
+        $objPage = array();
+        $threadslist['pagefooter'] = showpage($nowPage,$count,$objPage);
+        unset($nowPage,$count,$Page,$threads,$threads_data);
+        return $threadslist;
+    }
+
 }

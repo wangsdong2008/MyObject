@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,7 +15,7 @@
 </head>
 <body>
 <script>
-    s = 2;
+    s = 3;
 </script>
 <div class="wrapper">
     <!--网站内容开始-->
@@ -37,7 +35,8 @@
                     <div class="model_info_sate mtop10">
                         <ul>
                             <!-- CSS Tabs -->
-                            <li id="EliteContentList"<if condition="$flg eq '1'"> class="hover"</if>><span> <a id="LinkContentList" href="{:U('newslist',array('flg'=>1))}">已通过的教程信息</a></span> </li>
+                            <li id="EliteContentList"<if condition="$flg eq '3'"> class="hover"</if>><span> <a id="LinkContentList" href="{:U('newslist',array('flg'=>3))}">所有教程</a></span> </li>
+                            <li id="EliteContentList2"<if condition="$flg eq '1'"> class="hover"</if>><span> <a id="LinkContentList2" href="{:U('newslist',array('flg'=>1))}">已通过的教程信息</a></span> </li>
                             <li id="ElitePending"<if condition="$flg eq '0'"> class="hover"</if>><span> <a id="LinkPending" href="{:U('newslist',array('flg'=>0))}">待审核的教程信息</a></span> </li>
                             <li id="EliteAudited2"<if condition="$flg eq '-1'"> class="hover"</if>><span> <a id="LinkAudited2" href="{:U('newslist',array('flg'=>-1))}">未通过的教程信息</a></span> </li>
                         </ul>
