@@ -111,6 +111,12 @@
                                         <label> 教程内容：</label>
                                         <textarea style="width:550px; height:350px;" id="news_content" rows="50" cols="10" name="news_content" errormsg="教程内容不能为空" datatype="*">{$newslist.news_content}</textarea><a class="Validform_checktip Validform_wrong">*</a>
                                     </li>
+                                    <if condition="$newslist.is_show == -1">
+                                    <li>
+                                        <label> 审核不通过理由：</label>
+                                        <span style="border: 1px solid #f00; height: 25px; padding: 5px;">{$newslist.show_error}</span>
+                                    </li>
+                                    </if>
                                 </ul>
                                 <div class="submit_model_content">
                                     <input type="submit" name="BtnSave" value="提交" class="submit_button" />

@@ -1320,6 +1320,7 @@ class IndexController extends Controller {
 			$this->assign('news_keyword',$newslist['news_keyword']);	
 			$this->assign('news_description',$newslist['news_description']);
 			$this->assign('news_time',$newslist['news_time']);
+			$this->assign('show_error',$newslist['show_error']);
 		}	
 		$categorylist1 = $this->getcategorylist(2);		
 		$this->assign('category_list',$categorylist1);					
@@ -1370,6 +1371,10 @@ class IndexController extends Controller {
 		$is_show = I('is_show', 0);
 		$news_keyword = I('news_keyword');
 		$news_description = I('news_description');
+		$show_error = '';
+		if($is_show == -1){
+			$show_error = I('show_error');
+		}
 
 		$news = M('news');
 		$news_data['cat_id'] = $cat_id;
@@ -1383,6 +1388,7 @@ class IndexController extends Controller {
 		$news_data['news_keyword'] = $news_keyword;
 		$news_data['news_description'] = $news_description;
 		$news_data['news_time'] = strtotime(I('news_time', ''));
+		$news_data['show_error'] = $show_error;
 		if ($news_id == 0) {
 			$news_id = $news->add($news_data);
 		} else {

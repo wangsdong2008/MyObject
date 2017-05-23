@@ -128,6 +128,13 @@ KindEditor.ready(function(K) {
       </div>
       <div class="col-4"> </div>
     </div>
+    <div class="row cl" id="showerror" <if condition="$is_show != -1">style="display:none;"</if>>
+    <label class="form-label col-3">被拒理由：</label>
+    <div class="formControls col-5">
+      <input type="text" class="input-text" placeholder="请填写理由" id="show_error" name="show_error" value="{$show_error}" >
+    </div>
+    <div class="col-4"> </div>
+   </div>
     <div class="row cl">
       <label class="form-label col-3"><span class="c-red">*</span>精华：</label>
       <div class="formControls col-5 skin-minimal">
@@ -173,6 +180,15 @@ KindEditor.ready(function(K) {
 <script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.doc.js"></script> 
 <script type="text/javascript">
 $(function(){
+  $("input[name='is_show']").each(function(){
+    $(this).click(function(){
+      if($(this).val() == -1){
+        $("#showerror").show();
+      }else{
+        $("#showerror").hide();
+      }
+    })
+  })
 	$("#form-news-add").Validform({
 		tiptype:2,
 	});
