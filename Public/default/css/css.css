@@ -140,7 +140,7 @@ ul.techlistul li span a{ color:#ccc;}
 .con_main h1{ text-align:center; font-size:24px; line-height:50px; height:50px; overflow:hidden;}
 .abstract{ height:30px; line-height:30px; overflow:hidden; border-bottom:1px solid #eee; color:#666; text-align:center;}
 .main_text{ font-size:14px; padding:30px 10px 10px 10px; line-height:24px;}
-.main_text p{ margin-bottom:10px; text-indent:24px; line-height:24px;}
+.main_text p{ margin-bottom:10px; /*text-indent:24px; */ line-height:24px;}
 .thinks{ margin-right:10px;}
 .share{ padding:10px;}
 .lastnext{ padding:10px; margin-top:20px; line-height:25px;margin-bottom: 10px; }
