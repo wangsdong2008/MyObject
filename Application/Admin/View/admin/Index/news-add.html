@@ -131,7 +131,7 @@ KindEditor.ready(function(K) {
     <div class="row cl" id="showerror" <if condition="$is_show != -1">style="display:none;"</if>>
     <label class="form-label col-3">被拒理由：</label>
     <div class="formControls col-5">
-      <input type="text" class="input-text" placeholder="请填写理由" id="show_error" name="show_error" value="{$show_error}" >
+      <textarea id="show_error" name="show_error" cols="30" rows="6" style="width:348px;" placeholder="请填写理由">{$show_error}</textarea>
     </div>
     <div class="col-4"> </div>
    </div>
