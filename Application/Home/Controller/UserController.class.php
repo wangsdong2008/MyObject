@@ -163,6 +163,7 @@ class UserController extends Controller {
 	  //检测用户名是否存在
 	  $question = I("question");
 	  $answer = I("answer");
+      $email = I('email');
 	  $regtime = time();
 	  $isdel = 0;
 	  $users = M('users');
@@ -194,6 +195,8 @@ class UserController extends Controller {
 			$users_data['regtime'] = $regtime;
 			$users_data['isdel'] = $isdel;
 		    $users_data['mycode'] = $mycode;
+		    $users_data['email'] = $email;
+		    $users_data['face'] = "face/pic".rand(1,10).".gif";
 			$users->add($users_data);
 
 		    if($tj>0){
@@ -202,7 +205,7 @@ class UserController extends Controller {
 		    }
 		    unset($tj);
 
-			$this->redirect("login");
+		    echo "<script>alert('注册成功,点击确定登录');location.href='".U('login')."';</script>";
 	  }
 	}
 
