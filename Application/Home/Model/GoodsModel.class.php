@@ -55,7 +55,7 @@ class GoodsModel extends Model{
             ->join(C(DB_PREFIX).'users on id = '.C(DB_PREFIX).'goods.user_id')
             ->join('left join '.C(DB_PREFIX).'goods_img on '.C(DB_PREFIX).'goods_img.goods_id = '.C(DB_PREFIX).'goods.goods_id')
             ->where($goods_data)
-            ->field(C(DB_PREFIX).'category.cat_id,cat_name,floor(goods_price) as goods_price,sy_url,true_name,'.C(DB_PREFIX).'goods.goods_description,'.C(DB_PREFIX).'goods.goods_keyword,'.C(DB_PREFIX).'goods.goods_title,'.C(DB_PREFIX).'goods.goods_name,'.C(DB_PREFIX).'goods.goods_id,'.C(DB_PREFIX).'goods.goods_environment,'.C(DB_PREFIX).'goods.goods_keyword,'.C(DB_PREFIX).'goods.goods_description,'.C(DB_PREFIX).'goods.cat_id,'.C(DB_PREFIX).'goods.goods_content,'.C(DB_PREFIX).'goods.goods_time,'.C(DB_PREFIX).'goods_img.goods_small_img,'.C(DB_PREFIX).'goods_img.goods_img')
+            ->field(C(DB_PREFIX).'category.cat_id,cat_name,floor(goods_price) as goods_price,sy_url,true_name,'.C(DB_PREFIX).'goods.goods_description,'.C(DB_PREFIX).'goods.goods_keyword,'.C(DB_PREFIX).'goods.goods_title,'.C(DB_PREFIX).'goods.goods_name,'.C(DB_PREFIX).'goods.goods_id,'.C(DB_PREFIX).'goods.goods_environment,'.C(DB_PREFIX).'goods.goods_keyword,'.C(DB_PREFIX).'goods.goods_description,'.C(DB_PREFIX).'goods.cat_id,'.C(DB_PREFIX).'goods.goods_content,'.C(DB_PREFIX).'goods.goods_time,'.C(DB_PREFIX).'goods_img.goods_small_img,'.C(DB_PREFIX).'goods_img.goods_img,goods_num')
             ->limit(1)
             ->find();
         unset($goods,$goods_data);

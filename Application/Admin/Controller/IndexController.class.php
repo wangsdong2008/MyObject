@@ -136,8 +136,8 @@ class IndexController extends Controller {
 		$sys_list = S('config');
 		$sys_upload_img = $sys_list['sys_upload_img'];
 
-		$oldfile = C('UPlOAD_TMP').'/'.$filename ; //临时文件
-		$newFile = $sys_upload_img .'/'.$filename; //正式文件		
+		$oldfile = 'upload_tmp/'.$filename ; //临时文件
+		$newFile = $sys_upload_img .'/'.$filename; //正式文件
 		if(copy($oldfile,$newFile)){			
 		   //拷贝到新目录
 		   unlink($oldfile); //删除旧目录下的文件
@@ -1974,7 +1974,7 @@ class IndexController extends Controller {
 			  $goods_img1 = I("goods_img".$i);
               $goods_small_img1 = preg_replace('/\/(\w+)\./', '/s_${1}.', $goods_img1);
               $goods_big_img1 = preg_replace('/\/(\w+)\./', '/b_${1}.', $goods_img1);
-				foreach($old_goods_img_arr as $key => $val) {
+			  foreach($old_goods_img_arr as $key => $val) {
 					if ($val['goods_img'] == $goods_img1) {
 						unset($old_goods_img_arr[$key]);
 					} else {
@@ -1982,8 +1982,7 @@ class IndexController extends Controller {
 						$this->movefiles($goods_small_img1);
 						$this->movefiles($goods_big_img1);
 					}
-				}
-			  
+			  }
 			  $goods_key = I("main_pic".$i);	
 			  $goods_img = M('goods_img');
 			  $goods_img_data['goods_id'] = $goods_id;
