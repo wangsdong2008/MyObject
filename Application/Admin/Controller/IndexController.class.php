@@ -1771,6 +1771,7 @@ class IndexController extends Controller {
 			$this->assign('hj',$goodslist['goods_environment']);
 			$this->assign('var',$goodslist['goods_version']);
 			$this->assign('years',$goodslist['goods_years']);
+			$this->assign('goods_num',$goodslist['goods_num']);
 
 			$this->assign('goods_sn',$goodslist['goods_sn']);
 
@@ -1857,6 +1858,7 @@ class IndexController extends Controller {
 		$cat_id = I('cat_id',0);
 		$brand_id = I('brand_id',0);				
 		$goods_name = I('goods_name');
+		$goods_num = I('goods_num');
 		$goods_sn = I('goods_sn');
 		$goods_market_price = I('goods_market_price',0);
 		$goods_price = I('goods_price',0);
@@ -1874,7 +1876,11 @@ class IndexController extends Controller {
 		$sf_url = I('sf_url');
 		$goods_price_switch = I('goods_price_switch');
 
-		$goods_environment = implode(',',I('hj',''));
+		$goods_environment = I('hj','');
+		$goods_version = I('var','');
+		$goods_years = 1;
+
+		/*$goods_environment = implode(',',I('hj',''));
 		$goods_version = implode(',',I('var',''));
 		$goods_years = implode(',',I('years'));
 
@@ -1914,7 +1920,7 @@ class IndexController extends Controller {
 					}
 				}
 			}
-		}
+		}*/
 
 				
 		$goods = M('goods');		
@@ -1938,7 +1944,7 @@ class IndexController extends Controller {
 		$goods_data['goods_title'] = $goods_title;
 		$goods_data['goods_keyword'] = $goods_keyword;
 		$goods_data['goods_description'] = $goods_description;
-			
+		$goods_data['goods_num'] = $goods_num;
 		if( $goods_id == 0){
 		  $goods_data['goods_time'] = time();			
 		  $goods_id = $goods->add($goods_data);	

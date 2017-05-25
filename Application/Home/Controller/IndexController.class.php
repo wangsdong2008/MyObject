@@ -555,7 +555,6 @@ class IndexController extends Controller {
 		if($id>0){
 			$cat_id = 0;
 			$goodsdetail = D('goods')->getGoodsDetail($id);
-			print_r($goodsdetail);exit;
 			$cat_id = $goodsdetail['cat_id'];
 			$this->assign('GoodsDetail',$goodsdetail);
 			unset($goodsdetail);

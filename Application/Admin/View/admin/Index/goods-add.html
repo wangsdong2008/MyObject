@@ -28,7 +28,7 @@
 <style>
 .upload_form{ width:150px; }
   .pricelist{
-    display: none;
+    display: block;
   }
 </style>
 </head>
@@ -105,7 +105,7 @@
          <div class="row cl">
           <label class="form-label col-3">图片：</label>
           <div class="formControls col-5"> 
-            <input type="text" class="input-text upload_form" placeholder="请上传图片！" id="goods_img1" name="goods_img1" ignore="ignore" datatype="*" value="{$goods_img1}">&nbsp;<input class="btn btn-default radius btn-upload1" type="buttom" value="浏览..." onClick="upload(500,50,'上传产品图片','goods','goods_img1')" /><!-- &nbsp;<input type="button" value="增加" class="btn btn-default radius" id="addpic">-->&nbsp;<input type="radio" value="1" name="main_pic1" class="btn btn-default radius mainpic" onClick="key_pic(this)" checked>主图
+            <input type="text" class="input-text upload_form" placeholder="请上传图片！" id="goods_img1" name="goods_img1" ignore="ignore" datatype="*" value="{$goods_img1}">&nbsp;<input class="btn btn-default radius btn-upload1" type="buttom" value="浏览..." onClick="upload(500,50,'上传产品图片','goods','goods_img1')" />&nbsp;<input type="button" value="增加" class="btn btn-default radius" id="addpic">&nbsp;<input type="radio" value="1" name="main_pic1" class="btn btn-default radius mainpic" onClick="key_pic(this)" checked>主图
             </div>
           <div class="col-4"> </div>
         </div>
@@ -116,7 +116,7 @@
             <div class="row cl">
               <label class="form-label col-3">图片{$k}：</label>
               <div class="formControls col-5"> 
-                <input type="text" class="input-text upload_form" placeholder="请上传图片！" id="goods_img{$k}" name="goods_img{$k}" ignore="ignore" datatype="*" value="{$goodsimglist.goods_img}">&nbsp;<input class="btn btn-default radius btn-upload1" type="buttom" value="浏览..." onClick="upload(500,50,'上传产品图片','goods','goods_img{$k}')" /><!--<if condition="$k eq 1">&nbsp;<input type="button" value="增加" class="btn btn-default radius" id="addpic"><else/>&nbsp;<input type="button" value="删除" class="btn btn-default radius" onClick="delgoodspic(this)"></if>-->&nbsp;<input type="radio" value="1" name="main_pic{$k}" class="btn btn-default radius mainpic" onclick="key_pic(this)"  <if condition="$goodsimglist.goods_key eq 1">checked</if>>主图
+                <input type="text" class="input-text upload_form" placeholder="请上传图片！" id="goods_img{$k}" name="goods_img{$k}" ignore="ignore" datatype="*" value="{$goodsimglist.goods_img}">&nbsp;<input class="btn btn-default radius btn-upload1" type="buttom" value="浏览..." onClick="upload(500,50,'上传产品图片','goods','goods_img{$k}')" /><if condition="$k eq 1">&nbsp;<input type="button" value="增加" class="btn btn-default radius" id="addpic"><else/>&nbsp;<input type="button" value="删除" class="btn btn-default radius" onClick="delgoodspic(this)"></if>&nbsp;<input type="radio" value="1" name="main_pic{$k}" class="btn btn-default radius mainpic" onclick="key_pic(this)"  <if condition="$goodsimglist.goods_key eq 1">checked</if>>主图
                 </div>
               <div class="col-4"> </div>
             </div>
@@ -126,7 +126,7 @@
             <div class="row cl">
               <label class="form-label col-3">图片：</label>
               <div class="formControls col-5"> 
-                <input type="text" class="input-text upload_form" placeholder="请上传图片！" id="goods_img1" name="goods_img1" ignore="ignore" datatype="*" value="{$goods_img1}">&nbsp;<input class="btn btn-default radius btn-upload1" type="buttom" value="浏览..." onClick="upload(500,50,'上传产品图片','goods','goods_img1')" /><!-- &nbsp;<input type="button" value="增加" class="btn btn-default radius" id="addpic">-->&nbsp;<input type="radio" value="1" name="main_pic1" class="btn btn-default radius mainpic" onClick="key_pic(this)" checked>主图
+                <input type="text" class="input-text upload_form" placeholder="请上传图片！" id="goods_img1" name="goods_img1" ignore="ignore" datatype="*" value="{$goods_img1}">&nbsp;<input class="btn btn-default radius btn-upload1" type="buttom" value="浏览..." onClick="upload(500,50,'上传产品图片','goods','goods_img1')" /> &nbsp;<input type="button" value="增加" class="btn btn-default radius" id="addpic">&nbsp;<input type="radio" value="1" name="main_pic1" class="btn btn-default radius mainpic" onClick="key_pic(this)" checked>主图
                 </div>
               <div class="col-4"> </div>
             </div>
@@ -134,7 +134,13 @@
       </if> 
       
     </div>
-
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>软件大小：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" placeholder="请填写软件大小" id="goods_num" name="goods_num" datatype="n" value="{$goods_num}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
     <div class="row cl">
       <label class="form-label col-3"><span class="c-red">*</span>市场价：</label>
       <div class="formControls col-5">
@@ -159,118 +165,30 @@
       </div>
       <div class="col-4"> </div>
     </div>
-
-    <div class="pricelist">
-      <div class="row cl">
-        <label class="form-label col-3"><span class="c-red"></span>试用链接：</label>
-        <div class="formControls col-5">
-          <input type="text" class="input-text" placeholder="" id="sy_url" ignore="ignore" name="sy_url" value="{$sy_url}" >
-        </div>
-        <div class="col-4"> </div>
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>统一价：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" placeholder="请填写统一价" id="goods_price" name="goods_price" datatype="n" value="{$goods_price}" >
       </div>
-
-      <div class="row cl">
-        <label class="form-label col-3"><span class="c-red"></span>算法链接：</label>
-        <div class="formControls col-5">
-          <input type="text" class="input-text" placeholder="" id="sf_url" datatype="url"  ignore="ignore" name="sf_url" value="{$sf_url}" >
-        </div>
-        <div class="col-4"> </div>
-      </div>
-
-      <div class="row cl">
-        <label class="form-label col-3"><span class="c-red">*</span>统一价：</label>
-        <div class="formControls col-5">
-          <input type="text" class="input-text" placeholder="请填写统一价" id="goods_price" name="goods_price" datatype="n" value="{$goods_price}" >
-        </div>
-        <div class="col-4"> </div>
-      </div>
+      <div class="col-4"> </div>
     </div>
 
     <div class="pricelist">
       <div class="row cl">
         <label class="form-label col-3"><span class="c-red">*</span>运行环境：</label>
         <div class="formControls col-5" id="hj_list">
-          <volist name="hjlist" id="hjlist">
-              <input type="checkbox" name="hj[]" value="{$hjlist.var_id}" rel="{$hjlist.var_name}">{$hjlist.var_name}&nbsp;&nbsp;
-          </volist>
-          <input type="hidden" name="hj_num" id="hj_num" value="{$hj_num}">
+          <input class="input-text"  type="text" name="hj" value="{$hj}" rel="{$hj}">
         </div>
         <div class="col-4"> </div>
       </div>
       <div class="row cl">
         <label class="form-label col-3"><span class="c-red">*</span>版本：</label>
         <div class="formControls col-5" id="var_list">
-          <volist name="varlist" id="varlist">
-            <input type="checkbox" name="var[]" value="{$varlist.var_id}" rel="{$varlist.var_name}">{$varlist.var_name}&nbsp;&nbsp;
-          </volist>
-          <input type="hidden" name="var_num" id="var_num" value="{$var_num}">
+          <input class="input-text"  type="text" name="var" value="{$var}" rel="{$var}">
         </div>
         <div class="col-4"> </div>
       </div>
-      <script>
-        $(function(){
-
-          //设置运行环境的默认值
-          $("#hj_list input[type='checkbox']").val([{$hj}]);
-          //设置版本的默认值
-          $("#var_list input[type='checkbox']").val([{$var}]);
-          //设置年限的默认值
-          $("#years_list input[type='checkbox']").val([{$years}]);
-
-          $("div.pricelist").eq({$goods_price_switch}).show();
-          $("input.plist").each(function(pos){
-            $(this).click(function(){
-              $("div.pricelist").eq(pos).show().siblings("div.pricelist").hide();
-            })
-          })
-
-          $(".pricelist input").each(function(){
-            $(this).click(function(){
-              setmuilprice();
-              $("#hj_num").val($("#hj_list input[type='checkbox']:checked").length);
-              $("#var_num").val($("#var_list input[type='checkbox']:checked").length);
-              $("#years_num").val($("#years_list input[type='checkbox']:checked").length);
-            })
-          })
-        })
-
-        function setmuilprice(){
-          var str = '<table>';
-          hjstr='';
-
-          //循环运行环境
-          $("#hj_list input[type='checkbox']:checked").each(function(i){
-            hj_sname = $(this).attr("rel");
-            hj_sid = $(this).val();
-            hjstr = "<tr><td><input type='hidden' name='hj_txt"+i+"' id='hj_txt"+hj_sid+"' value="+hj_sid+">"+hj_sname+"</td>";
-
-            //循环版本
-            $("#var_list input[type='checkbox']:checked").each(function(j){
-              var_sname = $(this).attr("rel");
-              var_sid = $(this).val();
-              varstr = "<td><input type='hidden' name='var_txt_"+i+"_"+j+"' id='var_txt_"+hj_sid+"_"+var_sid+"' value="+var_sid+">"+var_sname+"</td>";
-
-              //循环年限
-              $("#years_list input[type='checkbox']:checked").each(function(k) {
-                years_sname = $(this).attr("rel");
-                years_sid = $(this).val();
-                yearstr = "<td><input type='hidden' name='years_txt_" + i + "_" + j + "_" + k + "' id='years_txt_" + hj_sid + "_" + var_sid+ "_" + years_sid +  "' value=" + years_sid + ">" + years_sname + "</td>";
-                pricestr = "<td><input style='width:50px' type='text' name='price_txt_" + i + "_" + j + "_" + k + "' id='price_txt_" + hj_sid + "_" + var_sid+ "_" + years_sid +  "' value=''>元</td>";
-                sfstr = "<td><input style='width:150px' type='text' name='sf_txt_" + i + "_" + j + "_" + k + "' id='sf_txt_" + hj_sid + "_" + var_sid+ "_" + years_sid +  "' value='' placeholder='算法链接'></td>";
-                systr = "<td><input style='width:150px' type='text' name='sy_txt_" + i + "_" + j + "_" + k + "' id='sy_txt_" + hj_sid + "_" + var_sid+ "_" + years_sid +  "' value='' placeholder='试用链接'></td>";
-                str += hjstr + varstr + yearstr + pricestr + sfstr + systr + "</tr>";
-              });
-
-            });
-
-          });
-          str += "</table>";
-          $("#priceset").html(str);
-
-        }
-
-      </script>
-      <div class="row cl">
+      <!--<div class="row cl">
         <label class="form-label col-3"><span class="c-red">*</span>购买年限：</label>
         <div class="formControls col-5" id="years_list">
           <input type="checkbox" name="years[]" value="1" rel="1年">1年&nbsp;&nbsp;
@@ -287,7 +205,7 @@
         <label class="form-label col-3"><span class="c-red">*</span>价格设置：</label>
         <div class="formControls col-5" id="priceset" style="width: 70%;">{$form_detail}</div>
         <div class="col-4"> </div>
-      </div>
+      </div>-->
     </div>
     <script type="text/javascript" charset="utf-8" src="{$DEFAULT_PATH}/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="{$DEFAULT_PATH}/kindeditor/lang/zh_CN.js"></script>  
@@ -297,7 +215,25 @@ KindEditor.ready(function(K) {
 	editor = K.create('textarea[name="goods_content"]', {afterBlur: function(){this.sync();}});
 });	
 </script>
+    <div class="pricelist">
+      <div class="row cl">
+        <label class="form-label col-3"><span class="c-red"></span>下载地址：</label>
+        <div class="formControls col-5">
+          <input type="text" class="input-text" placeholder="" id="sy_url" ignore="ignore" name="sy_url" value="{$sy_url}" >
+        </div>
+        <div class="col-4"> </div>
+      </div>
 
+      <!--<div class="row cl">
+        <label class="form-label col-3"><span class="c-red"></span>算法链接：</label>
+        <div class="formControls col-5">
+          <input type="text" class="input-text" placeholder="" id="sf_url" datatype="url"  ignore="ignore" name="sf_url" value="{$sf_url}" >
+        </div>
+        <div class="col-4"> </div>
+      </div>-->
+
+
+    </div>
     <div class="row cl">
       <label class="form-label col-3">产品简介：</label>
       <div class="formControls col-5">
