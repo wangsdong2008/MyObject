@@ -61,16 +61,16 @@
       <div class="col-4"> </div>
     </div>-->
     <div class="row cl">
-      <label class="form-label col-3"><span class="c-red">*</span>产品编号：</label>
+      <label class="form-label col-3"><span class="c-red"></span>产品编号：</label>
       <div class="formControls col-5">
-        <input type="text" class="input-text" placeholder="请填写产品编号" id="goods_sn" name="goods_sn" datatype="*" nullmsg="产品编号不能为空" value="{$goods_sn}"  >
+        <input type="text" class="input-text" placeholder="请填写产品编号" id="goods_sn" name="goods_sn"  value="{$goods_sn}"  >
       </div>
       <div class="col-4"> </div>
     </div>
     <div class="row cl">
       <label class="form-label col-3"><span class="c-red">*</span>产品名称：</label>
       <div class="formControls col-5">      
-        <input type="text" class="input-text" placeholder="请填写产品名称" id="goods_name" name="goods_name" datatype="*2-16" nullmsg="产品名称不能为空" value="{$goods_name}" <if condition="$goods_id == 0">onBlur="tdk(this,'goods_keyword','goods_description','goods_title')"</if> ><input type="hidden" name="goods_id" id="goods_id" value="{$goods_id}">
+        <input type="text" class="input-text" placeholder="请填写产品名称" id="goods_name" name="goods_name" datatype="*2-30" nullmsg="产品名称不能为空" value="{$goods_name}" <if condition="$goods_id == 0">onBlur="tdk(this,'goods_keyword','goods_description','goods_title')"</if> ><input type="hidden" name="goods_id" id="goods_id" value="{$goods_id}">
       </div>
       <div class="col-4"> </div>
     </div>
@@ -292,17 +292,16 @@
     <script type="text/javascript" charset="utf-8" src="{$DEFAULT_PATH}/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="{$DEFAULT_PATH}/kindeditor/lang/zh_CN.js"></script>  
 <script type="text/javascript" charset="utf-8">
-var editor,editor1;
+var editor;
 KindEditor.ready(function(K) {
 	editor = K.create('textarea[name="goods_content"]', {afterBlur: function(){this.sync();}});
-    editor1 = K.create('textarea[name="goods_detail"]', {afterBlur: function(){this.sync();}});
 });	
 </script>
 
     <div class="row cl">
       <label class="form-label col-3">产品简介：</label>
       <div class="formControls col-5">
-        <textarea name="goods_detail" id="goods_detail" cols="5" rows="10" datatype="" >{$goods_detail}</textarea>
+        <textarea name="goods_detail" id="goods_detail" class="input-text" style="width:348px; height:80px" >{$goods_detail}</textarea>
       </div>
       <div class="col-4"> </div>
     </div>
