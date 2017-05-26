@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件重命名工具</title>
+    <meta http-equiv="x-ua-compatible" content="IE=11" >
+    <meta http-equiv="x-ua-compatible" content="IE=10" >
+    <meta http-equiv="x-ua-compatible" content="IE=9" >
+    <style>
+        *{padding: 0px; margin: 0px;}
+        img{ width:165px; height: 300px;}
+        div.main{width: 165px;overflow: hidden;}
+        ul{width: 495px; list-style-type: none;}
+        li{float: left;}
+        .clear{ clear: both; }
+    </style>
+    <script src="{$js_model_path}/js/jquery.js"></script>
+    <script>
+    $(function(){
+        var j = 1;
+        var i=1;
+        //setInterval为自动重复。
+        //clearInterval(对象) 清除已设置的setInterval对象
+        var intervalId;
+        intervalId = setInterval(function(){
+            $("ul").animate({"marginLeft":-1*j*165+"px"},300);
+            if(i==0){
+                j--;
+            }else{
+                j++;
+            }
+            if(j==2){
+                i=0;
+            }
+            if(j==0){
+                i=1;
+            }
+        },5000);
+    });
+    </script>
+</head>
+<body>
+<div class="main">
+    <ul>
+        <volist name="tplist" id="tplist">
+        <li><a href="{$tplist.ad_url}" target="_blank"><img src="/{$sys_upload_img}/{$tplist.ad_logo}" alt="{$tplist.ad_name}"></a></li>
+        </volist>
+    </ul>
+</div><div class="clear"></div>
+</body>
+</html>

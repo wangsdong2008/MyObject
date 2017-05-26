@@ -31,4 +31,12 @@ class IndexController extends Controller {
         unset($datalist);
         $this->display('datalist');
     }
+
+    //文件重命名工具
+    public function FilenameReplace(){
+        $datalist = D("Home/ad")->getAdlist(44);
+        $this->assign('tplist',$datalist);
+        unset($datalist);
+        $this->display('filenamereplacelist');
+    }
 }
