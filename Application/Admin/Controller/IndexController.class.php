@@ -40,20 +40,30 @@ class IndexController extends Controller {
 		$news_data['is_show'] = 1;
 		$newslist = $news->where($news_data)->field('news_id,news_time')->select();
 		foreach($newslist as $key => $val){
-			$str .= "<url>\r\n<loc>".$this->public_sys_url."/Newslist/news/id/".$val['news_id'].".html</loc>\r\n<lastmod>".date("Y-m-d",$val['news_time'])."</lastmod>\r\n<changefreq>daily</changefreq>\r\n<priority>0.9</priority>\r\n</url>\r\n\r\n";
+			$str .= "<url>\r\n<loc>".$this->public_sys_url."/Index/showtech/id/".$val['news_id'].".html</loc>\r\n<lastmod>".date("Y-m-d",$val['news_time'])."</lastmod>\r\n<changefreq>daily</changefreq>\r\n<priority>0.9</priority>\r\n</url>\r\n\r\n";
 		}
 
-		//产品生成
+		//软件产品生成
 		$goods = M('goods');
 		$goods_data['isdel'] = 0;
+		$goods_data['cat_id'] = array('in','24,25,26,32');
 		$goodslist = $goods->where($goods_data)->field('goods_id,goods_time')->select();
 		foreach($goodslist as $key => $val){
-			$str .= "<url>\r\n<loc>".$this->public_sys_url."/Index/goods/id/".$val['goods_id'].".html</loc>\r\n<lastmod>".date("Y-m-d",$val['news_time'])."</lastmod>\r\n<changefreq>daily</changefreq>\r\n<priority>0.9</priority>\r\n</url>\r\n\r\n";
+			$str .= "<url>\r\n<loc>".$this->public_sys_url."/Index/showsoft/id/".$val['goods_id'].".html</loc>\r\n<lastmod>".date("Y-m-d",$val['goods_time'])."</lastmod>\r\n<changefreq>daily</changefreq>\r\n<priority>0.9</priority>\r\n</url>\r\n\r\n";
+		}
+
+		//源码产品生成
+		$goods = M('goods');
+		$goods_data['isdel'] = 0;
+		$goods_data['cat_id'] = array('in','17,18,19,20,21,23');
+		$goodslist = $goods->where($goods_data)->field('goods_id,goods_time')->select();
+		foreach($goodslist as $key => $val){
+			$str .= "<url>\r\n<loc>".$this->public_sys_url."/Index/showcode/id/".$val['goods_id'].".html</loc>\r\n<lastmod>".date("Y-m-d",$val['goods_time'])."</lastmod>\r\n<changefreq>daily</changefreq>\r\n<priority>0.9</priority>\r\n</url>\r\n\r\n";
 		}
 
 
 		$str .= '</urlset>';
-		$surl = $_SERVER['DOCUMENT_ROOT']."/sitemap/sitemap.xml";
+		$surl = $_SERVER['DOCUMENT_ROOT']."/sitemap.xml";
 		$file = fopen($surl,"w");
 		fwrite($file,$str);
         fclose($file);
