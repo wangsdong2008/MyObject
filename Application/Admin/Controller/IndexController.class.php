@@ -1424,10 +1424,10 @@ class IndexController extends Controller {
 				}
 			}
 		}
-		if ($sys_baidu_send == 1 && $is_show == 1) {
+		if ($is_show == 1) {
 			//推送
 			$url = $sys_url . "/Index/showtech/id/" . $news_id . ".html";
-			$data = $this->sendbaidu($url, $sys_baidu_api);
+			$data = $this->sendbaidu($url);
 			$obj = json_decode($data);
 			if ($obj->success == "1") {
 			} else {
@@ -2020,6 +2020,26 @@ class IndexController extends Controller {
 			}
 			unset($goods_img,$goods_small_img,$goods_big_img);
 		}
+
+		//推送百度
+		$configlist = D("Home/config")->showconfig(1);
+		$sys_url  = $configlist['sys_url'];
+		if ( $is_show == 1) {
+			//推送
+			if($cat_id == 24 || $cat_id == 25 || $cat_id == 26 || $cat_id == 32){
+				$url = $sys_url . "/Index/showsoft/id/" . $goods_id . ".html";
+			}else{
+				$url = $sys_url . "/Index/showcode/id/" . $goods_id . ".html";
+			}
+			$data = $this->sendbaidu($url);
+			$obj = json_decode($data);
+			if ($obj->success == "1") {
+			} else {
+				echo '推送百度出错';
+				exit;
+			}
+		}
+
 		$this->closewindows();
 	}
 	
@@ -3849,8 +3869,9 @@ class IndexController extends Controller {
 	}
 	
 	//推送到百度 
-	public function sendbaidu($url,$baidu_api){
+	public function sendbaidu($url){
 		$urls[0] = $url;
+		$baidu_api = 'http://data.zz.baidu.com/urls?site=www.aspbc.com&token=c0SyqNvLAtYIqrvP';//传参不成功
 		$ch = curl_init();
 		$options =  array(
 			CURLOPT_URL => $baidu_api,
