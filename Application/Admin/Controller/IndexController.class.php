@@ -1801,36 +1801,12 @@ class IndexController extends Controller {
 			$this->assign('goods_num',$goodslist['goods_num']);
 
 			$this->assign('goods_sn',$goodslist['goods_sn']);
+			$this->assign('user_id',$goodslist['user_id']);
 
 			//环境，版本，年限数量的默认值
-			$goods_environment = explode(',',$goodslist['goods_environment']);
-			$goods_version = explode(',',$goodslist['goods_version']);
-			$goods_years = explode(',',$goodslist['goods_years']);
-			$hj_num = count($goods_environment);
-			$var_num = count($goods_version);
-			$years_num = count($goods_years);
-			$this->assign('hj_num',$hj_num);
-			$this->assign('var_num',$var_num);
-			$this->assign('years_num',$years_num);
-			$form_detail = '<table>';
-			for($ii=0;$ii<$hj_num;$ii++){
-				for($jj=0;$jj<$var_num;$jj++){
-					for($kk=0;$kk<$years_num;$kk++){
-						//根据环境，版本，年份查询此商品价格
-						$goodsprice = $this->getgoodsprice($goods_id,$goods_environment[$ii],$goods_version[$jj],$goods_years[$kk]);
-						$form_detail .= '<tr>';
-						$form_detail .= '<td><input type="hidden" name="hj_txt'.$ii.'" id="hj_txt'.$goods_environment[$ii].'" value="'.$goods_environment[$ii].'">'.$this->getsystemvar($goods_environment[$ii]).'</td>';
-						$form_detail .= '<td><input type="hidden" name="var_txt_'.$ii.'_'.$jj.'" id="var_txt_'.$goods_environment[$ii].'_'.$goods_version[$jj].'" value="'.$goods_version[$jj].'">'.$this->getsystemvar($goods_version[$jj]).'</td>';
-						$form_detail .= '<td><input type="hidden" name="years_txt_'.$ii.'_'.$jj.'_'.$kk.'" id="years_txt_'.$goods_environment[$ii].'_'.$goods_version[$jj].'_'.$goods_years[$kk].'" value="'.$goods_years[$kk].'">'.$goods_years[$kk].'年</td>';
-						$form_detail .= '<td><input style="width:50px" type="text" name="price_txt_'.$ii.'_'.$jj.'_'.$kk.'" id="price_txt_'.$goods_environment[$ii].'_'.$goods_version[$jj].'_'.$goods_years[$kk].'" value="'.$goodsprice['gp_price'].'">元</td>';
-						$form_detail .= '<td><input style="width:150px" type="text" name="sf_txt_'.$ii.'_'.$jj.'_'.$kk.'" id="sf_txt_'.$goods_environment[$ii].'_'.$goods_version[$jj].'_'.$goods_years[$kk].'" value="'.$goodsprice['gp_sf_url'].'" placeholder="算法链接"></td>';
-						$form_detail .= '<td><input style="width:150px" type="text" name="sy_txt_'.$ii.'_'.$jj.'_'.$kk.'" id="sy_txt_'.$goods_environment[$ii].'_'.$goods_version[$jj].'_'.$goods_years[$kk].'" value="'.$goodsprice['gp_sy_url'].'" placeholder="试用链接"></td>';
-						$form_detail .= '</tr>';
-					}
-				}
-			}
-			$form_detail .= '</table>';
-			$this->assign('form_detail',$form_detail);
+			/*$goods_environment = $goodslist['goods_environment'];
+			$goods_version = $goodslist['goods_version'];
+			$goods_years = $goodslist['goods_years'];*/
 
 		}	
 		$categorylist1 = $this->getcategorylist(1);		
@@ -1906,6 +1882,7 @@ class IndexController extends Controller {
 		$goods_environment = I('hj','');
 		$goods_version = I('var','');
 		$goods_years = 1;
+		$user_id = I('user_id',1);
 
 		/*$goods_environment = implode(',',I('hj',''));
 		$goods_version = implode(',',I('var',''));
@@ -1972,6 +1949,8 @@ class IndexController extends Controller {
 		$goods_data['goods_keyword'] = $goods_keyword;
 		$goods_data['goods_description'] = $goods_description;
 		$goods_data['goods_num'] = $goods_num;
+		$goods_data['user_id'] = $user_id;
+
 		if( $goods_id == 0){
 		  $goods_data['goods_time'] = time();			
 		  $goods_id = $goods->add($goods_data);	
