@@ -1355,13 +1355,14 @@ class IndexController extends Controller {
 		$news_data['news_id'] = array('eq',$news_id);
 		$this->assign('news_id',$news_id);
 		$news_img = I('news_img');
-		if($this->movefiles($news_img)*1 == 1) {
-			$sys_list = S('config');
-			$sys_upload_img = $sys_list['sys_upload_img'];
-			$sys_baidu_send = $sys_list['sys_baidu_send'];
-			$sys_url  = $sys_list['sys_url'];
-			$sys_baidu_api = $sys_list['sys_baidu_api'];
 
+		$sys_list = M('config')->limit(1)->find();
+		$sys_upload_img = $sys_list['sys_upload_img'];
+		$sys_baidu_send = $sys_list['sys_baidu_send'];
+		$sys_url  = $sys_list['sys_url'];
+
+		$sys_baidu_api = $sys_list['sys_baidu_api'];
+		if($this->movefiles($news_img)*1 == 1) {
 			$news = M('news');
 			$newslist = $news->where($news_data)->field('news_img')->limit(1)->find();
 			if($newslist){
@@ -3850,7 +3851,6 @@ class IndexController extends Controller {
 	//推送到百度 
 	public function sendbaidu($url,$baidu_api){
 		$urls[0] = $url;
-		//$api = 'http://data.zz.baidu.com/urls?site=www.wantuoban.net&token=c0SyqNvLAtYIqrvP';
 		$ch = curl_init();
 		$options =  array(
 			CURLOPT_URL => $baidu_api,
