@@ -26,7 +26,18 @@
 </head>
 <body>
 <nav class="breadcrumb"><i class="iconfont">&#xf012b;</i> 首页 <span class="c-gray en">&gt;</span> 广告库 <span class="c-gray en">&gt;</span> 广告管理 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="icon-refresh"></i></a></nav>
-<div class="pd-20">  
+<div class="pd-20">
+    <div class="text-c">
+        <form action="" method="post" id="formID">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入广告名称" id="keyword" name="keyword" value="{$keyword}" >
+            <select name="cat_id" id="cat_id" style="height: 30px; margin-right: 5px;">
+                <option value="0">请选择分类</option>
+                <volist name="category_list" id="category_list">
+                    <option value="{$category_list.cat_id}" <if condition="$category_list.cat_id eq $cat_id">selected</if>>{$category_list.spacenum}{$category_list.cat_name}</option>
+                </volist>
+            </select><button type="submit" class="btn btn-success" id="" name=""><i class="icon-search"></i> 搜广告</button>
+        </form>
+    </div>
   <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="WinDelAll('ad_id','广告','addel')" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a> <a href="javascript:;" onclick="WinAdd('650','530','添加广告','adadd')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加广告</a></span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
   <table class="table table-border table-bordered table-hover table-bg table-sort">
     <thead>

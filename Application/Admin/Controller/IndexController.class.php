@@ -239,6 +239,22 @@ class IndexController extends Controller {
 	//广告管理列表
 	public function adlist(){
 		$this->getrolelist(83);
+		$cat_id = I("cat_id",0,'intval');
+		$this->assign('cat_id',$cat_id);
+		$keyword = I("keyword");
+		$this->assign('keyword',$keyword);
+		$objPage['cat_id'] = $cat_id;
+		$objPage['keyword'] = $keyword;
+		if($cat_id > 0){
+			$ad_data[C('DB_PREFIX').'ad.cat_id'] = $cat_id;
+		}
+		//分类
+		$categorylist1 = $this->getcategorylist(4);
+		$this->assign('category_list',$categorylist1);
+		if($keyword != ""){
+			$ad_data[C('DB_PREFIX').'ad.ad_name'] = array('like','%'.$keyword.'%');
+		}
+
 		$ad = M('ad');
 		$ad_data[C('DB_PREFIX').'ad.isdel'] = array('eq',0);
 		$nowPage = I('page')?I('page'):1;
