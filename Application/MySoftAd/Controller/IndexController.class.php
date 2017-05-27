@@ -10,6 +10,7 @@ class IndexController extends Controller {
     function _initialize()
     {
         //A('Index/_initialize');//实例化Index类并调用_initialize方法
+        session("tksession", 1);
         // 实例化Index控制器与调用方法
         $index = A('Home/Index');
         $index->init();

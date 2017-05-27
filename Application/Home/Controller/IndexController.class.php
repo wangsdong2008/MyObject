@@ -19,24 +19,52 @@ class IndexController extends Controller {
 		return $robot;
 	}
 
+	// 说明：获取完整URL
+
+	function curPageURL()
+	{
+		$pageURL = 'http';
+
+		if ($_SERVER["HTTPS"] == "on")
+		{
+			$pageURL .= "s";
+		}
+		$pageURL .= "://";
+
+		if ($_SERVER["SERVER_PORT"] != "80")
+		{
+			$pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+		}
+		else
+		{
+			$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+		}
+		return $pageURL;
+	}
+
 	public function init(){
 		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
-		if(!$this->is_spider()) { //普通客户
-			$fromurl = I('server.HTTP_REFERER'); //$_SERVER['HTTP_REFERER']
-			if (!strpos($fromurl, 'www.baidu.com')&&!strpos($fromurl, 'www.google.com')&&!strpos($fromurl, 'www.so.com')) {
-				$openhtml = array('index');
-				if (!in_array(ACTION_NAME, $openhtml)) {
-					if (!session('tksession')) {
-						exit;
+		$flg = 0;
+		if($flg == 1){
+			if(!$this->is_spider()) { //普通客户
+				$fromurl = I('server.HTTP_REFERER'); //$_SERVER['HTTP_REFERER']
+				if (!strpos($fromurl, 'www.baidu.com')&&!strpos($fromurl, 'www.google.com')&&!strpos($fromurl, 'www.so.com')&&!strpos($fromurl, 'www.sogou.com')) {
+					$openhtml = array('index');
+					if (!in_array(ACTION_NAME, $openhtml)) {
+						if (!session('tksession')) {
+							echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+							echo '<a href="'.$this->curPageURL().'">点击打开此页面</a>';
+							exit;
+						}
+					} else {
+						session("tksession", 1);
 					}
 				} else {
 					session("tksession", 1);
 				}
-			} else {
+			}else{   //蜘蛛
 				session("tksession", 1);
 			}
-		}else{   //蜘蛛
-			session("tksession", 1);
 		}
 
 		$this->data = '教程';
