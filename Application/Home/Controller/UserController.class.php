@@ -116,6 +116,8 @@ class UserController extends Controller {
 
 	//初始化类
   	public function _initialize() {
+		$index = A('Home/Index');
+		$index->init();
 		$this->assign('APP_NAME',APP_NAME);
 		$this->assign('App_ManageName',App_ManageName);
 		$this->assign('DEFAULT_PATH',C('DEFAULT_PATH'));
@@ -132,9 +134,6 @@ class UserController extends Controller {
 			  $this->assign('grouplist',$grouplist);
 		  }
 		}
-		$index = A('Home/Index');
-		$index->init();
-
 	}
 
 	//注册

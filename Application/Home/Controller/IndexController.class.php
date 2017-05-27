@@ -6,8 +6,39 @@ class IndexController extends Controller {
 	/*public function _empty(){
 		header("Location: /404.html");
 	}*/
+	private function is_spider(){
+		$robot = 0;
+		$USER_AGENT = strtolower($_SERVER['HTTP_USER_AGENT']);
+		if(strpos($USER_AGENT,"bot")) $robot = 1;
+		if(strpos($USER_AGENT,"spider")) $robot = 1;
+		if(strpos($USER_AGENT,"slurp")) $robot = 1;
+		if(strpos($USER_AGENT,"mediapartners-google")) $robot = 1;
+		if(strpos($USER_AGENT,"fast-webcrawler")) $robot = 1;
+		if(strpos($USER_AGENT,"altavista")) $robot = 1;
+		if(strpos($USER_AGENT,"ia_archiver")) $robot = 1;
+		return $robot;
+	}
 
 	public function init(){
+		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
+		if(!$this->is_spider()) { //普通客户
+			$fromurl = I('server.HTTP_REFERER'); //$_SERVER['HTTP_REFERER']
+			if (!strpos($fromurl, 'www.baidu.com')&&!strpos($fromurl, 'www.google.com')&&!strpos($fromurl, 'www.so.com')) {
+				$openhtml = array('index');
+				if (!in_array(ACTION_NAME, $openhtml)) {
+					if (!session('tksession')) {
+						exit;
+					}
+				} else {
+					session("tksession", 1);
+				}
+			} else {
+				session("tksession", 1);
+			}
+		}else{   //蜘蛛
+			session("tksession", 1);
+		}
+
 		$this->data = '教程';
 		$this->assign('keyword',I('keyword',''));
 		$this->assign('searchtype',I('searchtype',1));
