@@ -43,6 +43,26 @@ class UserController extends Controller {
 		$this->display('index');
     }
 
+	public function delFavorites(){
+		$ids = I('d');
+		foreach($ids as $key => $id){
+			D('Home/favorites')->delUserFavorites(session("userid"),$id);
+		}
+		unset($ids);
+		$this->redirect('myfavorites');
+	}
+
+	//我的收藏分页
+	public function myfavorites(){
+	    //我的收藏
+		$myFavorites = D("Home/favorites")->getUserPageFavorites(session("userid"));
+		$this->assign('myFavorites',$myFavorites['list']);
+		$this->assign('pagefooter',$myFavorites['pagefooter']);
+		unset($mysoftlist);
+
+		$this->display('myFavorites');
+	}
+
     //签到
 	public function sign(){
 		echo D('Home/IntegralRecord')->sign();

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的收藏-会员中心-{$sys_sitename}</title>
+    <link href="{$css_model_path}/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{$css_model_path}/css/model.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
+    <style type="text/css">
+        .fclick {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+<script>
+    s = 3;
+</script>
+<div class="wrapper">
+    <!--网站内容开始-->
+    <div class="user_main_all">
+        <!--会员中心顶部菜单导航开始-->
+        <include file="top" />
+        <!--会员中心顶部菜单导航结束-->
+        <!--会员主体定义开始-->
+        <div class="user_main">
+            <!--会员信息侧边栏目开始-->
+            <include file="left" />
+            <!--会员信息侧边栏目结束-->
+            <!--右侧定义框架开始 -->
+            <div class="user_summary">
+                <div class="user_sitepath"> 您现在的位置：<a title="{$sys_sitename}" href="{$sys_url}">{$sys_sitename}</a></span><span> &gt; </span><span><a title="会员中心" href="{:U('index')}">会员中心</a></span><span> &gt; </span><span>我的收藏</span><a id="YourPosition_SkipLink"></a></span></div>
+                <div class="model_info_list">
+                    <div class="model_info_sate mtop10">
+                        <ul>
+                            <!-- CSS Tabs -->
+                            <li id="EliteContentList" class="hover"><span> <a id="LinkContentList">我的收藏</a></span> </li>
+                        </ul>
+                    </div>
+                    <!--模型内容列表开始-->
+                    <div class="model_info_content">
+                        <!--列表开始-->
+                        <form name="form1" method="post" action="{:U('delFavorites')}" onSubmit="return fdel('删除','收藏教程')">
+                            <div>
+                                <table id="EgvContent" cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
+                                    <thead>
+                                    <tr class="model_info_title">
+                                        <th scope="col" style="width:3%;">&nbsp;</th>
+                                        <th scope="col" style="width:6%;">ID</th>
+                                        <th scope="col">标题</th>
+                                        <th class="operate" scope="col" style="width:13%;">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="myFavorites" id="myFavorites" key="key">
+                                    <tr class="listbg1">
+                                        <td align="center"><input name="d[]" type="checkbox" value="{$myFavorites.id}"></td>
+                                        <td>{$key}</td>
+                                        <td class="content_left"><div class="linkType"><a href="{:U('Index/showtech',array('id'=>$myFavorites['article_id']))}" target="_blank" title="{$myFavorites.news_title}">{$myFavorites.news_title}</a></div></td>
+                                        <td><a href="{:U('Index/showtech',array('id'=>$myFavorites['article_id']))}" target="_blank">打开</a></td>
+                                    </tr>
+                                    </volist>
+                                    <tr>
+                                        <td colspan="4" style="text-align:left; padding-left: 5px;"><label class="checkbox"><input id="ChkAll" type="checkbox"  onClick="CheckAll('d[]')"/>
+                                            全选</label>
+                                            <input type="submit" name="EBtnBatchDelete" value="批量删除"  id="EBtnBatchDelete" class="input_button" /></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="list_page">
+                                    {$pagefooter}
+                                </div>
+                            </div>
+                        </form>
+                        <!--列表结束-->
+                    </div>
+                    <!--模型内容列表结束-->
+                </div>
+                <div class="clear"> </div>
+            </div>
+            <!--右侧定义框架结束 -->
+            <div class="clear"> </div>
+        </div>
+        <!--会员主体定义结束-->
+        <!--网站内容结束-->
+    </div>
+</div>
+<!--网站底部开始-->
+<include file="foot" />
+<!--网站底部结束-->
+</body>
+</html>

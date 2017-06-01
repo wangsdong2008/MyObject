@@ -63,6 +63,42 @@ class FavoritesModel extends Model{
         return $favoriteslist;
     }
 
+    //收藏分页
+    public function getUserPageFavorites($userid,$pagesize=10){
+        $favorites = M('favorites');
+        $favorites_data['think_news.is_show'] = array('eq',1);
+        $favorites_data['think_news.isdel'] = array('eq',0);
+        $userid = session('userid');
+        $favorites_data['think_favorites.user_id'] = array('eq',$userid);
+        $nowPage = I('page')?I('page'):1;
+        $count = $favorites
+            ->join('inner join think_news on think_news.news_id = think_favorites.article_id')
+            ->where($favorites_data)
+            ->count();
+        $favoriteslist['count'] = $count;
+        $Page = new \Think\Page($count,10);
+        $favoriteslist['list'] = $favorites
+            ->join('inner join think_news on think_news.news_id = think_favorites.article_id')
+            ->where($favorites_data)
+            ->order('`think_favorites`.`id` desc')
+            ->field('`think_favorites`.`id`,`think_favorites`.`article_id`,`think_news`.`news_title`')
+            ->page($nowPage.','.$Page->listRows)
+            ->select();
+        $objPage = array();
+        $favoriteslist['pagefooter'] = showpage($nowPage,$count,$objPage);
+        unset($nowPage,$count,$Page,$favorites,$favorites_data);
+        return $favoriteslist;
+    }
+
+    //删除收藏
+    public function delUserFavorites($userid,$id){
+        $favorites = M('favorites');
+        $favorites_data['id'] = array('eq',$id);
+        $favorites_data['user_id'] = array('eq',$userid);
+        $favorites->where($favorites_data)->delete();
+        unset($favorites,$favorites_data);
+    }
+
     //下面是你要定义的函数
 
     /*

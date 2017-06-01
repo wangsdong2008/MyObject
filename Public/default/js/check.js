@@ -129,7 +129,7 @@ function f(text, t1) {
 }
 
 function f2(text, t1, name) {
-    var dnum = document.getElementsByName("d").length;
+    var dnum = document.getElementsByName("d[]").length;
     j = 0;
     if (dnum == 1) {
         if (document.form1.d.checked == true) {
