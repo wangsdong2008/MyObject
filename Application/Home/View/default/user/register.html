@@ -28,16 +28,16 @@
                                     <legend>会员注册</legend>
                                     <div class="reg_input">
                                         <label> <span class="red">*</span>&nbsp;用户名：</label>
-                                        <input ajaxurl="{:U('checkusersname')}" name="username" type="text" id="TxtRegUserName" style="float:left;line-height:100%;" datatype="*6-20" maxlength="20" sucmsg="用户名验证通过！" nullmsg="请输入用户名！" errormsg="输入6位～20位的字符串作为用户名"/><a class="Validform_checktip Validform_wrong">*</a>
+                                        <input ajaxurl="{:U('checkusersname')}" name="username" type="text" id="TxtRegUserName" style="float:left;line-height:100%;" datatype="s6-20" maxlength="20" sucmsg="用户名验证通过！" nullmsg="请输入用户名！" errormsg="输入6位～20位的字符串作为用户名"/><a class="Validform_checktip Validform_wrong">*</a>
                                     </div>
                                     <div class="user_line"> </div>
                                     <div class="reg_input">
                                         <label> <span class="red">*</span>&nbsp;密码：</label>
-                                        <input name="password" type="password" id="TxtRegPassword" datatype="*" style="float:left;line-height:100%;" maxlength="20" errormsg="输入6位～20位的字符串作为密码"/><a class="Validform_checktip Validform_wrong">*</a>
+                                        <input name="password" type="password" id="TxtRegPassword" datatype="s6-20" style="float:left;line-height:100%;" maxlength="20" errormsg="输入6位～20位的字符串作为密码"/><a class="Validform_checktip Validform_wrong">*</a>
                                     </div>
                                     <div class="reg_input">
                                         <label> <span class="red">*</span>&nbsp;确认密码：</label>
-                                        <input name="usecpwd" type="password" id="TxtPwdConfirm" style="float:left;line-height:100%;" maxlength="20" datatype="*" recheck="password" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！" /><a class="Validform_checktip Validform_wrong">*</a>
+                                        <input name="usecpwd" type="password" id="TxtPwdConfirm" style="float:left;line-height:100%;" maxlength="20" datatype="s6-20" recheck="password" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！" /><a class="Validform_checktip Validform_wrong">*</a>
                                     </div>
                                     <div class="user_line"> </div>
                                     <div class="reg_input">
