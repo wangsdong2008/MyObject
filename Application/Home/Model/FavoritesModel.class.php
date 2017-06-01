@@ -46,6 +46,23 @@ class FavoritesModel extends Model{
         unset($article_id,$user_id,$addtime,$favorites,$favorites_data);
     }
 
+    //我的收藏
+    public function getUserNumFavorites($userid,$num=6){
+        $favorites = M('favorites');
+        $favorites_data['think_favorites.user_id'] = array('eq',$userid);
+        $favorites_data['think_news.is_show'] = array('eq',1);
+        $favorites_data['think_news.isdel'] = array('eq',0);
+        $favoriteslist = $favorites
+            ->join('inner join think_news on think_news.news_id = think_favorites.article_id')
+            ->where($favorites_data)
+            ->order('`think_favorites`.`id` desc')
+            ->field('`think_favorites`.`id`,`think_favorites`.`article_id`,`think_news`.`news_title`')
+            ->limit($num)
+            ->select();
+        unset($favorites,$favorites_data);
+        return $favoriteslist;
+    }
+
     //下面是你要定义的函数
 
     /*

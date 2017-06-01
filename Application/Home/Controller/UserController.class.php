@@ -34,9 +34,9 @@ class UserController extends Controller {
 		$this->assign('mycodelist',$mycodelist);
 		unset($mycodelist);
 
-		//我发布的软件
-		$mysoftlist = D("Home/goods")->getMyNumGoods(session("userid"),30);
-		$this->assign('mysoftlist',$mysoftlist);
+		//我的收藏
+		$myFavorites = D("Home/favorites")->getUserNumFavorites(session("userid"));
+		$this->assign('myFavorites',$myFavorites);
 		unset($mysoftlist);
 
 

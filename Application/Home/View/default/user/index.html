@@ -236,8 +236,8 @@
                 <div class="item">
                   <div class="itemcontent">
                     <div class="Header">
-                      <h3 id="WidTitle" ><a href='/users/user_soft.asp?act=list&uid=4'>我发布的软件</a></h3>
-                      <a class="more" href="/users/user_soft.asp?act=list&uid=4" title="更多信息">更多</a></div>
+                      <h3 id="WidTitle" ><a href="{:U('myfavorites')}">我的收藏</a></h3>
+                      <a class="more" href="{:U('myfavorites')}" title="更多信息">更多</a></div>
                     <div class="content">
                       <div>
                         <table cellpadding="0" cellspacing="0" width="100%" class="model_info_table">
@@ -245,30 +245,21 @@
                           <tr class="model_info_title">
                             <th scope="col" style="width:40px;">ID</th>
                             <th scope="col">标题</th>
-                            <th scope="col" style="width:50px;">已审核</th>
                             <th class="operate" scope="col" style="width:50px;">操作</th>
                           </tr>
                           </thead>
-                          <tbody>
 
-                          <volist name="mysoftlist" id="mysoftlist">
+                          <volist name="myFavorites" id="myFavorites" key="key">
                             <tr class="listbg1">
-                              <td>{$mysoftlist.goods_id}</td>
-                              <td class="content_left"><div class="linkType"><a href="{:U('Index/showsoft',array('id'=>$mysoftlist['goods_id']))}" title="{$mysoftlist.goods_name}" target="_blank">{$mysoftlist.goods_name}</a></div></td>
-                              <td>
-                                <if condition="$mysoftlist.is_show eq 1">
-                                  <span style='color:#0f0;' title='审核通过'>√</span>
-                                  <elseif condition="$mysoftlist.is_show eq 0" />
-                                  <span style='color:#ccc;' title='审核中'>⊙</span>
-                                  <else />
-                                  <span style='color:#f00;' title='审核不通过'>X</span>
-                                </if>
+                              <td>{$key}</td>
+                              <td class="content_left">
+                                <div class="linkType">
+                                  <a href="{:U('Index/showtech',array('id'=>$myFavorites['article_id']))}" title="{$myFavorites.news_title}" target="_blank">{$myFavorites.news_title}</a>
+                                </div>
                               </td>
-                              <td><a href="#">修改</a></td>
+                              <td><a href="{:U('Index/showtech',array('id'=>$myFavorites['article_id']))}" target="_blank">打开</a></td>
                             </tr>
                           </volist>
-
-
 
                         </table>
                       </div>
