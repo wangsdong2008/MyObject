@@ -69,7 +69,7 @@ class IndexController extends Controller {
 
 		$this->data = '教程';
 		$this->assign('keyword',I('keyword',''));
-		$this->assign('searchtype',I('searchtype',1));
+		$this->assign('searchtype',I('searchtype',2));
 		if(session("userid"))  $this->assign('userid',session("userid"));
 		$configlist = D("Home/config")->showconfig();
 		$path = "";
