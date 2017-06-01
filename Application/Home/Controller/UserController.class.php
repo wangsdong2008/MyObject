@@ -121,7 +121,7 @@ class UserController extends Controller {
 		$this->assign('APP_NAME',APP_NAME);
 		$this->assign('App_ManageName',App_ManageName);
 		$this->assign('DEFAULT_PATH',C('DEFAULT_PATH'));
-		if(ACTION_NAME != 'login' && ACTION_NAME != 'dl' && ACTION_NAME != 'verify'  && ACTION_NAME != 'checkverify' && ACTION_NAME != 'reg' && ACTION_NAME != 'register' && ACTION_NAME != 'checkusersname'){
+		if(ACTION_NAME != 'login' && ACTION_NAME != 'addfavorite' && ACTION_NAME != 'dl' && ACTION_NAME != 'verify'  && ACTION_NAME != 'checkverify' && ACTION_NAME != 'reg' && ACTION_NAME != 'register' && ACTION_NAME != 'checkusersname'){
 		  if(!session('userid')){
 			  $this -> redirect('login');
 		  }
@@ -136,10 +136,32 @@ class UserController extends Controller {
 		}
 	}
 
+	public function addFavorite(){
+		$token = I('token','');
+		$id = I('id',0);
+		if(!session('userid')) { //未登录
+			echo 0;
+			exit;
+		}
+		if($token != session("token")) { //token不对
+			echo 1;
+			exit;
+		}
+		$favorites = D('Home/favorites')->getUserFavorites($id,session('userid'));
+		if($favorites){  //已经存在
+			echo 2;
+			exit;
+		}else{ //添加成功
+			$favorites = D("favorites");
+			$favorites->addUserFavorites($id,session('userid'),time());
+			echo 3;
+			exit;
+		}
+	}
+
 	//注册
 	public function reg(){
-		$token = md5(uniqid(rand(), true));
-		session("token",$token);
+		$token = gettoken();
 		$this->assign('token',$token);
 		unset($this,$token);
 
@@ -149,10 +171,14 @@ class UserController extends Controller {
 		$this->display('register');
 	}
 
-
 	//注册写入数据库
 	public function register(){
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$token = I('token');
+		if($token != session("token")){
+			echo '出错';
+			exit;
+		}
 	  $username = I("username");
 	  $password = I("password");
 	  $usecpwd = I("usecpwd");

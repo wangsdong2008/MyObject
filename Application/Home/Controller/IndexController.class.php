@@ -192,7 +192,11 @@ class IndexController extends Controller {
 	}
 
 	public function showtech(){
+		$token = gettoken();
+		$this->assign('token',$token);
+		unset($this,$token);
 		$news_id = I("id",0,"intval");
+		$this->assign('news_id',$news_id);
 		$newslist = D('news')->getNews($news_id);
 		$cat_id = 0;
 		if($newslist){

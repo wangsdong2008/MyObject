@@ -216,4 +216,10 @@ function download($path=""){
  fclose($fp);
 }
 
+function gettoken(){
+ $token = md5(uniqid(rand(), true));
+ session("token",$token);
+ return $token;
+}
+
 ?>
