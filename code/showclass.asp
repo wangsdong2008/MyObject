@@ -1,5 +1,5 @@
 <%
-id = request("id")
+id = replace(request("id"),"'","''")
 if(cint(id) = 19) then
 id = 23
 else
