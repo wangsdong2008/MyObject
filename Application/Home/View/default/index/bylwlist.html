@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$categorylist.cat_title}-毕业设计-{$sys_sitename}</title>
+  <meta name="Keywords" content="{$categorylist.cat_keyword}">
+  <meta name="Description" content="{$categorylist.cat_description}">
+<link href="{$css_model_path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  <include file="top" />
+  <!--  正文  -->
+  <div class="container m10">
+    <div class="con_left">
+      <!--  左侧正文内容部分  -->
+      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>><a href="{:U('bylw')}">毕业论文</a>>&nbsp;&nbsp;{$categorylist.cat_name}{$data}</div>
+      <div class="techlist border">
+        <ul class="techlistul">
+          <volist name="goodslist.list" id="goodslist">
+          <li><span>{$goodslist.goods_time|date="Y-m-d",###}</span><a href="{:U('showbylw',array('id'=>$goodslist['goods_id']))}" target="_blank" title="{$goodslist.goods_title}">{$goodslist.goods_name}</a></li>
+          </volist>
+        </ul>
+        <div class="fy">{$pagefooter}</div>
+      </div>
+    </div>
+    <div class="con_right">
+      <include file="bylw_right" />
+    </div>
+    <div class="clearit"></div>
+    <div class="shownewsbuttom"></div>
+  </div>
+  <!--  底部导航  -->
+  <include file="foot" />
+</div>
+</body>
+</html>
