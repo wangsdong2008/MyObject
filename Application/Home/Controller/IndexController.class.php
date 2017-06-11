@@ -1120,4 +1120,84 @@ class IndexController extends Controller {
 		$this->display('about');
 	}
 
+	public function bylw(){
+		$category = D('category')->getCategory(45);
+		$this->assign('categorylist',$category);
+		unset($category);
+
+		//asp教程下面的广告
+		$ad_asp = D('ad')->showAd(72);
+		$this->assign('ad1',$ad_asp);
+		unset($ad_asp);
+
+		//php教程下面的广告
+		$ad_php = D('ad')->showAd(73);
+		$this->assign('ad2',$ad_php);
+		unset($ad_php);
+
+		//php毕业论文
+		$phplist = D('goods')->getTopGoodsList(5,46);
+		$this->assign('phplist',$phplist);
+		unset($phplist);
+
+		$this->display('bylw');
+	}
+
+	public function bylwlist(){
+		$cat_id = I('id',0);
+
+		//相关分类
+		$categorylist = D('category')->getCategory($cat_id);
+		$this->assign('categorylist',$categorylist);
+		unset($categorylist);
+
+		//热门软件
+		$hotgoodslist = D('goods')->gethotgoods($cat_id);
+		$this->assign('hotgoodslist',$hotgoodslist);
+		unset($hotgoodslist);
+
+		$nowPage = I('page',1,'intval');
+		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20,45);
+		$this->assign('goodslist',$goodslsit);
+		$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('id'=>$cat_id),1));
+		unset($page,$goodslsit);
+
+
+		$this->display("bylwlist");
+	}
+
+	public function showbylw(){
+		$id = I('id',0);
+		if($id>0){
+			$cat_id = 0;
+			$goodsdetail = D('goods')->getGoodsDetail($id);
+			$cat_id = $goodsdetail['cat_id'];
+			$this->assign('GoodsDetail',$goodsdetail);
+			unset($goodsdetail);
+
+			//上下篇
+			$arr = D('goods')->getPrevNext($cat_id,$id);
+			$this->assign('goods_about',$arr);
+			unset($arr);
+
+			//更多产品
+			$alist = D('goods')->getTopGoodslist(10,$cat_id);
+			$this->assign('codelist',$alist);
+			unset($alist);
+
+			//点击量
+			D('goods')->updateGoodsHits($id);
+
+			//热门软件
+			$hotgoodslist = D('goods')->gethotgoods($cat_id);
+			$this->assign('hotgoodslist',$hotgoodslist);
+			unset($hotgoodslist);
+
+			$this->assign('goods_id',$id);
+
+		}
+
+		$this->display('showbylw');
+	}
+
 }
