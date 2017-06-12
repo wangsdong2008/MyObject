@@ -44,7 +44,7 @@ class IndexController extends Controller {
 
 	public function init(){
 		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
-		$flg = 0;
+		$flg = 1;
 		if($flg == 1){
 			if(!$this->is_spider()) { //普通客户
 				$fromurl = I('server.HTTP_REFERER'); //$_SERVER['HTTP_REFERER']
