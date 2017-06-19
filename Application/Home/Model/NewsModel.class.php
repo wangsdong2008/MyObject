@@ -35,6 +35,14 @@ class NewsModel extends Model{
         return session("userid");
     }
 
+    public function getMaxId(){
+        $Model = M();
+        $sql = "select max(news_id) as id from think_news";
+        $result = $Model->query($sql);
+        unset($sql,$Model);
+        return $result[0]['id'];
+    }
+
     /*
      * 获取某个类型的新闻
      * $cat_id为分类，$num为数量

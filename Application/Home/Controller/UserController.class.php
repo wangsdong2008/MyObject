@@ -263,6 +263,9 @@ class UserController extends Controller {
     //登录
 	public function login(){
 		$fromurl = $_SERVER['HTTP_REFERER'];
+		if(strpos($fromurl,"register")){
+			$fromurl = "";
+		}
 		$this->assign('fromurl',$fromurl);
 		$this->display('login');
 	}

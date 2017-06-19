@@ -53,7 +53,7 @@ class IndexController extends Controller {
 					if (!in_array(ACTION_NAME, $openhtml)) {
 						if (!session('tksession')) {
 							echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-							echo '<a href="'.$this->curPageURL().'">点击打开此页面</a>';
+							echo '<a href="http://www.aspbc.com/">打开asp编程网</a>';
 							exit;
 						}
 					} else {
@@ -196,6 +196,9 @@ class IndexController extends Controller {
 		$this->assign('token',$token);
 		unset($this,$token);
 		$news_id = I("id",0,"intval");
+		if($news_id == 0 || $news_id > D('news')->getMaxId()){
+			exit;
+		}
 		$this->assign('news_id',$news_id);
 		$newslist = D('news')->getNews($news_id);
 		$cat_id = 0;
@@ -253,6 +256,9 @@ class IndexController extends Controller {
 
 	public function newslist(){
 		$cat_id = I('id',0,'intval');
+		if($cat_id == 0 || $cat_id > D('news')->getMaxId()){
+			exit;
+		}
 		$nowPage = I('page',1,'intval');
 		$newslsit = D('news')->getPageNews($cat_id,$nowPage,20);
 		$this->assign('newslist',$newslsit);
@@ -615,6 +621,9 @@ class IndexController extends Controller {
 
 	public function showsoft(){
 		$id = I('id',0);
+		if($id == 0 || $id > D('goods')->getMaxId()){
+			exit;
+		}
 		if($id>0){
 			$cat_id = 0;
 			$goodsdetail = D('goods')->getGoodsDetail($id);
@@ -648,6 +657,9 @@ class IndexController extends Controller {
 
 	public function showcode(){
 		$id = I('id',0);
+		if($id == 0 || $id > D('goods')->getMaxId()){
+			exit;
+		}
 		if($id>0){
 			$cat_id = 0;
 			$goodsdetail = D('goods')->getGoodsDetail($id);

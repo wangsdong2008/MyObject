@@ -6,6 +6,14 @@ use Think\Model;
  * 产品模型
  */
 class GoodsModel extends Model{
+
+    public function getMaxId(){
+        $Model = M();
+        $sql = "select max(goods_id) as id from think_goods";
+        $result = $Model->query($sql);
+        unset($sql,$Model);
+        return $result[0]['id'];
+    }
     /*
      * 获取最新的模版
      * $cat_id分类，$num为数量
