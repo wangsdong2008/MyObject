@@ -14,9 +14,11 @@
 <div class="r_link border">
     <!--  下载排行榜  -->
     <div class="title2">
-        <h4>下载排行榜</h4>
+        <h4>最新软件</h4>
     </div>
     <ul class="hourul">
-        <li class="onlink"><a href="http://www.aspbc.com/soft/showsoft.asp?id=208" target="_blank" title="AdminLTE bootstrap 后台框架">AdminLTE&nbsp;bootstrap&nbsp;后台框架</a></li>
+        <volist name="newgoodslist" id="newgoodslist">
+            <li class="onlink"><a href="{:U('showsoft',array('id'=>$newgoodslist['goods_id']))}" target="_blank" title="{$newgoodslist.goods_name}">{$newgoodslist.goods_name}</a></li>
+        </volist>
     </ul>
 </div>

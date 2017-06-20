@@ -74,5 +74,13 @@ class CategoryModel extends Model{
         return $categorylist;
     }
 
+    public function getMaxId(){
+        $Model = M();
+        $sql = "select max(cat_id) as id from think_category";
+        $result = $Model->query($sql);
+        unset($sql,$Model);
+        return $result[0]['id'];
+    }
+
 
 }

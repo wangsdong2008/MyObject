@@ -3,9 +3,10 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
 	private $data;
-	/*public function _empty(){
-		header("Location: /404.html");
-	}*/
+	public function _empty(){
+		$this->error();
+	}
+
 	private function is_spider(){
 		$robot = 0;
 		$USER_AGENT = strtolower($_SERVER['HTTP_USER_AGENT']);
@@ -197,6 +198,7 @@ class IndexController extends Controller {
 		unset($this,$token);
 		$news_id = I("id",0,"intval");
 		if($news_id == 0 || $news_id > D('news')->getMaxId()){
+			$this->error();
 			exit;
 		}
 		$this->assign('news_id',$news_id);
@@ -256,7 +258,8 @@ class IndexController extends Controller {
 
 	public function newslist(){
 		$cat_id = I('id',0,'intval');
-		if($cat_id == 0 || $cat_id > D('news')->getMaxId()){
+		if($cat_id == 0 || $cat_id > D('category')->getMaxId()){
+			$this->error();
 			exit;
 		}
 		$nowPage = I('page',1,'intval');
@@ -569,6 +572,10 @@ class IndexController extends Controller {
 
 	public function softlist(){
 		$cat_id = I('id',0,'intval');
+		if($cat_id == 0 || $cat_id > D('category')->getMaxId()){
+			$this->error();
+			exit;
+		}
 		$nowPage = I('page',1,'intval');
 		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20,30);
 		$this->assign('goodslist',$goodslsit);
@@ -580,10 +587,11 @@ class IndexController extends Controller {
 		$this->assign('hotgoodslist',$hotgoodslist);
 		unset($hotgoodslist);
 
-		/*//推荐新闻
-		$hotnewslist = D('news')->getBestNumNewsList($cat_id);
-		$this->assign('bestnewslist',$hotnewslist);
-		unset($hotnewslist);*/
+		//最新软件
+		$data = array(32);
+		$newgoodslist = D('goods')->getNewGoodsNum($data,10);
+		$this->assign('newgoodslist',$newgoodslist);
+		unset($newgoodslist);
 
 		//相关分类
 		$categorylist = D('category')->getCategory($cat_id);
@@ -595,6 +603,10 @@ class IndexController extends Controller {
 
 	public function codelist(){
 		$cat_id = I('id',0,'intval');
+		if($cat_id == 0 || $cat_id > D('category')->getMaxId()){
+			$this->error();
+			exit;
+		}
 		$nowPage = I('page',1,'intval');
 		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20,29);
 		$this->assign('goodslist',$goodslsit);
@@ -619,9 +631,15 @@ class IndexController extends Controller {
 		$this->display('showcodeclass');
 	}
 
+	public function error(){
+		Header("HTTP/1.1 404 Moved Permanently");
+		Header("Location: /404.html");
+	}
+
 	public function showsoft(){
 		$id = I('id',0);
 		if($id == 0 || $id > D('goods')->getMaxId()){
+			$this->error();
 			exit;
 		}
 		if($id>0){
@@ -649,6 +667,12 @@ class IndexController extends Controller {
 			$this->assign('hotgoodslist',$hotgoodslist);
 			unset($hotgoodslist);
 
+			//最新软件
+			$data = array(32);
+			$newgoodslist = D('goods')->getNewGoodsNum($data,10);
+			$this->assign('newgoodslist',$newgoodslist);
+			unset($newgoodslist);
+
 			$this->assign('goods_id',$id);
 
 		}
@@ -658,6 +682,7 @@ class IndexController extends Controller {
 	public function showcode(){
 		$id = I('id',0);
 		if($id == 0 || $id > D('goods')->getMaxId()){
+			$this->error();
 			exit;
 		}
 		if($id>0){
