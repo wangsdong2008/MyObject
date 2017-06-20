@@ -26,29 +26,8 @@
     </div>
     <div class="con_right">
 
-  <div class="r_link border">
-    <!--  热门教程  -->
-    <div class="title2">
-      <h4>热门软件</h4>
-    </div>
-    <ul class="hourul">
-      <volist name="hotgoodslist" id="hotgoodslist">
-        <li class="onlink"><a href="{:U('showsoft',array('id'=>$hotgoodslist['goods_id']))}" target="_blank" title="{$hotgoodslist.goods_name}">{$hotgoodslist.goods_name}</a></li>
-      </volist>
-    </ul>
-  </div>
   <div class="black"></div>
-  <div class="r_link border">
-    <!--  下载排行榜  -->
-    <div class="title2">
-      <h4>最新软件</h4>
-    </div>
-    <ul class="hourul">
-      <volist name="newgoodslist" id="newgoodslist">
-        <li class="onlink"><a href="{:U('showsoft',array('id'=>$newgoodslist['goods_id']))}" target="_blank" title="{$newgoodslist.goods_name}">{$newgoodslist.goods_name}</a></li>
-      </volist>
-    </ul>
-  </div>
+      <include file="soft_right" />
 </div>
 
     <div class="clearit"></div>

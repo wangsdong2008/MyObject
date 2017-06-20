@@ -545,6 +545,12 @@ class IndexController extends Controller {
 		$this->assign('ad2',$ad2);
 		unset($ad2);
 
+		//最新软件
+		$data = array(24,25,26,32);
+		$newgoodslist = D('goods')->getNewGoodsNum($data,10);
+		$this->assign('newgoodslist',$newgoodslist);
+		unset($newgoodslist);
+
 		//本站软件
 		$sitesoft = D('goods')->getTopGoodsList(10,32);
 		$this->assign('sitesoft',$sitesoft);
@@ -565,6 +571,8 @@ class IndexController extends Controller {
 		$hotgoodslist = D('goods')->gethotgoods(32);
 		$this->assign('hotgoodslist',$hotgoodslist);
 		unset($hotgoodslist);
+
+
 
 
 		$this->display('soft');
@@ -588,7 +596,7 @@ class IndexController extends Controller {
 		unset($hotgoodslist);
 
 		//最新软件
-		$data = array(32);
+		$data = array($cat_id);
 		$newgoodslist = D('goods')->getNewGoodsNum($data,10);
 		$this->assign('newgoodslist',$newgoodslist);
 		unset($newgoodslist);
@@ -618,10 +626,11 @@ class IndexController extends Controller {
 		$this->assign('hotgoodslist',$hotgoodslist);
 		unset($hotgoodslist);
 
-		/*//推荐新闻
-		$hotnewslist = D('news')->getBestNumNewsList($cat_id);
-		$this->assign('bestnewslist',$hotnewslist);
-		unset($hotnewslist);*/
+		//最新源码
+		$data = array($cat_id);
+		$newgoodslist = D('goods')->getNewGoodsNum($data,10);
+		$this->assign('newgoodslist',$newgoodslist);
+		unset($newgoodslist);
 
 		//相关分类
 		$categorylist = D('category')->getCategory($cat_id);
@@ -668,7 +677,7 @@ class IndexController extends Controller {
 			unset($hotgoodslist);
 
 			//最新软件
-			$data = array(32);
+			$data = array($cat_id);
 			$newgoodslist = D('goods')->getNewGoodsNum($data,10);
 			$this->assign('newgoodslist',$newgoodslist);
 			unset($newgoodslist);
@@ -703,10 +712,16 @@ class IndexController extends Controller {
 			//点击量
 			D('goods')->updateGoodsHits($id);
 
-			//热门软件
+			//热门源码
 			$hotgoodslist = D('goods')->gethotgoods($cat_id);
 			$this->assign('hotgoodslist',$hotgoodslist);
 			unset($hotgoodslist);
+
+			//最新源码
+			$data = array($cat_id);
+			$newgoodslist = D('goods')->getNewGoodsNum($data,10);
+			$this->assign('newgoodslist',$newgoodslist);
+			unset($newgoodslist);
 
 			$this->assign('goods_id',$id);
 		}
@@ -821,6 +836,17 @@ class IndexController extends Controller {
 		$ad_web = D('ad')->showAd(55);
 		$this->assign('ad_web',$ad_web);
 		unset($ad_web);
+
+		//热门软件
+		$hotgoodslist = D('goods')->gethotgoods(17);
+		$this->assign('hotgoodslist',$hotgoodslist);
+		unset($hotgoodslist);
+
+		//最新源码
+		$data = array(17,18,19,20,21,23);
+		$newgoodslist = D('goods')->getNewGoodsNum($data,10);
+		$this->assign('newgoodslist',$newgoodslist);
+		unset($newgoodslist);
 
 		$this->display('code');
 	}

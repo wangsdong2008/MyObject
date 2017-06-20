@@ -90,33 +90,8 @@
 
     </div>
     <div class="con_right">
-  <!--  右侧广告链接部分  -->
-  <div class="r_link border">
-    <!--  热门教程  -->
-    <div class="title2">
-      <h4>热门下载</h4>
+        <include file="code_right" />
     </div>
-    <ul class="hourul">
-        <volist name="hotgoodslist" id="hotgoodslist">
-            <li class="onlink"><a href="{:U('showcode',array('id'=>$hotgoodslist['goods_id']))}" target="_blank" title="{$hotgoodslist.goods_name}">{$hotgoodslist.goods_name}</a></li>
-        </volist>
-    </ul>
-  </div>
-  <div class="black"></div>
-  <div class="r_link border">
-    <!--  下载排行榜  -->
-    <div class="title2">
-      <h4>下载排行榜</h4>
-    </div>
-    <ul class="hourul">
-      <li class="onlink"><a href="http://www.aspbc.com/code/showcode.asp?id=207" target="_blank" title="easyui+asp Demo 演示程序">easyui+asp&nbsp;Demo&nbsp;演示程序</a></li>
-        <volist name="bestnewslist" id="bestnewslist">
-            <li class="onlink"><a href="{:U('showtech',array('id'=>$bestnewslist['news_id']))}" target="_blank" title="{$bestnewslist.news_title}">{$bestnewslist.news_title}</a></li>
-        </volist>
-    </ul>
-  </div>
-</div>
-
     <div class="clearit"></div>
     <div class="shownewsbuttom"></div>
   </div>
