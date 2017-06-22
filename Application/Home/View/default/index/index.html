@@ -68,8 +68,9 @@
             <h4>本站软件</h4>
           </div>
           <ul class="tieul">
-            <volist name="codelist2" id="codelist2">
-              <li class="onlink"><a href="{:U('showsoft',array('id'=>$codelist2['goods_id']))}" target="_blank" title="{$codelist2.goods_name}">{$codelist2.goods_name}</a></li>
+            <volist name="codelist2" id="codelist2" key="key">
+              <li class="onlink"><a href="{:U('showsoft',array('id'=>$codelist2['goods_id']))}" target="_blank" title="{$codelist2.goods_name}"><if condition="$key eq 1"><span style="color:#f00; float:left;">{$codelist2.goods_name}</span><else/>{$codelist2.goods_name}</if>
+              </a></li>
             </volist>
           </ul>
         </div>
