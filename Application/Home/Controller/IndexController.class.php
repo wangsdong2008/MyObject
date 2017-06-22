@@ -737,6 +737,13 @@ class IndexController extends Controller {
 
 		//最新教程
 		$newslist = D('news')->getTopNewslist(9);
+		foreach($newslist as $key => $v){
+			if(date("Y-m-d",$v['news_time']) == date("Y-m-d",time())){
+				$newslist[$key]['flg'] = 1;
+			}else{
+				$newslist[$key]['flg'] = 0;
+			}
+		}
 		$this->assign('news_list',$newslist);
 		unset($newslist);
 

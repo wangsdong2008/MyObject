@@ -106,7 +106,7 @@ class NewsModel extends Model{
         if($cat_id > 0 ){
             $news_data['cat_id'] = array('eq',$cat_id);
         }
-        $newslist = $news->where($news_data)->order('news_id desc')->field('news_id,news_title')->limit($num)->select();
+        $newslist = $news->where($news_data)->order('news_id desc')->field('news_id,news_title,news_time')->limit($num)->select();
         unset($news,$news_data);
         return $newslist;
     }

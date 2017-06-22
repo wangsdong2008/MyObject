@@ -2,6 +2,77 @@
 namespace Home\Controller;
 use Think\Controller;
 class CaijiController extends Controller {
+
+	public function zd(){
+		//采集浏览次数
+		//$url="https://zhidao.baidu.com/question/147323580.html";
+		/*$data = $this->getHTTPS($url);
+		$data2 = $this->getHTTPS("https://zhidao.baidu.com/api/qbpv?q=147323580");*/
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$url = "https://zhidao.baidu.com/question/649130262657664777.html";
+		$data2 = $this->getHTTPS($url);
+		//echo $data2;
+		if(strpos($data2,"<div class=\"f-yahei f-20 mb-20\">",1) > 0){
+			echo '不存在';
+		}else{
+			echo '存在';
+		}
+		//print_r($data2);
+
+	}
+
+	function getHTTPS($url) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_REFERER, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return $result;
+	}
+
+	/**
+	 * curl POST
+	 *
+	 * @param   string  url
+	 * @param   array   数据
+	 * @param   int     请求超时时间
+	 * @param   bool    HTTPS时是否进行严格认证
+	 * @return  string
+	 */
+	function curlPost($url, $data = array(), $timeout = 30, $CA = true){
+
+		$cacert = getcwd() . '/cacert.pem'; //CA根证书
+		$SSL = substr($url, 0, 8) == "https://" ? true : false;
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout-2);
+		if ($SSL && $CA) {
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);   // 只信任CA颁布的证书
+			curl_setopt($ch, CURLOPT_CAINFO, $cacert); // CA根证书（用来验证的网站证书是否是CA颁布）
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); // 检查证书中是否设置域名，并且是否与提供的主机名匹配
+		} else if ($SSL && !$CA) {
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证书
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); // 检查证书中是否设置域名
+		}
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //避免data数据过长问题
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		//curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data)); //data with URLEncode
+
+		$ret = curl_exec($ch);
+		//var_dump(curl_error($ch));  //查看报错信息
+
+		curl_close($ch);
+		return $ret;
+	}
+
 	public function index(){
 		echo '1111';exit;
 		ini_set("max_execution_time", "500");

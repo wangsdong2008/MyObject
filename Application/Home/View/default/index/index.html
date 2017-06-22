@@ -55,7 +55,9 @@
               <a href="{$ad3.ad_url}" target="_blank">{$ad3.ad_name}</a></div>
             <ul class="hotul">
               <volist name="news_list" id="news_list">
-                <li><a href="{:U('showtech',array('id'=>$news_list['news_id']))}" target="_blank" title="{$news_list.news_title}" >{$news_list.news_title}</a></li>
+<li><a href="{:U('showtech',array('id'=>$news_list['news_id']))}" target="_blank" title="{$news_list.news_title}">
+  <if condition="$news_list.flg eq 1"><span style="color:#f00">{$news_list.news_title}</span><else/>{$news_list.news_title}</if>
+</a></li>
               </volist>
             </ul>
           </div>
