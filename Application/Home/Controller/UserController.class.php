@@ -39,6 +39,10 @@ class UserController extends Controller {
 		$this->assign('myFavorites',$myFavorites);
 		unset($mysoftlist);
 
+		//我消费的积分
+		$xfjf = D('Home/OrderInfo')->getOrderIntegral(session("userid"));
+		$this->assign('xfjf',$xfjf);
+		unset($xfjf);
 
 		$this->display('index');
     }

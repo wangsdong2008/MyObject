@@ -186,4 +186,19 @@ class OrderInfoModel extends Model{
     }
 
 
+    //会员的消费积分
+    public function getOrderIntegral($userid = 0){
+        if($userid == 0) return 0;
+        $Order_info = M('Order_info');
+        $Order_info_data['user_id'] = array('eq',$userid);
+        $Order_info_data['order_status'] = array('eq',2);
+        $Order_infolist = $Order_info
+            ->where($Order_info_data)
+            ->field('sum(`order_mount`) as num')
+            ->select();
+        unset($Order_info,$Order_info_data);
+        return $Order_infolist[0]['num'];
+    }
+
+
 }

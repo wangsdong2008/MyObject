@@ -1073,7 +1073,7 @@ class IndexController extends Controller {
 
 			//判断总积分是否大于产品金额
 			if($jf*1 < $order_mount*1){
-				$this->error("积分不足");
+				echo("积分不足");
 				exit;
 			}
 
