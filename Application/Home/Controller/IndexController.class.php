@@ -1149,13 +1149,13 @@ class IndexController extends Controller {
 	public function search(){
 		$searchtype = I('searchtype',0,'intval');
 		if($searchtype == 0){
-			exit;
+			$this->error();
 		}
 
 		$keyword = I('keyword','','strip_tags');
 		preg_match('/^\w+$/', $keyword, $arr);;
 		if(count($arr) == 0){
-			exit;
+			$this->error();
 		}
 
 		$model = '';
