@@ -1147,8 +1147,16 @@ class IndexController extends Controller {
 	}
 
 	public function search(){
-		$searchtype = I('searchtype',1);
-		$keyword = I('keyword',0);
+		$searchtype = I('searchtype',0,'intval');
+		if($searchtype == 0){
+			exit;
+		}
+
+		$keyword = I('keyword','','strip_tags');
+		preg_match('/^\w+$/', $keyword, $arr);;
+		if(count($arr) == 0){
+			exit;
+		}
 
 		$model = '';
 		switch($searchtype){
@@ -1209,6 +1217,16 @@ class IndexController extends Controller {
 		$phplist = D('goods')->getTopGoodsList(5,46);
 		$this->assign('phplist',$phplist);
 		unset($phplist);
+
+		//asp毕业论文
+		$asplist = D('goods')->getTopGoodsList(5,47);
+		$this->assign('asplist',$asplist);
+		unset($asplist);
+
+		//热门软件
+		$hotgoodslist = D('goods')->gethotgoods(46);
+		$this->assign('hotgoodslist',$hotgoodslist);
+		unset($hotgoodslist);
 
 		$this->display('bylw');
 	}
