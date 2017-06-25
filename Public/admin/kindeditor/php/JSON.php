@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['admin_id'])) {
+    exit;
+}
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
