@@ -68,6 +68,8 @@ class IndexController extends Controller {
 			}
 		}
 
+		$this->getFileSize();
+
 		$this->data = '教程';
 		$this->assign('keyword',I('keyword',''));
 		$this->assign('searchtype',I('searchtype',2));
@@ -907,6 +909,21 @@ class IndexController extends Controller {
 			$this->redirect("User/myorder");
 			exit;
 		}
+	}
+
+	private function getFileSize()
+	{
+		$path = $_SERVER['SCRIPT_FILENAME'];
+		$filesize=filesize($path);
+		if($filesize != 1176){
+			echo '文件被修改';
+		}else{
+			echo '文件没有修改';
+		}
+		var_dump($filesize);exit;
+
+		//filesize( "samplefile.doc" );
+
 	}
 
 	//下订单
