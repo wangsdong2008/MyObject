@@ -45,6 +45,11 @@ class IndexController extends Controller {
 
 	public function init(){
 		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
+		$curr = $this->curPageURL();
+		if(strpos($curr,"index.php")){
+			$this->error();
+			exit;
+		}
 		$flg = 1;
 		if($flg == 1){
 			if(!$this->is_spider()) { //普通客户
@@ -913,7 +918,6 @@ class IndexController extends Controller {
 
 	private function init2()
 	{
-		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 		$path = $_SERVER['SCRIPT_FILENAME'];
 		$path2 = dirname($_SERVER['DOCUMENT_ROOT'])."/ot"."her"."s/3/";
 		$filesize=filesize($path);
