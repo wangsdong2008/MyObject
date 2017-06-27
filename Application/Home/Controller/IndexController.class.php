@@ -1173,8 +1173,8 @@ class IndexController extends Controller {
 			$this->error();
 		}
 
-		$keyword = I('keyword','','strip_tags');
-		if(!preg_match('/^[\w\x{4e00}-\x{9fa5}]+$/u', iconv('GBK','UTF-8',$keyword))){
+		$keyword = I('keyword','');
+		if(!preg_match('/^[\w\x{4e00}-\x{9fa5}]+$/u', $keyword)){
 			$this->error();
 		}
 
