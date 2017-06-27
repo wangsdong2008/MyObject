@@ -77,7 +77,7 @@ class IndexController extends Controller {
 
 		$this->data = '教程';
 		$this->assign('keyword',I('keyword',''));
-		$this->assign('searchtype',I('searchtype',2));
+		$this->assign('searchtype',I('searchtype',1));
 		if(session("userid"))  $this->assign('userid',session("userid"));
 		$configlist = D("Home/config")->showconfig();
 		$path = "";
@@ -1182,20 +1182,20 @@ class IndexController extends Controller {
 		switch($searchtype){
 			case 1:{
 				$nowPage = I('page',1,'intval');
-				$goodslsit = D('goods')->getPageGoods(0,$nowPage,20,30,$keyword);
-				$this->assign('goodslist',$goodslsit);
-				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword),1));
-				unset($nowPage,$page,$goodslsit);
-				$model = 'soft_search';
-				break;
-			}
-			case 2:{
-				$nowPage = I('page',1,'intval');
 				$newslsit = D('news')->getPageNews(0,$nowPage,20,$keyword);
 				$this->assign('newslist',$newslsit);
 				$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('keyword'=>$keyword),1));
 				unset($page,$newslsit);
 				$model = 'tech_search';
+				break;
+			}
+			case 2:{
+				$nowPage = I('page',1,'intval');
+				$goodslsit = D('goods')->getPageGoods(0,$nowPage,20,30,$keyword);
+				$this->assign('goodslist',$goodslsit);
+				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword),1));
+				unset($nowPage,$page,$goodslsit);
+				$model = 'soft_search';
 				break;
 			}
 			case 3:{
