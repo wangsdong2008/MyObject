@@ -77,7 +77,7 @@
       </dd>
     </dl>
    </if> 
-   <if condition="(stripos($qx,',15,') nheq false) or (stripos($qx,',19,') nheq false)"> 
+   <if condition="(stripos($qx,',15,') nheq false) or (stripos($qx,',19,') nheq false) or (stripos($qx,',93,') nheq false)">
     <dl id="menu-news">
       <dt><i class="icon-list"></i> 新闻库<i class="iconfont menu_dropdown-arrow">&#xf02a9;</i></dt>
       <dd>
@@ -87,6 +87,9 @@
           </if>
           <if condition="stripos($qx,',19,') nheq false">
             <li><a _href="newslist" href="javascript:void(0)">新闻管理</a></li>
+          </if>
+          <if condition="stripos($qx,',93,') nheq false">
+            <li><a _href="newslist2" href="javascript:void(0)">新闻导入</a></li>
           </if>
         </ul>
       </dd>

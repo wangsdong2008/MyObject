@@ -1244,6 +1244,42 @@ class IndexController extends Controller {
 		}
 		$this->closewindows();		
 	}
+
+	/*新闻导入*/
+	public function newslist2(){
+		$this->getrolelist(93);
+		$cat_id = I("cat_id",0,'intval');
+		$this->assign('cat_id',$cat_id);
+		$keyword = I("keyword");
+		$this->assign('keyword',$keyword);
+		$objPage['cat_id'] = $cat_id;
+		$objPage['keyword'] = $keyword;
+		if($cat_id > 0){
+			$news_data[C('DB_PREFIX').'news2.cat_id'] = $cat_id;
+		}
+		//分类
+		$categorylist1 = $this->getcategorylist(2);
+		$this->assign('category_list',$categorylist1);
+		if($keyword != ""){
+			$news_data[C('DB_PREFIX').'news2.news_title'] = array('like','%'.$keyword.'%');
+		}
+
+		$nowPage = I('page')?I('page'):1;
+		$news = M('news2');
+		$news_data[C('DB_PREFIX').'news2.isdel'] = 0;
+		$count = $news->where($news_data)->join('left join ' . C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news2.cat_id')->count();
+		$this->assign('count',$count);
+		$this->assign('pagecount',$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')));
+
+		$Page = new \Think\Page($count,C('ADMIN_DEFAULT_PAGENUM'));
+		$newslist = $news->where($news_data)->join('left join ' .C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news2.cat_id')->order('news_id desc')->page($nowPage.','.$Page->listRows)->select();
+
+		$this->assign('news_list',$newslist);
+		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));
+		unset($nowPage,$news,$news_data,$count,$Page,$newslist);
+
+		$this->display('news-list');
+	}
 	
 	/*新闻*/
 	public function newslist(){
@@ -1281,19 +1317,7 @@ class IndexController extends Controller {
 		$this->assign('news_list',$newslist);
 		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));
 		unset($nowPage,$news,$news_data,$count,$Page,$newslist);
-		/*
 
-		$nowPage = I('page')?I('page'):1;		
-		$news = M('news');
-		$news_data[C('DB_PREFIX').'news.isdel'] = 0;				
-		$count = $news->where($news_data)->join('left join ' . C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news.cat_id')->count();		
-		$this->assign('count',$count);
-		$this->assign('pagecount',$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')));
-		
-		$Page = new \Think\Page($count,C('ADMIN_DEFAULT_PAGENUM'));		
-		$newslist = $news->where($news_data)->join('left join ' .C('DB_PREFIX').'category on '.C('DB_PREFIX').'category.cat_id = '.C('DB_PREFIX').'news.cat_id')->order('news_id desc')->page($nowPage.','.$Page->listRows)->select();
-		$this->assign('news_list',$newslist);	
-		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));*/
 		$this->display('news-list');
 	}
 	
