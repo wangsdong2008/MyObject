@@ -1278,7 +1278,7 @@ class IndexController extends Controller {
 		$this->assign('pagefooter',$this->showpage($nowPage,$this->getpagenum($count,C('ADMIN_DEFAULT_PAGENUM')),$objPage));
 		unset($nowPage,$news,$news_data,$count,$Page,$newslist);
 
-		$this->display('news-list');
+		$this->display('news-list2');
 	}
 	
 	/*新闻*/
@@ -1346,13 +1346,43 @@ class IndexController extends Controller {
 		$this->assign('category_list',$categorylist1);		
 		$this->display('news-add');
 	}
+
+	public function newsedit2(){
+		$this->getrolelist(93);
+		$news_id = I('id',0);
+		$this->assign('news_id',$news_id);
+
+		$news = M('news2');
+		$news_data['news_id'] = $news_id;
+		$news_data['isdel'] = 0;
+		$newslist = $news->where($news_data)->limit(1)->find();
+		if($newslist){
+			$this->assign('cat_id',$newslist['cat_id']);
+			$this->assign('news_title',$newslist['news_title']);
+			$this->assign('news_img',$newslist['news_img']);
+			$this->assign('news_content',$newslist['news_content']);
+			$this->assign('is_show',$newslist['is_show']);
+			$this->assign('news_author',$newslist['news_author']);
+			$this->assign('news_from',$newslist['news_from']);
+			$this->assign('is_show',$newslist['is_show']);
+			$this->assign('is_best',$newslist['is_best']);
+			$this->assign('news_keyword',$newslist['news_keyword']);
+			$this->assign('news_description',$newslist['news_description']);
+			$this->assign('news_time',$newslist['news_time']);
+			$this->assign('show_error',$newslist['show_error']);
+		}
+		$categorylist1 = $this->getcategorylist(2);
+		$this->assign('category_list',$categorylist1);
+		$this->assign('saves',"2");
+		$this->display('news-add');
+	}
 	
 	/*新闻编辑*/
 	public function newsedit(){
 		$this->getrolelist(21);
 		$news_id = I('id',0);
 		$this->assign('news_id',$news_id);
-		
+
 		$news = M('news');
 		$news_data['news_id'] = $news_id;
 		$news_data['isdel'] = 0;
@@ -1362,28 +1392,55 @@ class IndexController extends Controller {
 			$this->assign('news_title',$newslist['news_title']);
 			$this->assign('news_img',$newslist['news_img']);
 			$this->assign('news_content',$newslist['news_content']);
-			$this->assign('is_show',$newslist['is_show']);	
-			$this->assign('news_author',$newslist['news_author']);	
-			$this->assign('news_from',$newslist['news_from']);	
+			$this->assign('is_show',$newslist['is_show']);
+			$this->assign('news_author',$newslist['news_author']);
+			$this->assign('news_from',$newslist['news_from']);
 			$this->assign('is_show',$newslist['is_show']);
 			$this->assign('is_best',$newslist['is_best']);
-			$this->assign('news_keyword',$newslist['news_keyword']);	
+			$this->assign('news_keyword',$newslist['news_keyword']);
 			$this->assign('news_description',$newslist['news_description']);
 			$this->assign('news_time',$newslist['news_time']);
 			$this->assign('show_error',$newslist['show_error']);
-		}	
-		$categorylist1 = $this->getcategorylist(2);		
-		$this->assign('category_list',$categorylist1);					
+		}
+		$categorylist1 = $this->getcategorylist(2);
+		$this->assign('category_list',$categorylist1);
+		$this->assign('saves',"1");
 		$this->display('news-add');
 	}
-	
+
+	/*新闻导入*/
+	public function news_dr(){
+		$this->getrolelist(93);
+		$id = I("id",'');
+		$list = explode(",",$id);
+		for($i=0;$i<count($list);$i++){
+			$pid = $list[$i];
+
+			//$sql = "insert into think_news(`news_title`,`news_keyword`,`news_description`,`news_content`,`is_show`,`cat_id`,`isdel`,`news_time`)select `news_title`,`news_keyword`,`news_description`,`news_content`,`is_show`,`cat_id`,`isdel`,`news_time` from think_news2 where news_id = $pid";
+			//echo $sql;exit;
+			//M()->query($sql);
+
+			$set = M("News2")->where("news_id = $pid")->find();
+			M('News')->add($set);
+
+
+			/*$news = M('news');
+			$news_data['news_id'] = $pid;
+			$news_data['isdel'] = 1;
+			$news->save($news_data);*/
+		}
+		echo "1";
+	}
+
+
 	/*新闻保存*/
 	public function newssave(){
 		$news_id = I('news_id',0);
+		$saves = I('saves',1);
 		$userid = 0;
 		if($news_id > 0){
 			$this->getrolelist(20);
-			$news = M('news');
+			$news = M('news'.$saves);
 			$news_data['news_id'] = $news_id;
 			$news_data['isdel'] = 0;
 			$newslist = $news->where($news_data)->limit(1)->find();
@@ -1427,7 +1484,7 @@ class IndexController extends Controller {
 			$show_error = I('show_error');
 		}
 
-		$news = M('news');
+		$news = M('news'.$saves);
 		$news_data['cat_id'] = $cat_id;
 		$news_data['news_title'] = $news_title;
 		$news_data['news_img'] = $news_img;
@@ -1445,26 +1502,29 @@ class IndexController extends Controller {
 		} else {
 			$news_data['news_id'] = $news_id;
 			$news->save($news_data);
-			if($userid>0) {
-				if ($is_show == 1) { //审核通过，赠送积分
-					//检查此教程是否已经送过积分
-					$pid = D('Home/integral_record')->check_news_integory_record(43, $news_id, $userid);
-					if ($pid == 0) {
-						//赠送积分
-						D('Home/integral_record')->OpIntegral(43, $userid, 0, '', $news_id);
+			if($saves == 1){
+				if($userid>0) {
+					if ($is_show == 1) { //审核通过，赠送积分
+						//检查此教程是否已经送过积分
+						$pid = D('Home/integral_record')->check_news_integory_record(43, $news_id, $userid);
+						if ($pid == 0) {
+							//赠送积分
+							D('Home/integral_record')->OpIntegral(43, $userid, 0, '', $news_id);
+						}
 					}
-				}
-				if ($is_best == 1) { //设为精华，赠送积分
-					//检查此教程是否已经送过积分
-					$pid = D('Home/integral_record')->check_news_integory_record(44, $news_id, $userid);
-					if ($pid == 0) {
-						//赠送积分
-						D('Home/integral_record')->OpIntegral(44, $userid, 0, '', $news_id);
+					if ($is_best == 1) { //设为精华，赠送积分
+						//检查此教程是否已经送过积分
+						$pid = D('Home/integral_record')->check_news_integory_record(44, $news_id, $userid);
+						if ($pid == 0) {
+							//赠送积分
+							D('Home/integral_record')->OpIntegral(44, $userid, 0, '', $news_id);
+						}
 					}
 				}
 			}
+
 		}
-		if ($is_show == 1) {
+		if ($is_show == 1 && $saves == 1) {
 			//推送
 			$url = $sys_url . "/Index/showtech/id/" . $news_id . ".html";
 			$data = $this->sendbaidu($url);

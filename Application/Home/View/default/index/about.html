@@ -1,38 +1,342 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{$article.article_title}-{$article.cat_name}-{$sys_sitename}</title>
-<meta name="Description" content="{$article.article_title} ">
-<meta name="Keywords" content="{$article.article_title} ">
-<link href="{$model_path}/css/css.css" rel="stylesheet" type="text/css" />
+  <meta charset="gb2312" />
+  <meta name="applicable-device" content="pc">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <title>asp获取虚拟目录根路径的代码_应用技巧_脚本之家</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+  <meta name="keywords" content="asp,虚拟目录,根路径" />
+  <meta name="description" content="这篇文章主要介绍了asp获取虚拟目录根路径的代码,需要的朋友可以参考下" />
+  <link rel="alternate" media="only screen and(max-width: 640px)" href="http://m.jb51.net/article/111606.htm" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/article/111606.htm" />
+  <meta http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/article/111606.htm" />
+  <script type="text/javascript">
+    var tougao="mdxy-dxy";var lmname="ASP编程";
+    (function(){var reWriteUrl=function(url){if(url){var Splits=url.split("/"),siteName=window.location.pathname;if(typeof siteName!=="undefined"){return "http://m.jb51.net"+siteName}}};if(/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile/i.test(navigator.userAgent)){var url=window.location.href;var pathname=window.location.pathname;if(url.indexOf("?pc")<0){try{window.location.href=reWriteUrl(url)}catch(e){}}}})();
+  </script>
+  <link type="text/css" href="/skin/2016/base.css" rel="stylesheet" />
+  <link type="text/css" href="/skin/2016/common.css" rel="stylesheet" />
+  <script type="text/javascript" src="http://common.jb51.net/jslib/jquery/jquery.min.js"></script>
+  <script type=text/javascript src="/js/function.js"></script>
 </head>
 <body>
-<div class="wrapper">
-  <!--  顶部链接  -->
-  <include file="top" />
-  <!--  正文  -->
-  <div class="container m10">
-    <div class="con_left">
-      <!--  左侧正文内容部分  -->
-      <div class="position">当前位置：<a href="{$sys_url}">{$sys_sitename}</a>>&nbsp;{$article.article_title}&nbsp;>&nbsp;&nbsp;正文</div>
-      <div class="techlist border">
-        <div class="con_main">
-          <h1>{$article.article_title}</h1>
-          <div class="abstract">{$article.article_time|date="Y-m-d H:i:s",###}&nbsp;&nbsp;&nbsp;来源：{$sys_sitename} </div>
-          <div class="main_text">{$article.article_content|htmlspecialchars_decode}</div>
-          
-          <div class="lastnext">  </div>
+<!--head Star -->
+<div id="head">
+  <div class="toolBar">
+    <div class="main">
+      <!--topNav Star -->
+      <div class="topNav clearfix">
+        <ul class="navList fl">
+          <li>
+            <div class="one"><a href="http://www.jb51.net" target="_blank">脚本之家</a></div>
+          </li>
+          <li>
+            <div class="one"><a href="http://www.jb51.net/softs/" target="_blank">软件下载<i class="icon"></i></a></div>
+            <div class="two">
+              <a href="/softs/android.html" target="_blank">android软件</a> <a href="/softs/mac.html" target="_blank">MAC软件</a> <a href="/qudong/" target="_blank">驱动下载</a> <a href="/fonts/" target="_blank">字体下载</a> <a href="/dll/" target="_blank">DLL下载</a> </div>
+          </li>
+          <li>
+            <div class="one"><a href="/codes/" target="_blank">源码下载<i class="icon"></i></a></div>
+            <div class="two"> <a href="/codes/asp.html" target="_blank">asp源码</a> <a href="/codes/php.html" target="_blank">php源码</a> <a href="/codes/aspnet.html" target="_blank">asp.net源码</a> <a href="/codes/jsp.html" target="_blank">jsp源码</a> <a href="/codes/editor.html" target="_blank">网页编辑器</a> <a href="/codes/list123_1.html" target="_blank">数据库管理</a> <a href="/codes/list124_1.html" target="_blank">常用组件</a> <a href="/jiaoben/" target="_blank">脚本下载</a></div>
+          </li>
+          <li>
+            <div class="one"><a href="http://tools.jb51.net" target="_blank">在线工具<i class="icon"></i></a></div>
+            <div class="two"> <a href="/shouce/" target="_blank">在线手册</a> <a href="/tools/cssyasuo.shtml" target="_blank">CSS格式化</a> <a href="http://tools.jb51.net/code/js" target="_blank">JS格式化</a> <a href="/tools/html-js.htm" target="_blank">Html转化为Js</a> <a href="http://tools.jb51.net/regex/javascript" target="_blank">js正则表达式</a>
+            </div>
+          </li>
+          <li>
+            <div class="one"><a href="/w3school/" target="_blank">网页教程基础</a></div>
+          </li>
+          <li>
+            <div class="one"><a href="http://s.jb51.net" target="_blank">服务器常用软件</a></div>
+          </li>
+          <li>
+            <div class="one"><a href="http://m.jb51.net" target="_blank">手机版</a></div>
+            <div class="two"><img src="http://files.jb51.net/images/m.jb51.net.png" data-baiduimageplus-ignore /></div>
+          </li>
+          <li class="watch">
+            <div class="one"><a href="http://www.jb51.net/about.htm" target="_blank" rel="nofollow" ><i class="icon"></i>关注微信</a></div>
+            <div class="two"><img src="http://files.jb51.net/images/weixin_200.gif" data-baiduimageplus-ignore /></div>
+          </li>
+        </ul>
+        <div class="navUser mt5 fr" id="jb51_topbar" >
+
         </div>
-      </div>          
+      </div>
+      <!--topNav End -->
     </div>
-    <div class="con_right" style="border-top: 1px solid #D7E1EA;">
-    </div>
-    <div class="clearit"></div>
-    <div class="shownewsbuttom"></div>
   </div>
-  <!--  底部导航  -->
-    <include file="foot" />
-</div>
+
+  <div class="main clearfix">
+    <div class="mtb10 clearfix">
+      <div class="logo"><a href="http://www.jb51.net/"><img src="http://www.jb51.net/images/logo.gif" title="脚本之家" alt="脚本之家" /></a></div>
+      <div class="logom fl"><span id="logo_m" class="jbTestPos"></span></div>
+      <div class="logor fr"><span id="logo_r" class="jbTestPos"></span></div>
+    </div>
+    <!-- 导航-->
+    <DIV class="nav_top clearfix">
+      <UL>
+        <li><a href="http://www.jb51.net/web/">网页制作</a></li>
+        <li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+        <li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+        <li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+        <li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+        <li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+        <li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+        <li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+        <li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+        <li><a href="http://www.jb51.net/os/">操作系统</a></li>
+        <li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+        <li><a href="http://www.jb51.net/hack/">网络安全</a></li>
+        <li class="last"><a href="http://www.jb51.net/shouce/">在线手册</a></li>
+
+      </UL>
+    </DIV>
+
+    <!--导航结束-->
+    <div class="subnav clearfix">
+      <ul><li><a href='/list/list_58_1.htm' title="ASP基础">ASP基础</a></li>
+        <li><a href='/list/list_30_1.htm' title="应用技巧">应用技巧</a></li>
+        <li><a href='/list/list_57_1.htm' title="数据库相关">数据库相关</a></li>
+        <li><a href='/list/list_31_1.htm' title="ASP CLASS类">ASP CLASS类</a></li>
+        <li><a href='/list/list_20_1.htm' title="存储过程">存储过程</a></li>
+        <li><a href='/list/list_13_1.htm' title="小偷/采集">小偷/采集</a></li>
+        <li><a href='/list/list_14_1.htm' title="木马相关">木马相关</a></li>
+        <li><a href='/list/list_94_1.htm' title="FSO专题">FSO专题</a></li>
+      </ul>
+    </div>
+    <div class="NavBar clearfix ptb10">
+      <div class="fl w690">
+        <div class="box mb15 mt10"><i class="icon"></i>您的位置：<a href='/'>首页</a> → <a href="/list/index_1.htm" title="网络编程">网络编程</a> → <a href="/list/list_2_1.htm" title="ASP编程">ASP编程</a> → <a href="/list/list_30_1.htm" title="应用技巧">应用技巧</a> → 正文内容 asp虚拟目录根路径</div>
+      </div>
+      <div class="fr w300"><div class="search">
+        <form action="http://so.jb51.net/cse/search" target="_blank">
+          <input type="hidden" name="s" value="10520733385329581432">
+          <input type="hidden" name="ie" value="gbk">
+          <input type="text" name="q" class="key_input" placeholder="请输入关键词">
+          <input type="submit" value="搜索" class="c_btn">
+        </form></div></div>
+    </div>
+  </div>
+  <!--head End -->
+  <div class="main mb10 clearfix">
+    <div class="clearfix"><span id="tonglan1" class="jbTestPos"></span></div>
+  </div>
+
+  <!--content Star -->
+  <div id="contents">
+    <div class="main clearfix">
+      <div class="w690 fl">
+        <div class="article-content border">
+          <div class="title">
+            <h1 class="YaHei">asp获取虚拟目录根路径的代码</h1>
+            <p>投稿：mdxy-dxy  字体：[<a href="javascript:turnbig()">增加</a> <a href="javascript:turnsmall()">减小</a>] 类型：转载 时间：2017-04-19<a href="#comments"> 我要评论</a></p>
+          </div>
+          <div class="art_desc mt10"><div id="art_demo">这篇文章主要介绍了asp获取虚拟目录根路径的代码,需要的朋友可以参考下</div></div>
+          <div class="lbd clearfix"><span id="art_up" class="jbTestPos"></span></div>
+          <div id="content">
+            <div id="content">
+            <p>核心代码：</p>
+            <div class="jb51code">
+<pre class="brush:vb;">
+&lt;%
+TempArray = Array("account_book","admin","ajaxFile","catalog","excel","excel_stu","frame","inc","lib","pub", "stock","student","sygl","temp","windows")
+url= LCase(Server.MapPath("./"))
+for i=0 to UBound(TempArray)
+url=Replace(url,"\"&TempArray(i),"")
+Next
+response.write url
+%&gt;</pre>
+            </div>
+            <p></p>
+
+          </div><!--endmain-->
+          <div class="art_xg">
+
+          </div>
+          <div class="lbd clearfix">
+            <span id="art_down" class="jbTestPos"></span>
+          </div>
+          <div id="shoucang"></div>
+          <div class="tags mt10">
+            <strong>Tags：</strong><a href="http://common.jb51.net/tag/asp/1.htm" target="_blank" title="搜索关于asp的文章">asp</a> <a href="http://common.jb51.net/tag/%E8%99%9A%E6%8B%9F%E7%9B%AE%E5%BD%95/1.htm" target="_blank" title="搜索关于虚拟目录的文章">虚拟目录</a> <a href="http://common.jb51.net/tag/%E6%A0%B9%E8%B7%AF%E5%BE%84/1.htm" target="_blank" title="搜索关于根路径的文章">根路径</a>
+          </div>
+          <DIV class="relatedarticle clearfix mt5">
+            <H2>相关文章</H2>
+            <ul><li><span>2012-08-08</span><a href="/article/31099.htm" title="ASP中Session技巧 默认过期时间为20分钟" target="_blank">ASP中Session技巧 默认过期时间为20分钟</a></li><li><span>2009-04-04</span><a href="/article/17780.htm" title="ASP 代码出现80040e14错误的解决方法" target="_blank">ASP 代码出现80040e14错误的解决方法</a></li><li><span>2011-03-03</span><a href="/article/26637.htm" title="为SWFUpload增加ASP版本的上传处理程序" target="_blank">为SWFUpload增加ASP版本的上传处理程序</a></li><li><span>2007-02-02</span><a href="/article/7299.htm" title="可以查询google排名的asp源码" target="_blank">可以查询google排名的asp源码</a></li><li><span>2006-09-09</span><a href="/article/1214.htm" title="ASP中过滤UBB和Html标签" target="_blank">ASP中过滤UBB和Html标签</a></li><li><span>2008-08-08</span><a href="/article/15377.htm" title="Asp高级故障解决以及相关代码" target="_blank">Asp高级故障解决以及相关代码</a></li><li><span>2011-06-06</span><a href="/article/27415.htm" title="ASP JSON类文件的使用方法" target="_blank">ASP JSON类文件的使用方法</a></li><li><span>2011-11-11</span><a href="/article/28807.htm" title="防ASP注入终极防范" target="_blank">防ASP注入终极防范</a></li><li><span>2006-08-08</span><a href="/article/668.htm" title="发邮件的asp(CDONTS.NewMail)" target="_blank">发邮件的asp(CDONTS.NewMail)</a></li><li><span>2008-06-06</span><a href="/article/14958.htm" title="ASP vbs 代码大小写规范" target="_blank">ASP vbs 代码大小写规范</a></li></ul>
+          </DIV>
+          <div class="lbd clearfix mt5">
+            <span id="art_down2" class="jbTestPos"></span>
+          </div>
+          <a href="#comments"></a>
+          <div id="comments">
+            <H2>最新评论</H2>
+            <div class="pd5"><div id="SOHUCS" sid="art_111606"></div></div>
+          </div>
+        </div><!--endborder-->
+      </div><!--end fl-->
+
+      <div class="w300 fr">
+        <div class="r300 clearfix"><span id="side_up" class="jbTestPos"></span></div>
+        <DIV class="tabTitleBar mt10 bgf borderTblue">
+          <DIV class="borderTnone pb10 YaHei">
+            <H4 class="blue">大家感兴趣的内容</H4>
+            <UL class="newsList newList-in">
+              <li><EM class="no1">1</EM><a href="/article/54237.htm" title="推荐4款傻瓜型的ASP服务器软件（asp运行环境一键搭建工具）" target="_blank">推荐4款傻瓜型的ASP服务器软件（</a></li><li><EM class="no2">2</EM><a href="/article/9404.htm" title="关于“未指定的错误”的问题 的比较正解的解决方法" target="_blank">关于“未指定的错误”的问题 的比</a></li><li><EM class="no3">3</EM><a href="/article/9403.htm" title="错误类型：Provider (0x80004005)未指定的错误 的一个处理方法" target="_blank">错误类型：Provider (0x80004005</a></li><li><EM class="no4">4</EM><a href="/article/23069.htm" title="C#入门教程之ListBox控件使用方法" target="_blank">C#入门教程之ListBox控件使用方法</a></li><li><EM class="no5">5</EM><a href="/article/16138.htm" title="utf-8 网页不显示+utf-8网页乱码的通用解决方法" target="_blank">utf-8 网页不显示+utf-8网页乱码</a></li><li><EM class="no6">6</EM><a href="/article/18546.htm" title="Asp 日期格式化问题" target="_blank">Asp 日期格式化问题</a></li><li><EM class="no7">7</EM><a href="/article/26378.htm" title="SQL查询语句通配符与ACCESS模糊查询like的解决方法" target="_blank">SQL查询语句通配符与ACCESS模糊查</a></li><li><EM class="no8">8</EM><a href="/article/31217.htm" title="asp中设置session过期时间方法总结" target="_blank">asp中设置session过期时间方法总</a></li><li><EM class="no9">9</EM><a href="/article/10890.htm" title="asp 字符串截取函数" target="_blank">asp 字符串截取函数</a></li><li><EM class="no10">10</EM><a href="/article/14799.htm" title="asp获取URL参数的几种方法分析总结" target="_blank">asp获取URL参数的几种方法分析总</a></li>
+            </UL>
+          </DIV>
+        </DIV>
+        <div class="r300 clearfix mt10"><span id="idctu" class="jbTestPos"></span></div>
+        <DIV class="tabTitleBar mt10 bgf borderTblue">
+          <DIV class="borderTnone pb10 YaHei">
+            <H4 class="blue">最近更新的内容</H4>
+            <UL class="newsListA">
+              <ul><li><a href="/article/15367.htm" title="ASP生成数字相加求和的BMP图片验证码" target="_blank">ASP生成数字相加求和的BMP图片验证码</a></li><li><a href="/article/14276.htm" title="asp汉字中文图片验证码" target="_blank">asp汉字中文图片验证码</a></li><li><a href="/article/26409.htm" title="让ASP程序自动运行的代码" target="_blank">让ASP程序自动运行的代码</a></li><li><a href="/article/17959.htm" title="Asp 编码互转的研究和实现代码" target="_blank">Asp 编码互转的研究和实现代码</a></li><li><a href="/article/495.htm" title="asp最常用的分页函数" target="_blank">asp最常用的分页函数</a></li><li><a href="/article/15235.htm" title="asp中command的在单条记录时,有些字段显示为空的问题" target="_blank">asp中command的在单条记录时,有些字段显示</a></li><li><a href="/article/496.htm" title="LINE9的目录浏览源程序" target="_blank">LINE9的目录浏览源程序</a></li><li><a href="/article/16879.htm" title="ASP去掉字符串头尾连续回车和空格的Function" target="_blank">ASP去掉字符串头尾连续回车和空格的Funct</a></li><li><a href="/article/24820.htm" title="asp图片加水印的功能代码" target="_blank">asp图片加水印的功能代码</a></li><li><a href="/article/23416.htm" title="asp 删除数据并同时删除图片的代码" target="_blank">asp 删除数据并同时删除图片的代码</a></li></ul>
+            </UL>
+          </DIV>
+        </DIV>
+        <div class="r300 clearfix mt10"><span id="idctu1" class="jbTestPos"></span></div>
+        <DIV class="tabTitleBar mt10 bgf borderTblue">
+          <DIV class="borderTnone pb10 YaHei">
+            <H4 class="blue">常用在线小工具</H4>
+            <ul class="newsListA"><span id="bctools" class="jbTestPos"></span></ul>
+          </DIV>
+        </DIV>
+        <div class="r300 clearfix mt10" id="idctu2"><span id="idctu2" class="jbTestPos"></span></div>
+        <div class="mt10 rFixedBox">
+          <span id="r_2" class="jbTestPos"></span>
+        </div>
+
+
+      </div><!--end fr-->
+    </div>
+  </div><!--end content-->
+  <div id="footer">
+    <div class="main clearfix">
+      <p>
+        <a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> -
+        <a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> -
+        <a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -
+        <a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -
+        <a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> -
+        <a href="tencent://message/?uin=461478385&Site=http://www.jb51.net" target="_blank">投诉建议</a> -
+        <a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+      </p>
+      <p>&copy;CopyRight 2006-2017 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+    </div>
+  </div><!--end footer-->
+  <link type="text/css" rel="stylesheet" href="/jslib/syntaxhighlighter/styles/shCore.css" />
+  <link type="text/css" rel="Stylesheet" href="/jslib/syntaxhighlighter/styles/shThemeDefault.css" />
+  <script type="text/javascript" src="/jslib/syntaxhighlighter/scripts/shCore.js"></script>
+  <script type="text/javascript" src="/jslib/syntaxhighlighter/scripts/shAutoloader.js"></script>
+  <script type="text/javascript">
+    (function(){
+      var bp = document.createElement('script');
+      bp.src = '//push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+    if (top.location != self.location)top.location=self.location;
+    $(function(){
+      $('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 650){
+          img.style.width = "650px";
+          img.style.height = "auto";
+          //$(img).removeAttr('height');
+          var aTag = document.createElement('a');
+          aTag.href = img.src;
+          aTag.target="_blank";
+          $(aTag).addClass('bPic')
+                  .insertAfter(img).append(img)
+        }
+      });
+      $(window).scroll(function()
+      {
+        //rFixedBox跟随滚动
+        var h = $(window).height();
+        var top = $(window).scrollTop();
+        var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+
+        if(top>=fixedTop+344)
+        {
+          var h1 = parseInt($('#content').children('.main').height());
+          if(parseInt(top) + 340 < h1){
+            $('.rFixedBox').css({'position':'fixed','top': 0});
+          }else{
+            $('.rFixedBox').css({'position':'absolute','top': h1-510});
+          }
+        }
+        else
+        {
+          $('.rFixedBox').css({'position':'static', 'top':0});
+        }
+        /* return true;*/
+      });
+      /*$(document).ready(function() {
+       $("#content img").unveil();
+       });	*/
+      SyntaxHighlighter.autoloader(
+              'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+              'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+              'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+              'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+              'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+              'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+              'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+              'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+              'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+              'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+              'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+              'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+              'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+              'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+              'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+              'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+              'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+              'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+              'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+              'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+              'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+              'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+              'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+              'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+              'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+              'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+      );
+      SyntaxHighlighter.all();
+    });
+    var ourl="";
+  </script>
+  <script type="text/javascript" src='http://common.jb51.net/js/jbLoader.js'></script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+  <div id="tongji">
+    <script type="text/javascript" src="http://common.jb51.net/inc/tongji.js"></script>
+    <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+    <script type="text/javascript">
+      window.changyan.api.config({
+        appid: 'cyrHH3dwi',
+        conf: 'prod_1dc5dc80970106099d43fe242b7465fc'
+      });
+    </script>
+  </div>
+  <script type="text/javascript" src="http://www.jb51.net/pl.asp?id=111606"></script>
 </body>
 </html>
+<!-- published at 2017/5/10 20:35:18By dxycms qq:461478385  -->
