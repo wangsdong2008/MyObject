@@ -1404,7 +1404,7 @@ class IndexController extends Controller {
 		}
 		$categorylist1 = $this->getcategorylist(2);
 		$this->assign('category_list',$categorylist1);
-		$this->assign('saves',"1");
+		$this->assign('saves',"");
 		$this->display('news-add');
 	}
 
@@ -1416,18 +1416,10 @@ class IndexController extends Controller {
 		for($i=0;$i<count($list);$i++){
 			$pid = $list[$i];
 
-			//$sql = "insert into think_news(`news_title`,`news_keyword`,`news_description`,`news_content`,`is_show`,`cat_id`,`isdel`,`news_time`)select `news_title`,`news_keyword`,`news_description`,`news_content`,`is_show`,`cat_id`,`isdel`,`news_time` from think_news2 where news_id = $pid";
-			//echo $sql;exit;
-			//M()->query($sql);
-
-			$set = M("News2")->where("news_id = $pid")->find();
+			$set = M("News2")->where("news_id = $pid")->field('`news_title`,`news_keyword`,`news_description`,`news_content`,`news_author`,`news_hits`,`news_from`,`news_time`,`is_show`,`cat_id`,`isdel`,`userid`');
 			M('News')->add($set);
 
-
-			/*$news = M('news');
-			$news_data['news_id'] = $pid;
-			$news_data['isdel'] = 1;
-			$news->save($news_data);*/
+			M()->query("delete from think_news2 where news_id = $pid");
 		}
 		echo "1";
 	}
@@ -1436,7 +1428,7 @@ class IndexController extends Controller {
 	/*新闻保存*/
 	public function newssave(){
 		$news_id = I('news_id',0);
-		$saves = I('saves',1);
+		$saves = I('saves',"");
 		$userid = 0;
 		if($news_id > 0){
 			$this->getrolelist(20);
