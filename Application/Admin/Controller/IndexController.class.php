@@ -1320,6 +1320,20 @@ class IndexController extends Controller {
 
 		$this->display('news-list');
 	}
+
+	/*删除新闻*/
+	public function newsdel2(){
+		$this->getrolelist(22);
+		$id = I("id",'');
+		$list = explode(",",$id);
+		for($i=0;$i<count($list);$i++){
+			$pid = $list[$i];
+			$news = M('news2');
+			$news_data['news_id'] = $pid;
+			$news->where($news_data)->delete();
+		}
+		echo "1";
+	}
 	
 	/*删除新闻*/
 	public function newsdel(){
@@ -1416,10 +1430,18 @@ class IndexController extends Controller {
 		for($i=0;$i<count($list);$i++){
 			$pid = $list[$i];
 
-			$set = M("News2")->where("news_id = $pid")->field('`news_title`,`news_keyword`,`news_description`,`news_content`,`news_author`,`news_hits`,`news_from`,`news_time`,`is_show`,`cat_id`,`isdel`,`userid`');
-			M('News')->add($set);
+			$News2 = M('News2');
+			$News2_data['news_id'] = array('eq',$pid);
+			$News2list = $News2
+				->where($News2_data)
+				->field('`news_title`,`news_keyword`,`news_description`,`news_content`,`news_author`,`news_hits`,`is_best`,`is_hot`,`news_from`,`news_time`,`is_show`,`cat_id`,`isdel`,`userid`')
+				->limit(1)
+				->find();
+			M('News')->add($News2list);
+			unset($News2,$News2_data,$News2list);
 
-			M()->query("delete from think_news2 where news_id = $pid");
+
+			M()->execute("delete from think_news2 where news_id = $pid");
 		}
 		echo "1";
 	}
