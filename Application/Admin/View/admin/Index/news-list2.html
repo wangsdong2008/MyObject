@@ -38,7 +38,7 @@
             </select><button type="submit" class="btn btn-success" id="" name=""><i class="icon-search"></i> 搜新闻</button>
         </form>
     </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="WinDelAll('news_id','新闻','newsdel')" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a> <a href="javascript:;" onclick="WinExpro('news_id','新闻','news_dr')" class="btn btn-primary radius"><i class="icon-plus"></i> 批量导入</a></span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+  <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="WinDelAll('news_id','新闻','newsdel')" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a> <a href="javascript:;" onclick="WinExpro('news_id','新闻','{:U(\'news_dr\')}')" class="btn btn-primary radius"><i class="icon-plus"></i> 批量导入</a></span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
   <table class="table table-border table-bordered table-hover table-bg table-sort">
     <thead>
       <tr class="text-c">
