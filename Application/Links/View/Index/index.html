@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>输入要采集的地址</title>
+    <style>
+        td{
+            font-size: 12px;}
+        .red{
+            color: #ff0000;
+        }
+        .hui{
+            color: #cccccc;}
+    </style>
+</head>
+<body>
+<form action="{:U('getlinks')}" id="theform">
+    <table style="margin: 0 auto; width: 500px; border: 1px solid #f00; margin-top: 50px;">
+        <tr>
+            <td>请输入网址：</td>
+            <td><input type="text" id="url" name="url"></td>
+        </tr>
+        <tr>
+            <td width="120">设置来路：</td>
+            <td><input type="text" id="referer" name="referer">&nbsp;<span class="hui">可不填</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
