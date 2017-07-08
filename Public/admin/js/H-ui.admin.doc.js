@@ -15,6 +15,31 @@ function WinAdd(w,h,title,url){
 function WinEdit(w,h,title,url){
 	layer_show(w,h,title,url);
 }
+//批量导入窗口
+function WinExpro(id,name,url){//name为提示文字,url为要导入的页面
+	var result = new Array();
+	$("input[name="+id+"]:checked").each(function(){
+		result.push($(this).val());
+	});
+	var str = result.join(',');
+	if(result.length > 0){
+		layer.confirm('确认要导入此'+name+'吗？',function(index){
+			$.post(url,{id:str,t:Math.random()},function(data){
+				if(data*1 == 1){
+					for(i=0;i<result.length;i++){
+						id = result[i];
+						$("#u_"+id).parent("tr").remove();
+					}
+					layer.msg('已导入!',1);
+				}
+			});
+		});
+	}
+	else{
+		layer.msg('请选择要导入的'+name+'!',1,3);
+	}
+}
+
 //批量删除窗口
 function WinDelAll(id,name,url){//name为提示文字,url为要删除的页面
 	var result = new Array();
