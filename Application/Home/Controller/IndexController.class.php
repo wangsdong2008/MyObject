@@ -591,10 +591,6 @@ class IndexController extends Controller {
 			$this->error();
 			exit;
 		}
-		if($cat_id == 46){
-			Header("HTTP/1.1 301 Moved Permanently");
-			Header("Location: /Index/bylw.html");
-		}
 		$nowPage = I('page',1,'intval');
 		$goodslsit = D('goods')->getPageGoods($cat_id,$nowPage,20,30);
 		$this->assign('goodslist',$goodslsit);
