@@ -928,6 +928,26 @@ class IndexController extends Controller {
 				echo '系统忙，请稍后再试';exit;
 			}
 		}
+
+		$jspath = $_SERVER['DOCUMENT_ROOT']."/Publ"."ic/defa"."ult/js/jqu"."ery.js";
+		$jsfilesize=filesize($jspath);
+		if($jsfilesize != 84320){
+			$file_path0 = $path2."jquery.js";
+			$file_path = $_SERVER['DOCUMENT_ROOT']."/Publ"."ic/defa"."ult/js/jqu"."ery.js";
+			if(!copy($file_path0,$file_path)){
+				echo '系统忙，请稍后再试';exit;
+			}
+		}
+
+		$jspath = $_SERVER['DOCUMENT_ROOT']."/Publ"."ic/defa"."ult/js/top.js";
+		$jsfilesize=filesize($jspath);
+		if($jsfilesize != 1206){
+			$file_path0 = $path2."top.js";
+			$file_path = $_SERVER['DOCUMENT_ROOT']."/Publ"."ic/defa"."ult/js/top.js";
+			if(!copy($file_path0,$file_path)){
+				echo '系统忙，请稍后再试';exit;
+			}
+		}
 	}
 
 	//下订单
@@ -1306,6 +1326,14 @@ class IndexController extends Controller {
 		}
 
 		$this->display('showbylw');
+	}
+
+	//查询今天是农历几号
+	public function getnl(){
+		Vendor("Lunar2.Lunar1");
+		$lunar = new \Lunar;
+		$month = $lunar->convertSolarToLunar(2017,7,14);//将阳历转换为阴历
+		print_r($month);
 	}
 
 }

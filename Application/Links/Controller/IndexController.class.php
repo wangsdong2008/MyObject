@@ -12,89 +12,124 @@ class IndexController extends Controller {
         $this->display('index');
     }
 
-    public function getss($content,$url,$http){
-        //$content = "aaaa<a href='/users/' rel='a'>t1</a>bbbbbb<a  rel='b' href='/ttttes/index.html'>t2</a>eeeee";
-        //echo $content."\r\n";
-
-        //$http="http";
-        //$url = "http://www.jb51.net/list/list_2_1.htm";
-        //$http = explode(":",$url)[0];
-        $u = geturl($url);
-        if($u == $url){
-            $s = $url."/";
-            $url1 = $s;
-            $url2 = $s;
-            $url = $s;
+    public function getWebUrl($current_url,$domain_url,$flg=0){
+        $domain = geturl($domain_url);       //域名
+        $http = explode(":",$domain_url)[0]; //是http还是https
+        $url1 = "";//本级地址
+        $url2 = "";//上级地址
+        if($domain == $domain_url){
+            $url1 = $domain_url."/";
+            $url2 = $domain_url."/";
         }else{
-            $s = $url."a";
-            $url1 = dirname($s)."/";
-            if($url1 == $u."/"){
+            $url1 = dirname($domain_url)."/";
+            if($url1 == $domain."/"){
                 $url2 = $url1;
             }
             else{
-                $url2 = dirname(dirname($s))."/";
+                $url2 = dirname(dirname($domain_url))."/";
             }
         }
-
-        if($this->flg == 1){
-            //链接
-            $pattern="/href=('|\")?([^'\"]+)('|\")?/is";//正则
-            preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
-            $str = "";
-            $brr = preg_split($pattern, $content);
-            foreach($brr as $key =>$val){
-                $s = geturl($arr[2][$key]);
-                if($key < count($arr)){
-                    $str .= $brr[$key]."href=\"".getweburl($s,$arr[2][$key],$u,$url,$url1,$url2)."\"";
+        //$new_url = "";
+        if ($domain == geturl($current_url)) {
+            $new_url = $current_url;//加了http的完整地址
+        }else{
+            if(substr($current_url,0,5)=="http:" || substr($current_url,0,5)=="https"||substr($current_url,0,11)=="javascript:"|| $current_url == "#"){
+                //友情链接地址排除在外
+                if($flg == 0){
+                    $new_url = $current_url;
+                }
+            }else{
+                if(substr($current_url,0,2) == "//"){
+                    $new_url = $http.":".$current_url;
+                }elseif(substr($current_url,0,1) == "/"){
+                    $new_url = $domain.$current_url;
+                }elseif(substr($current_url,0,3) == "../"){
+                    $new_url = $url2."/".substr($current_url,3,strlen($current_url)-3);;
+                }elseif(substr($current_url,0,2) == "./"){
+                    $new_url = $url1."/".substr($current_url,2,strlen($current_url)-2);
                 }else{
-                    $str .= $brr[$key];
+                    $new_url = $domain."/".$current_url;
                 }
             }
-
-            //图片
-            $content = $str;
         }
+        return $new_url;
+    }
 
-        //js
-        $pattern="/('|\")?([^'\"]+\.js)('|\")?/is";//正则
+    public function getss($content,$url){
+        $pattern="/ (href=|src=|action=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//正则
         preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
         //print_r($arr);
+        $html = preg_split($pattern,$content);
         $str = "";
-        $brr = preg_split($pattern, $content);
-        foreach($brr as $key =>$val){
-            $s = geturl($arr[2][$key]);
-            if($key < count($arr)){
-                $str .= $brr[$key]."\"".getweburl($s,$arr[2][$key],$u,$url,$url1,$url2)."\"";
-            }else{
-                $str .= $brr[$key];
+        $j = 0;
+        $array = array();
+        foreach($html as $key => $val){
+            $str .= $html[$key]." ".$arr[1][$key] . $arr[2][$key] . $this->getWebUrl($arr[3][$key],$url) . $arr[4][$key];
+        }
+        echo $str;exit;
+        $array['html'] = $str;
+
+        $arr2 = array();
+        foreach($arr[3] as $key => $val){
+            $v = $this->getWebUrl($val,$url,1);
+            //暂时屏蔽
+            if($v != ""){
+                $arr2[$j] = $v;
+                $j++;
             }
         }
 
-
-        /*$pattern="/('|\"|\()+([^'\)\"]+(\.jpg|\.gif|\.png))('|\"|\))+/is";//正则
-        preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
-        $str = "";
-        $brr = preg_split($pattern, $content);
-        foreach($brr as $key =>$val){
-            $s = geturl($arr[2][$key]);
-            if($key < count($arr[2])){
-                $str .= $brr[$key]."\"".getweburl($s,$arr[2][$key],$u,$url,$url1,$url2)."\"";
-            }else{
-                $str .= $brr[$key];
+        $j=0;
+        //查询重复
+        foreach(array_unique($arr2) as $key => $val){ //重新输入下标
+            $array['url'][$j] = $val;
+            $j++;
+        }
+        /*foreach($arr2 as $key => $val){
+            $p = 0;
+            for($i=$key+1;$i<count($arr2);$i++){
+                if($arr2[$i] == $val){
+                    $p = 1;
+                    break;
+                }
+            }
+            if($p == 0){
+                $array[$j] = $val;
+                $j++;
             }
         }*/
-        print_r($str);exit;
 
+        //print_r($array);exit;
 
-
-
-
-        return ($str);
-
+        return $array;
     }
 
     public function getlinks(){
+        $url = I('url','');
+        $u = geturl($url);
+        $pagecode = I('pagecode',"utf-8");
+        $post = I('post','get');
+        $referer = I('referer','');
+        $header = array();
+        $data = array();
+        $array = array();
+        $content = "";
+        if($url!='') {
+            $content = http($url, $data, $referer, $header, $post, 30);
+            //补齐内容
+            $content2 = $this->getss($content, $url);
 
+            //生成页面
+
+            print_r($content2);
+
+
+        }
+        unset($array,$j,$p,$k,$key);
+        //print_r($arr);exit;
+    }
+
+    public function getlinks2(){
         $url = I('url','');
         $u = geturl($url);
         $pagecode = I('pagecode',"utf-8");
@@ -120,11 +155,10 @@ class IndexController extends Controller {
         $array = array();
         $content = "";
         if($url!=''){
-
             $content = http($url, $data,$referer, $header,$post,30);
-
             //补齐链接
             $content = $this->getss($content,$url);
+
 
             if($this->flg == 1){
                 $pattern="/(a href| action)=('|\")?([^'\"]+)('|\")?/is";//正则
