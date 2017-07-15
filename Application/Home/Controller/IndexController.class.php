@@ -1328,12 +1328,4 @@ class IndexController extends Controller {
 		$this->display('showbylw');
 	}
 
-	//查询今天是农历几号
-	public function getnl(){
-		Vendor("Lunar2.Lunar1");
-		$lunar = new \Lunar;
-		$month = $lunar->convertSolarToLunar(2017,7,14);//将阳历转换为阴历
-		print_r($month);
-	}
-
 }
