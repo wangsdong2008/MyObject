@@ -58,7 +58,6 @@ class IndexController extends Controller {
     public function getss($content,$url){
         $pattern="/ (href=|src=|action=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//正则
         preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
-        //print_r($arr);
         $html = preg_split($pattern,$content);
         $str = "";
         $j = 0;
@@ -66,8 +65,8 @@ class IndexController extends Controller {
         foreach($html as $key => $val){
             $str .= $html[$key]." ".$arr[1][$key] . $arr[2][$key] . $this->getWebUrl($arr[3][$key],$url) . $arr[4][$key];
         }
-        echo $str;exit;
-        $array['html'] = $str;
+        //$array['html'] = $str;
+        $array['html'] = "1234";
 
         $arr2 = array();
         foreach($arr[3] as $key => $val){
@@ -82,26 +81,12 @@ class IndexController extends Controller {
         $j=0;
         //查询重复
         foreach(array_unique($arr2) as $key => $val){ //重新输入下标
-            $array['url'][$j] = $val;
+            $array['link'][$j]['url'] = $val;
+            $array['link'][$j]['real_url'] = $val;
             $j++;
         }
-        /*foreach($arr2 as $key => $val){
-            $p = 0;
-            for($i=$key+1;$i<count($arr2);$i++){
-                if($arr2[$i] == $val){
-                    $p = 1;
-                    break;
-                }
-            }
-            if($p == 0){
-                $array[$j] = $val;
-                $j++;
-            }
-        }*/
 
-        //print_r($array);exit;
-
-        return $array;
+        return json_encode($array);
     }
 
     public function getlinks(){
@@ -171,7 +156,7 @@ class IndexController extends Controller {
                 foreach($arr[3] as $key => $val){
                     $s = geturl($val);
                     $new_url = getweburl($s,$val,$u,$url,$url1,$url2);
-                    if($new_url != ""){
+                    if($new_url != ""&&($new_url!=$url||$new_url!=$url."/")){
                         $array['link'][$j]['url'] = $new_url;
                         $array['link'][$j]['real_url'] = $val;
                         $j++;
