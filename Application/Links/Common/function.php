@@ -36,6 +36,10 @@ function http($url, $data=array(),$referer=array(), $header=array(),$method='GET
     curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout - 2);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
+    curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+
     // 模拟来源
     if($referer){
         curl_setopt($curl, CURLOPT_REFERER, $referer);// 设置Referer
@@ -49,14 +53,11 @@ function http($url, $data=array(),$referer=array(), $header=array(),$method='GET
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
         }
     }
-    curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
-    curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
     $tmpInfo = curl_exec($curl); // 执行操作
+
     curl_close($curl); // 关闭CURL会话
     return $tmpInfo; // 返回数据
 }
-
 
 //获取域名
 function geturl($content){
@@ -88,4 +89,50 @@ function getweburl($s,$val,$u,$url,$url1,$url2){
         }
     }
     return $new_url;
+}
+
+function request_get($url='',$param=''){
+    if (empty($url) || empty($param)) {
+        return false;
+    }
+    $postUrl = $url;
+    $curlPost = $param;
+    //初始化
+    $ch = curl_init();
+    //设置抓取的url
+    curl_setopt($ch, CURLOPT_URL, $postUrl);
+    //设置头文件的信息作为数据流输出
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+    //设置获取的信息以文件流的形式返回，而不是直接输出。
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    //执行命令
+    $data = curl_exec($ch);
+    //关闭URL请求
+    curl_close($curlPost);
+    //显示获得的数据
+    return $data;
+}
+
+/**
+ * 模拟post进行url请求
+ * @param string $url
+ * @param string $param
+ */
+function request_post($url = '', $param = '') {
+    if (empty($url) || empty($param)) {
+        return false;
+    }
+
+    $postUrl = $url;
+    $curlPost = $param;
+    $ch = curl_init();//初始化curl
+    curl_setopt($ch, CURLOPT_URL,$postUrl);//抓取指定网页
+    curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+    curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
+    $data = curl_exec($ch);//运行curl
+    curl_close($ch);
+
+    return $data;
 }

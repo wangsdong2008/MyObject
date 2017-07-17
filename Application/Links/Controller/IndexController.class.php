@@ -48,7 +48,7 @@ class IndexController extends Controller {
                 }elseif(substr($current_url,0,2) == "./"){
                     $new_url = $url1."/".substr($current_url,2,strlen($current_url)-2);
                 }else{
-                    $new_url = $domain."/".$current_url;
+                    //$new_url = $domain."/".$current_url;
                 }
             }
         }
@@ -56,18 +56,20 @@ class IndexController extends Controller {
     }
 
     public function getss($content,$url){
+        $domain = geturl($url);
         $pattern="/ (href=|src=|action=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//正则
         preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
         $html = preg_split($pattern,$content);
-        $str = "";
+        $str2 = "";
         $j = 0;
         $array = array();
         foreach($html as $key => $val){
-            $str .= $html[$key]." ".$arr[1][$key] . $arr[2][$key] . $this->getWebUrl($arr[3][$key],$url) . $arr[4][$key];
+            $str2 .= $html[$key]." ".$arr[1][$key] . $arr[2][$key] . $this->getWebUrl($arr[3][$key],$url) . $arr[4][$key];
         }
-        //$array['html'] = $str;
-        $array['html'] = "1234";
-
+        $ht = str_replace("</html> ".$url."/","</html>",$str2);
+        $ht = str_replace("</html> ".$url,"</html>",$ht);
+        $array['html'] = $ht;
+        //$array['html'] = "123213";
         $arr2 = array();
         foreach($arr[3] as $key => $val){
             $v = $this->getWebUrl($val,$url,1);
@@ -77,15 +79,17 @@ class IndexController extends Controller {
                 $j++;
             }
         }
-
         $j=0;
         //查询重复
         foreach(array_unique($arr2) as $key => $val){ //重新输入下标
-            $array['link'][$j]['url'] = $val;
-            $array['link'][$j]['real_url'] = $val;
-            $j++;
+            //去掉自己
+            if($val != $url && $val != $url."/"&&geturl($val)==$domain){
+                $array['link'][$j]['url'] = $val;
+                $array['link'][$j]['real_url'] = $val;
+                $j++;
+            }
         }
-
+        //print_r($array);exit;
         return json_encode($array);
     }
 
@@ -98,17 +102,14 @@ class IndexController extends Controller {
         $header = array();
         $data = array();
         $array = array();
-        $content = "";
         if($url!='') {
+            $content = "";
             $content = http($url, $data, $referer, $header, $post, 30);
+
             //补齐内容
             $content2 = $this->getss($content, $url);
-
             //生成页面
-
             print_r($content2);
-
-
         }
         unset($array,$j,$p,$k,$key);
         //print_r($arr);exit;
