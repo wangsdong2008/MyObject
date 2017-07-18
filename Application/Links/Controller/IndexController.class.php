@@ -12,49 +12,6 @@ class IndexController extends Controller {
         $this->display('index');
     }
 
-    public function getWebUrl($current_url,$domain_url,$flg=0){
-        $domain = geturl($domain_url);       //域名
-        $http = explode(":",$domain_url)[0]; //是http还是https
-        $url1 = "";//本级地址
-        $url2 = "";//上级地址
-        if($domain == $domain_url){
-            $url1 = $domain_url."/";
-            $url2 = $domain_url."/";
-        }else{
-            $url1 = dirname($domain_url)."/";
-            if($url1 == $domain."/"){
-                $url2 = $url1;
-            }
-            else{
-                $url2 = dirname(dirname($domain_url))."/";
-            }
-        }
-        //$new_url = "";
-        if ($domain == geturl($current_url)) {
-            $new_url = $current_url;//加了http的完整地址
-        }else{
-            if(substr($current_url,0,5)=="http:" || substr($current_url,0,5)=="https"||substr($current_url,0,11)=="javascript:"|| $current_url == "#"){
-                //友情链接地址排除在外
-                if($flg == 0){
-                    $new_url = $current_url;
-                }
-            }else{
-                if(substr($current_url,0,2) == "//"){
-                    $new_url = $http.":".$current_url;
-                }elseif(substr($current_url,0,1) == "/"){
-                    $new_url = $domain.$current_url;
-                }elseif(substr($current_url,0,3) == "../"){
-                    $new_url = $url2."/".substr($current_url,3,strlen($current_url)-3);;
-                }elseif(substr($current_url,0,2) == "./"){
-                    $new_url = $url1."/".substr($current_url,2,strlen($current_url)-2);
-                }else{
-                    //$new_url = $domain."/".$current_url;
-                }
-            }
-        }
-        return $new_url;
-    }
-
     public function getss($content,$url){
         $domain = geturl($url);
         $pattern="/ (href=|src=|action=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//正则
@@ -68,9 +25,11 @@ class IndexController extends Controller {
         }
         $ht = str_replace("</html> ".$url."/","</html>",$str2);
         $ht = str_replace("</html> ".$url,"</html>",$ht);
-        $array['html'] = $ht;
-        //$array['html'] = "123213";
+
+        print_r($ht);exit;
+        //$array['html'] = $ht;
         $arr2 = array();
+        print_r($arr[3]);
         foreach($arr[3] as $key => $val){
             $v = $this->getWebUrl($val,$url,1);
             //暂时屏蔽
@@ -79,42 +38,20 @@ class IndexController extends Controller {
                 $j++;
             }
         }
+        print_r($arr2);exit;
         $j=0;
         //查询重复
         foreach(array_unique($arr2) as $key => $val){ //重新输入下标
             //去掉自己
-            if($val != $url && $val != $url."/"&&geturl($val)==$domain){
+           // if($val != $url){// && $val != $url."/"&&geturl($val)==$domain
                 $array['link'][$j]['url'] = $val;
-                $array['link'][$j]['real_url'] = $val;
+                $array['link'][$j]['real_url'] = str_replace($url,'',$val);
                 $j++;
-            }
+           // }
         }
-        //print_r($array);exit;
+        print_r($array);exit;
         return json_encode($array);
     }
-
-    public function getlinks(){
-        $url = I('url','');
-        $u = geturl($url);
-        $pagecode = I('pagecode',"utf-8");
-        $post = I('post','get');
-        $referer = I('referer','');
-        $header = array();
-        $data = array();
-        $array = array();
-        if($url!='') {
-            $content = "";
-            $content = http($url, $data, $referer, $header, $post, 30);
-
-            //补齐内容
-            $content2 = $this->getss($content, $url);
-            //生成页面
-            print_r($content2);
-        }
-        unset($array,$j,$p,$k,$key);
-        //print_r($arr);exit;
-    }
-
     public function getlinks2(){
         $url = I('url','');
         $u = geturl($url);
@@ -180,11 +117,11 @@ class IndexController extends Controller {
                 }
 
                 //获取images
-                $j = 0;
+               /* $j = 0;
                 $pattern="/('|\")?([^'\"]+(\.jpg|\.gif|\.png))('|\")?/is";//正则
                 preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
                 foreach($arr[2] as $key => $val){
-                    $s = geturl($val);
+                    $s = $this->geturl($val);
                     $new_url = $new_url = getweburl($s,$val,$http,$u,$url,$url1,$url2);
                     if($new_url!=""){
                         $array['img'][$j]['url'] = $new_url;
@@ -205,7 +142,7 @@ class IndexController extends Controller {
                         $array['js'][$j]['real_url'] = $val;
                         $j++;
                     }
-                }
+                }*/
             }
 
         }
@@ -250,6 +187,161 @@ class IndexController extends Controller {
         unset($array,$j,$p,$k,$key);
         print_r($arr);exit;
         // echo json_encode($arr);
+    }
+
+    public function getlinks(){
+        $url = I('url','');
+        $pagecode = I('pagecode',"utf-8");
+        $post = I('post','get');
+        $referer = I('referer','');
+        $header = array();
+        $data = array();
+        $array = array();
+        $content2 = "";
+        if($url!='') {
+            $content = http($url, $data, $referer, $header, $post, 30);
+            $content2 = $this->get1($content,$url);
+        }
+        //print_r($content2);exit;
+        unset($array,$j,$p,$k,$key);
+        echo json_encode($content2);
+    }
+
+    private function get1($content,$url){
+        $array = array();
+        $ext = getExt($url);
+        if($ext == "no extension")
+            $array['filename'] = "index";
+        else{
+            $array['filename'] = basename($url);//这里要注意
+        }
+        $pattern="/ (href=|src=|action=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//正则
+        preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
+        $html = preg_split($pattern,$content);
+        $str2 = "";
+        foreach($html as $key => $val){
+            $str2 .= $html[$key]." ".$arr[1][$key] . $arr[2][$key] . $this->getxdpath($arr[3][$key],$url) . $arr[4][$key];
+        }
+        $arr1 = array();
+        foreach($arr[3] as $key => $val){
+            if(substr($val,0,7)!="mailto:" && substr($val,0,11)!="javascript:" && substr($val,0,1) != "#" && $val != $url && $val != $url."/") {
+                $t = $this->getWebUrl($val,$url);
+                if($t!=""){
+                    $replace_val = $this->getWebUrl($val,$url);
+                    $arr1[] = $replace_val;
+                    unset($replace_val);
+                }
+            }
+        }
+
+        $j=0;
+        //查询重复
+        foreach(array_unique($arr1) as $key => $val){ //重新输入下标
+            $array['link'][$j]['url'] = $val;
+            $ext = getExt($val);
+            $list = array('jpg','gif','png','ico','swf','js','css','mp4');
+            if(!in_array($ext,$list)){
+                $array['link'][$j]['type'] = "page";
+            }else{
+                $array['link'][$j]['type'] = $ext;
+            }
+            $replace_val = $this->getxdpath($val,$url);
+            $array['link'][$j]['real_url'] = $replace_val;
+            $str2 = str_replace($val,$replace_val,$str2);
+            $j++;
+        }
+        $array['html'] = $str2;
+        unset($pattern,$str2,$arr1,$replace_val);
+        return $array;
+
+    }
+
+    private function getxdpath($current_url,$url){
+        if($current_url == "") return "";
+        $ext = getExt($current_url);
+        switch($ext){
+            case "jpg":
+            case "gif":
+            case "png":
+            case "ico":
+                $new_url = "images/".basename($current_url);
+                break;
+            case "css":
+                $new_url = "css/".basename($current_url);
+                break;
+            case "js":
+                $new_url = "js/".basename($current_url);
+                break;
+            case "swf":
+            case "mp4":
+                $new_url = "upload/".basename($current_url);
+            default:{
+                $new_url = str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));
+            }
+        }
+        return $new_url;
+    }
+
+
+    /*public function t1(){
+        $url = "https://bbb.aaa.xinhongru.oss-cn-beijing.aliyuncs.com/upload/13.png";
+        $a = $this->getdomain($url);
+        print_r($a);
+    }*/
+
+    private function getdomain($url){  //获取主域名
+        $pattern = "/http(s)?:[\/]{2}([^\.]+\.)*(\w+\.\w+)/is";
+        preg_match_all($pattern, $url, $arr);//匹配内容到arr数组
+        unset($pattern);
+        return  $arr[3][0];
+    }
+
+    public function getWebUrl($current_url,$domain_url){
+        $domain = geturl($domain_url);       //域名
+        $http = explode(":",$domain_url)[0]; //是http还是https
+        $url1 = "";//本级地址
+        $url2 = "";//上级地址
+        if($domain == $domain_url){
+            $url1 = $domain_url."/";
+            $url2 = $domain_url."/";
+        }else{
+            $url1 = dirname($domain_url)."/";
+            if($url1 == $domain."/"){
+                $url2 = $url1;
+            }
+            else{
+                $url2 = dirname(dirname($domain_url))."/";
+            }
+        }
+        //$new_url = "";
+        if ($domain == geturl($current_url)) {
+            $new_url = $current_url;//加了http的完整地址
+        }else{
+            if(substr($current_url,0,5)=="http:" || substr($current_url,0,5)=="https"){
+                //友情链接地址排除在外
+                if($this->getdomain($current_url != $this->getdomain($domain_url))){ //域名不一样
+                    $new_url = $current_url;
+                }else{
+                    $openhtml = array('jpg','gif','png','js','css','ico'); //外网的图片，js要保留下来
+                     if (in_array(getExt($current_url), $openhtml)) {
+                         $new_url = $current_url;
+                     }
+                }
+            }else{
+                if(substr($current_url,0,2) == "//"){
+                    $new_url = $http.":".$current_url;
+                }elseif(substr($current_url,0,1) == "/"){
+                    $new_url = $domain.$current_url;
+                }elseif(substr($current_url,0,3) == "../"){
+                    $new_url = $url2."/".substr($current_url,3,strlen($current_url)-3);;
+                }elseif(substr($current_url,0,2) == "./"){
+                    $new_url = $url1."/".substr($current_url,2,strlen($current_url)-2);
+                }else{
+                    $new_url = $domain."/".$current_url; //直接就是相对目录
+                }
+            }
+        }
+        return $new_url;
     }
 
 }

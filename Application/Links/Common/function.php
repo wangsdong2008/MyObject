@@ -67,29 +67,6 @@ function geturl($content){
     return  $arr[0][0];
 }
 
-function getweburl($s,$val,$u,$url,$url1,$url2){
-    $new_url = "";
-    if ($s == $u) {
-        $new_url = $val;//加了http
-    }else{
-        if(substr($val,0,5)=="http:"||substr($val,0,5)=="https"||substr($val,0,10)=="javascript"||strlen($val)==1){
-            //友情链接地址排除在外
-        }else{
-            if(substr($val,0,2) == "//"){
-                $new_url = explode(":",$u)[0].":".$val;
-            }elseif(substr($val,0,1) == "/"){
-                $new_url = $u.$val;
-            }elseif(substr($val,0,3) == "../"){
-                $new_url = $url2."/".substr($val,3,strlen($val)-3);;
-            }elseif(substr($val,0,2) == "./"){
-                $new_url = $url1."/".substr($val,2,strlen($val)-2);
-            }else{
-                $new_url = $url.$val;
-            }
-        }
-    }
-    return $new_url;
-}
 
 function request_get($url='',$param=''){
     if (empty($url) || empty($param)) {
@@ -135,4 +112,15 @@ function request_post($url = '', $param = '') {
     curl_close($ch);
 
     return $data;
+}
+
+//获取扩展名
+function getExt($url){
+    $urlinfo =  parse_url($url);
+    $file = basename($urlinfo['path']);
+    if(strpos($file,'.')!=false){
+        $ext = explode('.',$file);
+        return $ext[count($ext)-1];
+     }
+    return 'no extension';
 }
