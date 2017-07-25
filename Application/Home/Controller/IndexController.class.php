@@ -46,6 +46,28 @@ class IndexController extends Controller {
 	public function init(){
 		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
 		$curr = $this->curPageURL();
+		$cs_arr = array('id','searchtype','keyword','Topic','Description','Cat_id','username','password','usecpwd','question','answer','email','validationCode','page','news_title','news_id','news_from','news_author','news_content','flg','act','fromurl');
+		$arr = $_GET;
+		if(count($arr)>0){
+			foreach($arr as $key => $val){
+				if (!in_array($key, $cs_arr)) {
+					//echo $key;
+					$this->error();
+					exit;
+				}
+			}
+		}
+		$arr = $_POST;
+		if(count($arr)>0){
+			foreach($arr as $key => $val){
+				if (!in_array($key, $cs_arr)) {
+					//echo $key;
+					$this->error();
+					exit;
+				}
+			}
+		}
+
 		if(strpos($curr,"index.php")){
 			$this->error();
 			exit;
@@ -58,8 +80,9 @@ class IndexController extends Controller {
 					$openhtml = array('index');
 					if (!in_array(ACTION_NAME, $openhtml)) {
 						if (!session('tksession')) {
-							echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-							echo '<a href="http://www.aspbc.com/">打开asp编程网</a>';
+							//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+							//echo '<a href="http://www.aspbc.com/">打开asp编程网</a>';
+							$this->redirect("/");
 							exit;
 						}
 					} else {
@@ -272,7 +295,7 @@ class IndexController extends Controller {
 		$nowPage = I('page',1,'intval');
 		$newslsit = D('news')->getPageNews($cat_id,$nowPage,20);
 		$this->assign('newslist',$newslsit);
-		$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('id'=>$cat_id),1));
+		$this->assign('pagefooter',showpage($nowPage,$newslsit['count'],array('id'=>$cat_id),0,20));
 		unset($page,$newslsit);
 
 		//热门新闻
@@ -1204,7 +1227,7 @@ class IndexController extends Controller {
 				$nowPage = I('page',1,'intval');
 				$newslsit = D('news')->getPageNews(0,$nowPage,20,$keyword);
 				$this->assign('newslist',$newslsit);
-				$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('keyword'=>$keyword),1));
+				$this->assign('pagefooter',showpage($nowPage,$newslsit['pagecount'],array('keyword'=>$keyword,'searchtype'=>$searchtype),0));
 				unset($page,$newslsit);
 				$model = 'tech_search';
 				break;
@@ -1213,7 +1236,7 @@ class IndexController extends Controller {
 				$nowPage = I('page',1,'intval');
 				$goodslsit = D('goods')->getPageGoods(0,$nowPage,20,30,$keyword);
 				$this->assign('goodslist',$goodslsit);
-				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword),1));
+				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword,'searchtype'=>$searchtype),0));
 				unset($nowPage,$page,$goodslsit);
 				$model = 'soft_search';
 				break;
@@ -1222,7 +1245,7 @@ class IndexController extends Controller {
 				$nowPage = I('page',1,'intval');
 				$goodslsit = D('goods')->getPageGoods(0,$nowPage,20,29,$keyword);
 				$this->assign('goodslist',$goodslsit);
-				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword),1));
+				$this->assign('pagefooter',showpage($nowPage,$goodslsit['pagecount'],array('keyword'=>$keyword,'searchtype'=>$searchtype),0));
 				unset($nowPage,$page,$goodslsit);
 				$model = 'code_search';
 				break;
