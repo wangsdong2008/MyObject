@@ -72,7 +72,7 @@ class IndexController extends Controller {
 			$this->error();
 			exit;
 		}
-		$flg = 1;
+		$flg = 0;
 		if($flg == 1){
 			if(!$this->is_spider()) { //普通客户
 				$fromurl = I('server.HTTP_REFERER'); //$_SERVER['HTTP_REFERER']

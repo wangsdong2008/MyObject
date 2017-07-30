@@ -6,7 +6,30 @@ class IndexController extends Controller {
         $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover,{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
     }*/
 
-    private $flg = 0;  //用来控制是否返回CSS，js,img
+    private $flg = 0; //付费情况
+
+    public function getImagesPath($url,$g_url){
+        $str = "";
+        if($url==""||$g_url==""){
+        }else{
+            $list1 = explode("/",$g_url);
+            $list2 = explode("/",$url);
+            $num = 0;
+            foreach($list2 as $key => $val){
+                if($list2[$key] == $list1[$key]){
+                    //不管
+                }else{
+                    $num = count($list2)-$key-1;
+                    break;
+                }
+            }
+            for($i=0;$i<$num;$i++){
+                $str .="../";
+            }
+        }
+        //$str .="images/";
+        return $str;
+    }
 
     public function index(){
         $this->display('index');
@@ -190,26 +213,53 @@ class IndexController extends Controller {
     }
 
     public function getlinks(){
-        $flg = 1; //付费成功
-
+        $this->flg = 1; //临时处理
+        /*$status = 0;
+        if(session("ff")){//是否登录过
+            $this->flg = 1;
+        }else{
+            $username = I('username','aaaaa');
+            $code = I('code');
+            $bzUserslist = D('bzuser')->showBzuserFromUsername($username);
+            if($bzUserslist){//用户不存在
+                $status = 0;
+            }else{
+                if($code == md5($username.$bzUserslist['codeid'])){ //密码不正确
+                    $status = 1;
+                }else{
+                    if($bzUserslist['num'] <= 0){ //次数必须大于0
+                        $status = 2;
+                    }else{
+                        $status = 3;
+                        session("ff",$bzUserslist['id']);
+                        //扣除次数
+                        D('bzuser')->updatenum($bzUserslist['id'],$bzUserslist['num']-1);
+                    }
+                }
+            }
+        }
+        if($status < 3){
+            $arr['status'] = $status;
+            return json_encode($arr);
+        }*/
         $url = I('url','');
-        $pagecode = I('pagecode',"utf-8");
+        $g_url = $url;
         $post = I('post','get');
         $referer = I('referer','');
+        $pagecode = I('pagecode','utf-8');
         $header = array();
         $data = array();
         $array = array();
         $content2 = "";
         if($url!='') {
             $content = http($url, $data, $referer, $header, $post, 30);
-            $content2 = $this->get1($content,$url,$flg);
+            $content2 = $this->get1($content,$url,$this->flg,$g_url);
         }
-        //print_r($content2);exit;
         unset($array,$j,$p,$k,$key);
         echo json_encode($content2);
     }
 
-    private function get1($content,$url,$flg){
+    private function get1($content,$url,$flg,$g_url){
         $array = array();
         $ext = getExt($url);
         if($ext == "no extension")
@@ -218,26 +268,35 @@ class IndexController extends Controller {
             $array['filename'] = basename($url);//这里要注意
         }
 
-        $pattern="/ (src=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//正则
+        $pattern="/ (src=|url\()('|\")?([^'\"\) ]+)('|\"|\)| )?/is";//图片正则
         preg_match_all($pattern, $content, $arr);//匹配内容到arr数组
 
-        //补齐链接
+        //补齐图片链接
         $html = preg_split($pattern,$content);
         $str2 = "";
         foreach($html as $key => $val){
             $str2 .= $html[$key]." ".$arr[1][$key] . $arr[2][$key] . $this->getxdpath($arr[3][$key],$url) . $arr[4][$key];
         }
         //补齐链接结束
-
         $arr1 = array();
 
+        /*
         //获取css
         $ii=0;
         $jj = 0;
-        $pattern="/<link[\w+ '\"\=\/\(\)-:]+href=('|\")?(([^'\" ]+)\.css)('|\"| )?/is";//正则
+        $pattern="/<link([\w+ '\"\=\/\(\)-:]+)href=('|\")?(([^'\" ]+)\.css)('|\"| )?/is";//css正则
         preg_match_all($pattern, $content, $arr2);//匹配内容到arr数组
+
+        //补齐CSS链接
+        $html = preg_split($pattern,$str2);
+        $str2 = "";
+        foreach($html as $key => $val){
+            $str2 .= $html[$key]."<link". $arr2[1][$key] ."href=". $arr2[2][$key] . $this->getxdpath($arr2[3][$key],$url) . $arr2[5][$key];
+        }
+        //补齐链接结束
+
         $str3 = "";
-        foreach($arr2[2] as $key => $val){
+        foreach($arr2[3] as $key => $val){
             $array['css'][$ii]['url'] = $val;
             $current_css = $val;
             $replace_val = $this->getxdpath($val,$url);
@@ -252,7 +311,7 @@ class IndexController extends Controller {
                 //补齐图片链接
                 $html2 = preg_split($pattern,$content1);
                 foreach($html2 as $key => $val){
-                    $str3 .= $html2[$key]." background".$arr3[1][$key] . $arr3[2][$key]  . $arr3[3][$key] .$this->getWebUrl($arr3[4][$key],$url) . $arr3[5][$key];
+                    $str3 .= $html2[$key]." background".$arr3[1][$key] .":url". $arr3[2][$key]  . $arr3[3][$key] .$this->getWebUrl($arr3[4][$key],$url) . $arr3[5][$key];
                 }
                 $str3 = str_replace('background'.$url.'/','',$str3);
                 //补齐图片链接结束
@@ -260,21 +319,21 @@ class IndexController extends Controller {
                 //使用替换后的图片地址替换掉
                 foreach($arr3[4] as $key => $v){
                     $array['Resources'][$jj]['url'] = $this->getWebUrl($v,$current_css);
-                    $replace_val = $this->getxdpath($v,$url);
+                    //$replace_val = $this->getxdpath($v,$url);
+                    $replace_val = $this->getxdpath($v,$current_css);
                     $array['Resources'][$jj]['real_url'] = $replace_val;
-                    $str3 = str_replace($this->getWebUrl($v,$url),"../".$replace_val,$str3); //替换图片地址
+                    $str3 = str_replace($this->getWebUrl($v,$url),"..".$replace_val,$str3); //替换图片地址
                     $jj++;
                 }
-
                 $array['css'][$ii]['content']  = $str3;
                 unset($arr3,$str3,$html2);
             }else{
                 //获取替换前的CSS
                 $array['css'][$ii]['content']  = http($val);
             }
+            $str2 = str_replace($val,$replace_val,$str2);
             $ii++;
         }
-
         $j=$jj;
 
         //图片链接
@@ -285,33 +344,38 @@ class IndexController extends Controller {
             $str3 = str_replace($this->getWebUrl($v1,$url),"".$replace_val,$str3); //替换图片地址
             $jj++;
         }
+        */
+        $j=0;//临时启用，使用时关闭
 
-        //查询链接
+       //查询链接
         $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
         preg_match_all($pattern, $content, $link_arr);//匹配内容到arr数组
         foreach($link_arr[4] as $key => $val){
-            if(substr($val,0,7)!="mailto:" && substr($val,0,11)!="javascript:" && substr($val,0,1) != "#" && $val != $url && $val != $url."/" && $val != "/") {
-                $array['Resources'][$j]['url'] = $this->getWebUrl($val,$url);
-                $replace_val = $this->getxdpath($val,$url);
-                $array['Resources'][$j]['real_url'] = $replace_val;
-                $str2 = str_replace($val,$replace_val,$str2);
-                $j++;
-
+            $val = trim($val);
+            if(substr($val,0,7)!="mailto:" && geturl($val)!=geturl($g_url) && substr($val,0,11)!="javascript:" && substr($val,0,1) != "#" && $val != $url && $val != $url."/" && $val != "/") {
+                if($this->getWebUrl($val,$url)!=""){
+                    $array['links'][$j]['url'] = $this->getWebUrl($val,$url);
+                    $replace_val = $this->getxdpath($val,$url);
+                    $array['links'][$j]['real_url'] = $replace_val;
+                    $str2 = str_replace($val,$replace_val,$str2);
+                    $j++;
+                }
             }
         }
 
-
         //查询重复
-        foreach(array_unique($arr1) as $key => $val){ //重新输入下标
+        /*foreach(array_unique($arr1) as $key => $val){ //重新输入下标
             $array['Resources'][$j]['url'] = $val;
             $replace_val = $this->getxdpath($val,$url);
             $array['Resources'][$j]['real_url'] = $replace_val;
             $str2 = str_replace($val,$replace_val,$str2);
             $j++;
-        }
+        }*/
 
-        $array['html'] = $str2;
-        unset($pattern,$str2,$arr1,$replace_val);
+        $array['status'] = 3;
+
+        $array['html'] = urlencode($str2);
+        unset($pattern,$str2,$replace_val);
         return $array;
 
     }
@@ -324,21 +388,23 @@ class IndexController extends Controller {
             case "gif":
             case "png":
             case "ico":
-                $new_url = "images/".basename($current_url);
+                $new_url = "/images/".basename($current_url);
                 break;
             case "css":
-                $new_url = "css/".basename($current_url);
+                $new_url = "/css/".basename($current_url);
                 break;
             case "js":
-                $new_url = "js/".basename($current_url);
+                $new_url = "/js/".basename($current_url);
                 break;
             case "swf":
             case "mp4":
-                $new_url = "upload/".basename($current_url);
+                $new_url = "/upload/".basename($current_url);
             default:{
                 $new_url = str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));
             }
         }
+        /*$new_url = str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));
+        $new_url = str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));*/
         return $new_url;
     }
 
@@ -356,7 +422,7 @@ class IndexController extends Controller {
         return  $arr[3][0];
     }
 
-    public function getWebUrl($current_url,$domain_url){
+    public function getWebUrl($current_url,$domain_url){ //补齐域名
         $domain = geturl($domain_url);       //域名
         $http = explode(":",$domain_url)[0]; //是http还是https
         $url1 = "";//本级地址
