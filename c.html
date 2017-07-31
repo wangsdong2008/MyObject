@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<title>game</title>
+<body>
+<div style="width: 500px; margin: 0 auto;">
+    <div style="width:330px;height: 450px; border:1px solid #ccc; float:left;">
+        <canvas id="canvas" width="330" height="450"></canvas>
+    </div>
+</div>
+<script>
+    g = new Game();
+    g.init();
+
+    function Game(){
+        var mycanvas;     //canvas
+        var ctx;          //ctx
+        var width;        //canvas宽度
+        var height;       //canvas高度
+        var speed;        //速度
+        var direction;    //方向
+        var radius2;       //球直径
+        var radius;       //球半径
+        var balls;        //所有球列表
+        var row;          //所有行
+        var col;          //所有列
+
+        var init_balls;   //三个球列表
+        var init_x;       //当前球位置x行
+        var init_y;       //当前球位置y行
+
+        var interval;     //定义一个定时器
+        var t = 100;     //定时器时间
+
+        var color = new Array( "green","red","blue","black","grey","#f0f","purple"); //初始化小球颜色
+
+        this.init = function(){//初始化
+            mycanvas=document.getElementById("canvas");
+            ctx = mycanvas.getContext("2d");
+            width = 330;
+            height = 450;
+            radius2 = 30;
+            radius = radius2/2;
+            row = 15;    //15行
+            col = 11;    //11列
+            balls = new Array();
+            for(var i=0;i<row;i++){
+                balls[i] = new Array();
+                for(var j=0; j<col; j++){
+                    var ball = {
+                        X:0,
+                        Y:0,
+                        color:"",
+                        status:0
+                    };
+                    balls[i][j] = ball;
+                }
+            }
+            init_balls = [];
+            init3ball();
+            //支持键盘事件
+            window.addEventListener("keyup",keyup,false);
+            run();
+        };
+
+        function run(){
+            interval = setInterval(chat,t);   //定时的设置
+        };
+
+        function chat(){
+            var c = rowid(init_y);
+            if(c == 3){
+                ctx.beginPath();
+                ctx.fillStyle="red";
+                ctx.font="30px Georgia";
+                ctx.fillText("Game Over",radius2*3,radius2*7);
+                ctx.closePath();
+                clearInterval(interval);
+            }else{
+                var h = height - (row-c)*radius2;
+                var current_y = init_balls[2].Y;
+                if(current_y < h-radius2){
+                    clearballs();
+                    //在当前三个球下方画三个相同的球
+                    for(var i = 2; i >= 0; i--){
+                        var current_y = init_balls[i].Y + radius;
+                        init_balls[i].Y = current_y + radius;
+                    }
+                    init_x = init_x + 1;
+                    draw(init_balls);
+                }else{
+                    balls[init_x][init_y] = init_balls[0];
+                    balls[init_x+1][init_y] = init_balls[1];
+                    balls[init_x+2][init_y] = init_balls[2];
+                    clearInterval(interval);
+                    init3ball();
+                    interval = setInterval(chat,t);   //定时的设置/
+                }
+            }
+        };
+
+
+        //删除同一列col上颜色相同且超过三个球
+        function deleteballs(col){
+            var start,end;
+            end = row-1;
+            var num = 1;
+            var pcolor = balls[row-1][col].color;
+            for(var i = row-2; i>=0; i--){
+                if(balls[i][col].status == 1){
+                    if(balls[i][col].color == pcolor){
+                        start = i;
+                        num ++;
+                    }else{
+                        if(num>=3){
+                            break;
+                        }else{
+                            pcolor = balls[i][col].color;
+                            end = i;
+                            num = 1;
+                        }
+                    }
+                }else{
+                    break;
+                }
+            }
+            if(num>=3){
+
+            }
+        }
+
+        function rowid(col){ //根据列得到行的id
+            var c = row;
+            for(var i = 3; i< row; i++){
+                if(balls[i][col].status == 1){
+                    c = i;
+                    break;
+                }
+            }
+            return c;
+        };
+
+        function init3ball(){   //产生三个球
+            init_x = 0; //行
+            init_y = 5; //列
+            for(var j = 0; j < 3; j++){ //j为行
+                var color_num = Math.floor(Math.random()*color.length);
+                var ball = {
+                    X:width/2,
+                    Y:j*radius2,
+                    color:color[color_num],
+                    status:1
+                };
+                init_balls[j] = ball;
+            }
+            draw(init_balls);
+        }
+        function clearballs(){   //使用白色清除原来的球
+            for(var i=0;i<3;i++){
+                ctx.beginPath();
+                ctx.fillStyle = "#fff";
+                ctx.arc(init_balls[i].X, init_balls[i].Y+radius, radius+1, 0, Math.PI*2);
+                ctx.fill();
+                ctx.closePath();
+            }
+        };
+
+        function keyup(event){ //键盘事件
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            var current_x = 0,current_y = 0;
+            switch(e && e.keyCode) {
+                case 37:
+                {
+                    direction = "left";
+                    current_y = init_y - 1;
+                    if(current_y>=0){
+                        var c = rowid(current_y);
+                        var h = height - (row-c)*radius2;
+                        var current_y = init_balls[2].Y;
+                        if(current_y <= h-radius2){
+                            for(var i = 0;i<3;i++){
+                                current_x = init_balls[i].X;
+                                init_balls[i].X = current_x - radius2;
+
+                                //画个白色的球
+                                ctx.beginPath();
+                                ctx.fillStyle = "#fff";
+                                ctx.arc(current_x, init_balls[i].Y+radius, radius+1, 0, Math.PI*2);
+                                ctx.fill();
+                                ctx.closePath();
+                            }
+                            init_y = init_y - 1;
+                        }
+                    }
+                    break;
+                }
+                case 39:
+                {
+                    direction = "right";
+                    current_y = init_y + 1;
+                    if(current_y>=0){
+                        var c = rowid(current_y);
+                        var h = height - (row-c)*radius2;
+                        var current_y = init_balls[2].Y;
+                        if(current_y <= h-radius2){
+                            for(var i = 0;i<3;i++){
+                                current_x = init_balls[i].X;
+                                init_balls[i].X = current_x + radius2;
+
+                                //画个白色的球
+                                ctx.beginPath();
+                                ctx.fillStyle = "#fff";
+                                ctx.arc(current_x, init_balls[i].Y+radius, radius+1, 0, Math.PI*2);
+                                ctx.fill();
+                                ctx.closePath();
+                            }
+                            init_y = init_y + 1;
+                        }
+                    }
+                    break;
+                }
+                case 40:{
+                    current_x = init_x + 1;
+                    if(current_x <= row-2){
+                        var c = rowid(init_y);
+                        var h = height - (row-c)*radius2;
+                        var current_y = init_balls[2].Y;
+                        if(current_y <  h - radius2){
+                            for(var i = 0;i<3;i++){
+                                current_y = init_balls[i].Y;
+                                init_balls[i].Y = current_y + radius2;
+                                //画个白色的球
+                                ctx.beginPath();
+                                ctx.fillStyle = "#fff";
+                                ctx.arc(init_balls[i].X, current_y-radius, radius+1, 0, Math.PI*2);
+                                ctx.fill();
+                                ctx.closePath();
+                            }
+                            init_x = init_x + 1;
+                        }
+                    }
+                    break;
+                }
+                case 38:{
+                    var ball = {
+                        X:0,
+                        Y:0,
+                        color:"",
+                        status:0
+                    };
+                    ball.X = init_balls[0].X;
+                    ball.Y = init_balls[2].Y;
+                    ball.color = init_balls[0].color;
+                    ball.status = init_balls[0].status;
+                    for(var i=1;i<3;i++){
+                        init_balls[i-1].X = init_balls[i].X;
+                        init_balls[i-1].Y = init_balls[i].Y-radius2;
+                        init_balls[i-1].color = init_balls[i].color;
+                    }
+                    init_balls[2] = ball;
+                    break;
+                }
+            }
+            draw(init_balls);
+        };
+
+        function draw(balls){  //画球
+            for(var j = 0; j < balls.length; j++){
+                ctx.beginPath();
+                var x = balls[j].X;
+                var y = balls[j].Y + radius;
+                var grd = ctx.createRadialGradient(x+3, y-4, 3,x, y, radius);
+                grd.addColorStop(0,"white");
+                var color = balls[j].color;
+                grd.addColorStop(1,color);
+                ctx.fillStyle = grd;
+                grd = null;
+                ctx.arc(x, y, radius, 0, Math.PI*2);
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+
+
+    }
+
+</script>
+</body>
+</html>
