@@ -260,6 +260,8 @@ class IndexController extends Controller {
     }
 
     private function get1($content,$url,$flg,$g_url){
+        $j=0;
+
         $array = array();
         $ext = getExt($url);
         if($ext == "no extension")
@@ -278,6 +280,14 @@ class IndexController extends Controller {
         }
         $content = $str2;
         //补齐图片，js链接结束
+        //图片链接
+        foreach($pic_arr[3] as $key => $v1){
+            $array['Resources'][$j]['url'] = $this->getWebUrl($v1,$url);
+            $replace_val = $this->getxdpath($v1,$url);
+            $array['Resources'][$j]['real_url'] = $replace_val;
+            $content = str_replace($this->getWebUrl($v1,$url),"".$replace_val,$content); //替换图片地址
+            $j++;
+        }
 
         //补齐CSS链接
         $pattern="/<link([\w+ '\"\=\/\(\)-:]+)href=('|\")?(([^'\" ]+)\.css)('|\"| )?/is";//css正则
@@ -289,6 +299,14 @@ class IndexController extends Controller {
         }
         $content = $str2;
         //补齐css链接结束
+        //css链接
+        /*foreach($css_arr[3] as $key => $v1){
+            $array['css'][$j]['url'] = $this->getWebUrl($v1,$url);
+            $replace_val = $this->getxdpath($v1,$url);
+            $array['css'][$j]['real_url'] = $replace_val;
+            $content = str_replace($this->getWebUrl($v1,$url),"".$replace_val,$content); //替换图片地址
+            $j++;
+        }*/
 
         //补齐内部链接
         $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
@@ -301,8 +319,6 @@ class IndexController extends Controller {
         }
         $content = $str3;
         //补齐补齐内部链接结束
-
-
         $arr1 = array();
         $k = 0;
         foreach($link_arr[4] as $key => $val){
@@ -312,13 +328,10 @@ class IndexController extends Controller {
                     $arr1[$k]['url'] = $this->getWebUrl($val,$url);
                     $replace_val = $this->getxdpath($val,$url);
                     $arr1[$k]['real_url'] = $replace_val;
-
                     $k++;
                 }
             }
         }
-
-        $j=0;//临时启用，使用时关闭
         //查询重复
         foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
             $array['links'][$j]['url'] = $val['url'];
@@ -329,19 +342,19 @@ class IndexController extends Controller {
 
         //获取css
         $ii=0;
-        $jj = 0;
-        /*$str3 = "";
+        $jj = $j;
+        $str3 = "";
         foreach($css_arr[3] as $key => $val){
-            $array['css'][$ii]['url'] = $val;
+            $array['css'][$ii]['url'] = $this->getWebUrl($val,$url);;
             $current_css = $val;
             $replace_val = $this->getxdpath($val,$url);
             $array['css'][$ii]['real_url'] = $replace_val;
-            if($flg == 1){
+            $content = str_replace($this->getWebUrl($val,$url),"".$replace_val,$content); //替换图片地址
+           if($flg == 1){
                 //获取替换后的CSS
-                $content1 = http($val);
+                $content1 = http($this->getWebUrl($val,$url));
                 $pattern="/background(-image)?:( )?url('|\"|\()?([^'\"\) ]+)('|\"|\))?/is";//正则
                 preg_match_all($pattern, $content1, $arr3);//匹配内容到arr数组
-
 
                 //补齐图片链接
                 $html2 = preg_split($pattern,$content1);
@@ -360,33 +373,24 @@ class IndexController extends Controller {
                     $str3 = str_replace($this->getWebUrl($v,$url),"..".$replace_val,$str3); //替换图片地址
                     $jj++;
                 }
-                $array['css'][$ii]['content']  = $str3;
+                $array['css'][$ii]['content']  = urlencode($str3);
                 unset($arr3,$str3,$html2);
             }else{
                 //获取替换前的CSS
-                $array['css'][$ii]['content']  = http($val);
+                $array['css'][$ii]['content']  = urlencode(http($val));
             }
-            $str2 = str_replace($val,$replace_val,$str2);
+            //$content = str_replace($val,$replace_val,$content);
             $ii++;
         }
-        $j=$jj;
-        $content = $str2;
-
-        */
-        //图片链接
-        foreach($pic_arr[3] as $key => $v1){
-            $array['Resources'][$jj]['url'] = $this->getWebUrl($v1,$url);
-            $replace_val = $this->getxdpath($v1,$url);
-            $array['Resources'][$jj]['real_url'] = $replace_val;
-            $content = str_replace($this->getWebUrl($v1,$url),"".$replace_val,$content); //替换图片地址
-            $jj++;
-        }
-        //print_r($pic_arr);exit;
+        $j = $jj;
+        //$content = $str2;
 
         $array['status'] = 3;
-
+        $ht = explode("</html>",$content);
+        $content = $ht[0]."</html>";
         $array['html'] = urlencode($content);
         unset($pattern,$str2,$replace_val);
+
         return $array;
 
     }
