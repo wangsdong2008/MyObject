@@ -298,15 +298,7 @@ class IndexController extends Controller {
             $str2 .= $html[$key]."<link". $css_arr[1][$key] ."href=". $css_arr[2][$key] . $this->getWebUrl($css_arr[3][$key],$url) . $css_arr[5][$key];
         }
         $content = $str2;
-        //补齐css链接结束
-        //css链接
-        /*foreach($css_arr[3] as $key => $v1){
-            $array['css'][$j]['url'] = $this->getWebUrl($v1,$url);
-            $replace_val = $this->getxdpath($v1,$url);
-            $array['css'][$j]['real_url'] = $replace_val;
-            $content = str_replace($this->getWebUrl($v1,$url),"".$replace_val,$content); //替换图片地址
-            $j++;
-        }*/
+        //补齐css链接结束       
 
         //补齐内部链接
         $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
@@ -318,7 +310,7 @@ class IndexController extends Controller {
             $str3 .= $html2[$key]."<".$link_arr[1][$key] ." ". $link_arr[2][$key]  ."=". $link_arr[3][$key] .$this->getWebUrl($link_arr[4][$key],$url) . $link_arr[5][$key];
         }
         $content = $str3;
-        //补齐补齐内部链接结束
+        //补齐内部链接结束
         $arr1 = array();
         $k = 0;
         foreach($link_arr[4] as $key => $val){
@@ -333,20 +325,30 @@ class IndexController extends Controller {
             }
         }
         //查询重复
+		$k = 0;
         foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
-            $array['links'][$j]['url'] = $val['url'];
-            $array['links'][$j]['real_url'] = $val['real_url'];
+            $array['links'][$k]['url'] = $val['url'];
+            $array['links'][$k]['real_url'] = $val['real_url'];
             $content = str_replace($val['url'],$val['real_url'],$content);
-            $j++;
+            $k++;
         }
 
-        //获取css
+//二维数据按url长度排序
+		usort($array['links'], function($a, $b) {
+			$al = strlen($a['url']);
+			$bl = strlen($b['url']);
+			if ($al == $bl)
+				return 0;
+			return ($al > $bl) ? -1 : 1;
+		});
+        
+		//获取css
         $ii=0;
         $jj = $j;
         $str3 = "";
         foreach($css_arr[3] as $key => $val){
-            $array['css'][$ii]['url'] = $this->getWebUrl($val,$url);;
-            $current_css = $val;
+            $array['css'][$ii]['url'] = $this->getWebUrl($val,$url);
+            $current_css = $this->getWebUrl($val,$url);
             $replace_val = $this->getxdpath($val,$url);
             $array['css'][$ii]['real_url'] = $replace_val;
             $content = str_replace($this->getWebUrl($val,$url),"".$replace_val,$content); //替换图片地址
@@ -384,7 +386,7 @@ class IndexController extends Controller {
         }
         $j = $jj;
         //$content = $str2;
-
+		
         $array['status'] = 3;
         $ht = explode("</html>",$content);
         $content = $ht[0]."</html>";
