@@ -324,6 +324,18 @@ class IndexController extends Controller {
                 }
             }
         }
+
+        //二维数据按url长度排序
+        usort($arr1, function($a, $b) {
+            $al = strlen($a['url']);
+            $bl = strlen($b['url']);
+            if ($al == $bl)
+                return 0;
+            return ($al > $bl) ? -1 : 1;
+        });
+
+        //print_r($arr1);exit;
+
         //查询重复
 		$k = 0;
         foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
@@ -333,15 +345,6 @@ class IndexController extends Controller {
             $k++;
         }
 
-//二维数据按url长度排序
-		usort($array['links'], function($a, $b) {
-			$al = strlen($a['url']);
-			$bl = strlen($b['url']);
-			if ($al == $bl)
-				return 0;
-			return ($al > $bl) ? -1 : 1;
-		});
-        
 		//获取css
         $ii=0;
         $jj = $j;
@@ -384,8 +387,7 @@ class IndexController extends Controller {
             //$content = str_replace($val,$replace_val,$content);
             $ii++;
         }
-        $j = $jj;
-        //$content = $str2;
+
 		
         $array['status'] = 3;
         $ht = explode("</html>",$content);
@@ -426,13 +428,18 @@ class IndexController extends Controller {
             case "do":
                  $new_url = str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));
                  $pathinfo = pathinfo($new_url);
-                 $new_url = $pathinfo[dirname]."/".basename($current_url,$ext)."html";
+                 if($pathinfo[dirname] == "."){
+                     $p2 = "";
+                 }else{
+                     $p2 = $pathinfo[dirname]."/";
+                 }
+                 $new_url = "/".$p2.basename($current_url,$ext)."html";
                  unset($pathinfo);
                  break;
             default:{
-                //$new_url = str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));
+                $new_url = "/".str_replace(geturl($url)."/","",$this->getWebUrl($current_url,$url));
                 //目录
-                $new_url = "index.html";
+                $new_url .= "/index.html";
                 break;
             }
         }
