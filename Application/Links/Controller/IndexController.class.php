@@ -212,6 +212,35 @@ class IndexController extends Controller {
         // echo json_encode($arr);
     }
 
+    public function register(){
+        $username = I("username").trim();
+        $password = I("password").trim();
+        $password2 = I("password2").trim();
+        $question = I("question").trim();
+        $answers = I("answers").trim();
+        $arr = array();
+        if($username == ""||$password ==""||$password2==""||$question==""||$answers==""){
+            $arr['status'] = 0; //数据为空
+        }else{
+            $id = D("users_caiji")->checkuser($username);
+            if($id>0){
+                $arr['status'] = 1;     //账号已经存在
+            }else{
+                $Users_caiji_data['username'] = $username;
+                $Users_caiji_data['password'] = $password;
+                $Users_caiji_data['question'] = $question;
+                $Users_caiji_data['answer'] = $answers;
+                $uid = D("users_caiji")->users_caijiSave($Users_caiji_data);
+                unset($password,$question,$answer,$Users_caiji,$Users_caiji_data);
+                $arr['status'] = 2;
+                $ulist = D("users_caiji")->showusers_caiji($uid);
+                $arr['username'] = $username;
+                $arr['code'] = md5($username.$ulist['regtime'].$ulist['mycode']);
+            }
+        }
+        echo json_encode($arr);
+    }
+
     public function getlinks(){
         $this->flg = 1; //临时处理
         /*$status = 0;
