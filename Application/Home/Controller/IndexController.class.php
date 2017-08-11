@@ -46,7 +46,7 @@ class IndexController extends Controller {
 	public function init(){
 		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
 		$curr = $this->curPageURL();
-		$cs_arr = array('id','searchtype','keyword','Topic','Description','Cat_id','username','password','usecpwd','question','answer','email','validationCode','page','news_title','news_id','news_from','news_author','news_content','flg','act','fromurl');
+		$cs_arr = array('BtnSave','cat_id','order_id','pays','flow_id','flowid','goods_id','id','searchtype','keyword','Topic','Description','Cat_id','username','password','usecpwd','question','answer','email','validationCode','page','news_title','news_id','news_from','news_author','news_content','flg','act','fromurl');
 		$arr = $_GET;
 		if(count($arr)>0){
 			foreach($arr as $key => $val){
