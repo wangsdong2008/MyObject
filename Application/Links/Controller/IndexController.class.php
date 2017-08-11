@@ -212,48 +212,20 @@ class IndexController extends Controller {
         // echo json_encode($arr);
     }
 
-    public function register(){
-        $username = I("username").trim();
-        $password = I("password").trim();
-        $password2 = I("password2").trim();
-        $question = I("question").trim();
-        $answers = I("answers").trim();
-        $arr = array();
-        if($username == ""||$password ==""||$password2==""||$question==""||$answers==""){
-            $arr['status'] = 0; //数据为空
-        }else{
-            $id = D("users_caiji")->checkuser($username);
-            if($id>0){
-                $arr['status'] = 1;     //账号已经存在
-            }else{
-                $Users_caiji_data['username'] = $username;
-                $Users_caiji_data['password'] = $password;
-                $Users_caiji_data['question'] = $question;
-                $Users_caiji_data['answer'] = $answers;
-                $uid = D("users_caiji")->users_caijiSave($Users_caiji_data);
-                unset($password,$question,$answer,$Users_caiji,$Users_caiji_data);
-                $arr['status'] = 2;
-                $ulist = D("users_caiji")->showusers_caiji($uid);
-                $arr['username'] = $username;
-                $arr['code'] = md5($username.$ulist['regtime'].$ulist['mycode']);
-            }
-        }
-        echo json_encode($arr);
-    }
-
     public function getlinks(){
-        $this->flg = 1; //临时处理
-        /*$status = 0;
+        //$this->flg = 1; //临时处理
+        $status = 3;
+        //session("ff",null);
         if(session("ff")){//是否登录过
             $this->flg = 1;
         }else{
-            $username = I('username','aaaaa');
-            $code = I('code');
-            $bzUserslist = D('bzuser')->showBzuserFromUsername($username);
-            if($bzUserslist){//用户不存在
+            $username = I('username','');
+            $code = I('codes','');
+            $bzUserslist = D('bzusers')->showBzusersFromUsername($username);
+            if(!$bzUserslist){//用户不存在
                 $status = 0;
             }else{
-                if($code == md5($username.$bzUserslist['codeid'])){ //密码不正确
+                if($code != md5($username.$bzUserslist['regtime'].$bzUserslist['mycode'])){
                     $status = 1;
                 }else{
                     if($bzUserslist['num'] <= 0){ //次数必须大于0
@@ -261,16 +233,19 @@ class IndexController extends Controller {
                     }else{
                         $status = 3;
                         session("ff",$bzUserslist['id']);
+                        $this->flg = 1;
                         //扣除次数
-                        D('bzuser')->updatenum($bzUserslist['id'],$bzUserslist['num']-1);
+                        D('bzusers')->updatenum($bzUserslist['id']);
                     }
                 }
             }
         }
-        if($status < 3){
-            $arr['status'] = $status;
-            return json_encode($arr);
-        }*/
+        $arr['status'] = $status;
+        if($status*1 < 3){
+            echo json_encode($arr);
+            exit;
+        }
+
         $url = I('url','');
         $g_url = $url;
         $post = I('post','get');
@@ -290,7 +265,6 @@ class IndexController extends Controller {
 
     private function get1($content,$url,$flg,$g_url){
         $j=0;
-
         $array = array();
         $ext = getExt($url);
         if($ext == "no extension")
@@ -362,8 +336,6 @@ class IndexController extends Controller {
                 return 0;
             return ($al > $bl) ? -1 : 1;
         });
-
-        //print_r($arr1);exit;
 
         //查询重复
 		$k = 0;
