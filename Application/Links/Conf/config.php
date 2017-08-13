@@ -8,6 +8,8 @@ return array(
     'DB_NAME'   => 'sq_aspbc123', // 数据库名
     'DB_USER'   => 'sq_aspbc123', // 用户名
     'DB_PWD'    => 'asp123123', // 密码*/
+	
+	
     'DB_HOST'   => 'localhost', // 服务器地址
     'DB_NAME'   => 'phpbc', // 数据库名
     'DB_USER'   => 'root', // 用户名

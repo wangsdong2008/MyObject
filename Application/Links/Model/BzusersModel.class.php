@@ -11,7 +11,7 @@ class BzusersModel extends Model{
         $bzusers_data['username'] = array('eq',$username);
         $bzuserslist = $bzusers
             ->where($bzusers_data)
-            ->field('`id`,`mycode`,`username`,`num`,`regtime`')
+            ->field('`id`,`mycode`,`username`,`num`,`regtime`,`islock`')
             ->limit(1)
             ->find();
         unset($bzusers,$bzusers_data);

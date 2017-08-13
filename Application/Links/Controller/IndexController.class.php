@@ -225,6 +225,7 @@ class IndexController extends Controller {
         }else{
             $username = I('username','');
             $code = I('codes','');
+
             $bzUserslist = D('bzusers')->showBzusersFromUsername($username);
             if(!$bzUserslist){//用户不存在
                 $status = 0;
@@ -245,7 +246,11 @@ class IndexController extends Controller {
                                 $status = 2;
                             }else{
                                 $status = 3;
-                                $this->flg = 1;
+                                if($bzUserslist['islock'] == 1){
+                                    $this->flg = 0; //测试账号
+                                }else{
+                                    $this->flg = 1; //正式账号
+                                }
                                 session("ff",$bzUserslist['id']);
                                 //扣除次数
                                 D('bzusers')->updatenum($bzUserslist['id']);
