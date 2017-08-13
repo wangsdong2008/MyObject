@@ -213,7 +213,11 @@ class IndexController extends Controller {
     }
 
     public function getlinks(){
-        //$this->flg = 1; //临时处理
+        $url = I('url','');
+        $g_url = $url;
+        $post = I('post','get');
+        $referer = I('referer','');
+        $pagecode = I('pagecode','utf-8');
         $status = 3;
         //session("ff",null);
         if(session("ff")){//是否登录过
@@ -228,14 +232,28 @@ class IndexController extends Controller {
                 if($code != md5($username.$bzUserslist['regtime'].$bzUserslist['mycode'])){
                     $status = 1;
                 }else{
-                    if($bzUserslist['num'] <= 0){ //次数必须大于0
-                        $status = 2;
-                    }else{
-                        $status = 3;
-                        session("ff",$bzUserslist['id']);
-                        $this->flg = 1;
-                        //扣除次数
-                        D('bzusers')->updatenum($bzUserslist['id']);
+                    //检查一下是否采集过
+                    if(!session("ff")){ //
+                        $pid = D('bzuser_url')->getcaiurl($bzUserslist['id'],$this->getdomain($url));
+                        if($pid>0){
+                            $status = 3;
+                            $this->flg = 1;
+                            session("ff",$bzUserslist['id']);
+                        }
+                        else{
+                            if($bzUserslist['num'] <= 0){ //次数必须大于0
+                                $status = 2;
+                            }else{
+                                $status = 3;
+                                $this->flg = 1;
+                                session("ff",$bzUserslist['id']);
+                                //扣除次数
+                                D('bzusers')->updatenum($bzUserslist['id']);
+                                //记录下来
+                                D('bzuser_url')->bzuser_urlSave(array('bzuserid'=>$bzUserslist['id'],'url'=>$this->getdomain($url)));
+
+                            }
+                        }
                     }
                 }
             }
@@ -245,12 +263,6 @@ class IndexController extends Controller {
             echo json_encode($arr);
             exit;
         }
-
-        $url = I('url','');
-        $g_url = $url;
-        $post = I('post','get');
-        $referer = I('referer','');
-        $pagecode = I('pagecode','utf-8');
         $header = array();
         $data = array();
         $array = array();
