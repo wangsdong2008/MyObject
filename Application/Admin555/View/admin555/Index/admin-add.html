@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/html5.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$DEFAULT_PATH}/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href="{$DEFAULT_PATH}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加管理员</title>
+</head>
+<body>
+<div class="pd-20">
+  <form action="adminsave" method="post" class="form form-horizontal" id="form-user-add"> 
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>管理员名称：</label>
+      <div class="formControls col-5">      
+        <input type="text" class="input-text" placeholder="请填写管理员名称" id="admin_username" name="admin_username" datatype="*2-16" nullmsg="管理员名称不能为空" value="{$admin_username}" ><input type="hidden" name="admin_id" id="admin_id" value="{$admin_id}">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>密码：</label>
+      <div class="formControls col-5">
+        <input type="password" class="input-text" placeholder="请填写密码" id="admin_password" name="admin_password" value="{$admin_password}" datatype="*6-16" <if condition="$admin_id neq 0"> ignore="ignore"</if>  >
+      </div>
+      <div class="col-4">{$admin_password_txt} </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>所属身份： </label>
+      <div class="formControls col-5">      
+        <select class="select" id="role_id" name="role_id" datatype="*" nullmsg="请选择所属身份">
+          <option value="">请选择所属身份</option>      
+          <volist name="role_list" id="rolelist">
+          <option value="{$rolelist.role_id}" <if condition="$rolelist.role_id == $role_id">selected</if>>{$rolelist.role_name}</option>
+          </volist>
+        </select>
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>状态：</label>
+      <div class="formControls col-5 skin-minimal">
+        <div class="radio-box">
+          <label>
+                <input name="is_show" type="radio" id="is_show_1" value="1" <if condition="$is_show == 1">checked</if> >
+           </label>
+          <label for="is_show-1">显示</label>
+        </div>
+        <div class="radio-box">
+          <input type="radio" name="is_show" value="0" id="is_show_0" <if condition="$is_show == 0">checked</if> >
+          <label for="is_show-2">隐藏</label>
+        </div>        
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        <input class="btn btn-default radius width_60" type="buttom" value="关闭" onclick="closeWin()" >
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/jquery.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/layer1.8/layer.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/laypage/laypage.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.doc.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$("#form-user-add").Validform({
+		tiptype:2,
+	});
+});
+</script> 
+</body>
+</html>

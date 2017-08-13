@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/html5.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$DEFAULT_PATH}/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href="{$DEFAULT_PATH}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加会员等级</title>
+</head>
+<body>
+<div class="pd-20">
+  <form action="membersave" method="post" class="form form-horizontal" id="form-member-add"> 
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>会员等级名称：</label>
+      <div class="formControls col-5">      
+        <input type="text" class="input-text" placeholder="请填写会员等级名称" id="groupname" name="groupname" datatype="*2-16" nullmsg="会员等级名称不能为空" value="{$groupname}" ><input type="hidden" name="groupid" id="groupid" value="{$groupid}">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>优惠折扣：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" placeholder="请填写优惠" id="groupDiscount" name="groupDiscount" value="{$groupDiscount}"  >
+      </div>
+      <div class="col-4" id="tishi"></div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>顺序：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" placeholder="请填写顺序" id="grouporder" name="grouporder" value="{$grouporder}" datatype="n1-3" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+
+    </div>
+    
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        <input class="btn btn-default radius width_60" type="buttom" value="关闭" onclick="closeWin()" >
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/jquery.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/layer1.8/layer.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/laypage/laypage.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.doc.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$("#form-member-add").Validform({
+		tiptype:2,
+	});
+	
+	$("#groupDiscount").blur(function() {
+		var ex = /^\d+$/;
+		str = $("#groupDiscount").val();
+		if (ex.test(str)) {
+			if (str>=0 && str<=100) {
+				$("#tishi").html("<span class='Validform_checktip Validform_right'></span>");
+			} else {
+				$("#tishi").html("<span class='Validform_checktip Validform_wrong'>请输入0-100</span>");
+			}
+		} else {
+			$("#tishi").html("<span class='Validform_checktip Validform_wrong'>请输入0-100</span>");
+		}
+	});
+});
+
+</script> 
+</body>
+</html>

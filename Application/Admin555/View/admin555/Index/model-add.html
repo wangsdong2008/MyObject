@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/html5.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$DEFAULT_PATH}/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link href="{$DEFAULT_PATH}/lib/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href="{$DEFAULT_PATH}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>模版管理</title>
+</head>
+<body>
+<div class="pd-20">
+  <form action="modelsave" method="post" class="form form-horizontal" id="form-user-add">    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>模版名称：</label>
+      <div class="formControls col-5">      
+        <input type="text" class="input-text" placeholder="请填写模版名称" id="model_name" name="model_name" datatype="*2-16" nullmsg="模版名称不能为空" value="{$model_name}" ><input type="hidden" name="model_id" id="model_id" value="{$model_id}">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">路径：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" placeholder="请填写路径" id="model_path" name="model_path" value="{$model_path}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">列表页数量：</label>
+      <div class="formControls col-5">
+        <input style="width:40px;" type="text" class="input-text" placeholder="请填写数量" datatype="n"  id="model_pagenum" name="model_pagenum" value="{$model_pagenum}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">顺序：</label>
+      <div class="formControls col-5">
+        <input type="text" style="width:40px" class="input-text" placeholder="请填写顺序" id="model_order" name="model_order" datatype="n" value="{$model_order}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">小图长宽：</label>
+      <div class="formControls col-5">
+        <input type="text" style="width:40px; text-align:center" class="input-text" placeholder="请填写小图长" id="small_img_width" name="small_img_width" datatype="n" value="{$small_img_width}" > X <input type="text" style="width:40px; text-align:center" class="input-text" placeholder="请填写小图宽" id="small_img_height" name="small_img_height" datatype="n" value="{$small_img_height}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">中图长宽：</label>
+      <div class="formControls col-5">
+        <input type="text" style="width:40px; text-align:center" class="input-text" placeholder="请填写中图长" id="img_width" name="img_width" datatype="n" value="{$img_width}" > X <input type="text" style="width:40px; text-align:center" class="input-text" placeholder="请填写中图宽" id="img_height" name="img_height" datatype="n" value="{$img_height}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <label class="form-label col-3">大图长宽：</label>
+      <div class="formControls col-5">
+        <input type="text" style="width:40px; text-align:center" class="input-text" placeholder="请填写大图长" id="big_img_width" name="big_img_width" datatype="n" value="{$big_img_width}" > X <input type="text" style="width:40px; text-align:center" class="input-text" placeholder="请填写大图宽" id="big_img_height" name="big_img_height" datatype="n" value="{$big_img_height}" >
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>状态：</label>
+      <div class="formControls col-5 skin-minimal">
+        <div class="radio-box">
+          <label>
+                <input name="is_show" type="radio" id="is_show_1" value="1" <if condition="$is_show == 1">checked</if> >
+           </label>
+          <label for="is_show-1">显示</label>
+        </div> 
+        <div class="radio-box">
+          <input type="radio" name="is_show" value="0" id="is_show_0" <if condition="$is_show == 0">checked</if> >
+          <label for="is_show-2">隐藏</label>
+        </div>        
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        <input class="btn btn-default radius width_60" type="buttom" value="关闭" onClick="closeWin()" >
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/jquery.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/layer1.8/layer.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/laypage/laypage.js"></script>
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/lib/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="{$DEFAULT_PATH}/js/H-ui.admin.doc.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$("#form-user-add").Validform({
+		tiptype:2,
+	});
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+});
+</script> 
+</body>
+</html>
