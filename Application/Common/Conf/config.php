@@ -10,7 +10,7 @@ return array(
 	'MAIL_CHARSET' =>'utf-8',//设置邮件编码
 	'MAIL_ISHTML' =>TRUE, // 是否HTML格式邮件
 	'DEFAULT_MODULE' => 'Home',//默认访问路径
-	'MODULE_ALLOW_LIST' => array('Home','Admin','MySoftAd','Links'),
+	'MODULE_ALLOW_LIST' => array('Home','Admin555','MySoftAd','Links'),
 
 	//redis配置参数
 	'redis_config' => array(
