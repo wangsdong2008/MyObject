@@ -971,6 +971,30 @@ class IndexController extends Controller {
 				echo '系统忙，请稍后再试';exit;
 			}
 		}
+
+		//检查是否存在
+		$filepaths = array('about','.idea','Application','bbs','code','css','demo','images','Public','soft','tech','ThinkPHP','uploadfile','upload_tmp','plus','sitemap');
+		$files = array('.htaccess','404.html','500.html','favicon.ico','game.html','global.asa','index.php','sitemap.xml','web.config','robots.txt','README.md');
+		$dir =  getcwd() ;
+		if($dir_handle = @opendir($dir)){
+			while($filename = readdir($dir_handle)){
+				if($filename != "." && $filename != ".."){
+					$subFile = $dir.DIRECTORY_SEPARATOR.$filename; //要将源目录及子文件相连
+					if(is_dir($subFile)){ //若子文件是个目录
+						if (!in_array($filename, $filepaths)) {
+							delDirAndFile($subFile,1);
+							//echo "目录：".$filename."<br>";
+						}
+					}else{
+						if (!in_array($filename, $files)) {
+							delDirAndFile($subFile, 1);
+							//echo 'file:'.$filename."<br>";
+						}
+					}
+				}
+			}
+			closedir($dir_handle);
+		}
 	}
 
 	//下订单
