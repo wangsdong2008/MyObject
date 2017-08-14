@@ -33,6 +33,7 @@ class BzuserUrlModel extends Model{
         $Bzuser_url = M('Bzuser_url');
         $Bzuser_url_data['bzuserid'] = array('eq',$bzuserid);
         $Bzuser_url_data['url'] = array('eq',$url);
+        $Bzuser_url_data['status'] = array('eq',1);
         $Bzuser_urllist = $Bzuser_url
             ->where($Bzuser_url_data)
             ->field('`id`')

@@ -20,10 +20,23 @@ class BzusersModel extends Model{
 
     //更新采集数量
     public function updatenum($id = 0){
-        $sql = "update think_bzusers set `num` = `num`-1  where `id` = '$id'";
+        $sql = "update think_bzusers set `num` = `num`- 1  where `id` = '$id'";
         $Model = M();
         $Model->execute($sql);
         unset($num,$sql,$Model);
+    }
+
+    //查询使用次数
+    public function getnum($username){
+        $Bzusers = M('Bzusers');
+        $Bzusers_data['username'] = array('eq',$username);
+        $Bzuserslist = $Bzusers
+            ->where($Bzusers_data)
+            ->field('`num`')
+            ->limit(1)
+            ->find();
+        unset($Bzusers,$Bzusers_data);
+        return $Bzuserslist['num'];
     }
 
     //注册时检测用户名是否存在

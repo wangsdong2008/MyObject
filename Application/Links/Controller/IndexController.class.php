@@ -255,7 +255,7 @@ class IndexController extends Controller {
                                 //扣除次数
                                 D('bzusers')->updatenum($bzUserslist['id']);
                                 //记录下来
-                                D('bzuser_url')->bzuser_urlSave(array('bzuserid'=>$bzUserslist['id'],'url'=>$this->getdomain($url)));
+                                D('bzuser_url')->bzuser_urlSave(array('bzuserid'=>$bzUserslist['id'],'url'=>$this->getdomain($url),'status'=>$this->flg));//这里的$this->flg用区别测试买帐号和正式账号的区别
 
                             }
                         }
