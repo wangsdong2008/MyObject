@@ -32,4 +32,27 @@ class UsersController extends Controller
         echo json_encode($arr);
     }
 
+    public function getUserNum(){
+        $username = I("username").trim();
+        $codes = I('codes').trim();
+        $username = I('username','');
+        $code = I('codes','');
+        $status = 0;
+        $num = 0;
+        $bzUserslist = D('bzusers')->showBzusersFromUsername($username);
+        if(!$bzUserslist){//用户不存在
+            $status = 0;
+        }else {
+            if ($code != md5($username . $bzUserslist['regtime'] . $bzUserslist['mycode'])) {
+                $status = 1; //账号错误
+            } else {
+                $status = 2; //正确
+                $num = D('bzusers')->getnum($username);
+            }
+        }
+        $arr['status'] = $status;
+        $arr['num'] = $num;
+        echo json_encode($arr);
+    }
+
 }

@@ -211,6 +211,13 @@ class IndexController extends Controller {
         print_r($arr);exit;
         // echo json_encode($arr);
     }
+    public function getVersion(){
+        $versionlist = D('version')->showversion(1);
+        $arr['status'] = 1;
+        $arr['version'] = $versionlist['version'];
+        $arr['url'] = $versionlist['url'];
+        echo json_encode($arr);
+    }
 
     public function getlinks(){
         $url = I('url','');
@@ -235,8 +242,8 @@ class IndexController extends Controller {
                 }else{
                     //检查一下是否采集过
                     if(!session("ff")){ //
-                        $pid = D('bzuser_url')->getcaiurl($bzUserslist['id'],$this->getdomain($url));
-                        if($pid>0){
+                        $pid = D('bzuser_url')->getcaiurl($bzUserslist['id'],$url);
+                        if($pid > 0){
                             $status = 3;
                             $this->flg = 1;
                             session("ff",$bzUserslist['id']);
@@ -255,7 +262,7 @@ class IndexController extends Controller {
                                 //扣除次数
                                 D('bzusers')->updatenum($bzUserslist['id']);
                                 //记录下来
-                                D('bzuser_url')->bzuser_urlSave(array('bzuserid'=>$bzUserslist['id'],'url'=>$this->getdomain($url),'status'=>$this->flg));//这里的$this->flg用区别测试买帐号和正式账号的区别
+                                D('bzuser_url')->bzuser_urlSave(array('bzuserid'=>$bzUserslist['id'],'url'=>$url,'status'=>$this->flg));//这里的$this->flg用区别测试买帐号和正式账号的区别
 
                             }
                         }
