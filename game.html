@@ -26,6 +26,7 @@
     </div>
     <div style="clear:both;"></div>
 </div>
+<script src="jquery-1.8.3.min.js"></script>
 <script>
     g = new Game();
     g.init();
@@ -117,11 +118,7 @@
                     balls[init_x+1][init_y] = init_balls[1];
                     balls[init_x+2][init_y] = init_balls[2];
                     clearInterval(interval);
-                    deleteballs(init_y);//删除掉三个颜色相同的球，暂时关闭竖向删除
-                    for(var i = 2;i>=0;i--){
-                        deleteballs_row(init_x+i);//先删除最下面的一行
-                    }
-
+                    deleteball();
                     //把小框中的球赋值给大框
                     init_x = 0; //行
                     init_y = 5; //列
@@ -142,181 +139,175 @@
                 }
             }
         };
+        function deleteball(){
+            var row = 15;    //15行
+            var col = 11;    //11列
+            var pcolor = ""; //上一个颜色
+            var pcolor1 = ""; //当前颜色
+            var num = 0;     //相同颜色的数量
+            var num1 = 0;   //横向和纵向颜色的数量
 
-        //删除同一行中颜色相同的列
-        function deleteballs_row(row){
-            var start,end;
-            var num = 1;
-            var pcolor = "";
-            for(var i = 0; i<col; i++){
-                if(pcolor == ""){
-                    pcolor = balls[row][i].color;
-                    start = i;
-                    num = 1;
-                }else{
-                    if(balls[row][i].color == pcolor){
-                        end = i;
-                        num ++;
-                    }else{
-                        if(num<3){
-                            pcolor = balls[row][i].color;
-                            start = i;
-                            num = 1;
+            var str1 = "";
+            var str2 = "";
+            var flg = 0;
+            //横向
+            for(i=0;i<row;i++){
+                for(j=0;j<col;j++){
+                    if(balls[i][j].status == 1){
+                        pcolor1 = balls[i][j].color;
+                        if(pcolor1 == pcolor){
+                            num ++;
+                            str1 += i+","+j+"|";
                         }else{
+                            if(num >= 3){
+                                flg = 1;
+                                break;
+                            }else{
+                                num = 1;
+                                flg = 0;
+                                pcolor = pcolor1;
+                                str1 = i+","+j+"|";
+                            }
+                        }
+                    }else{
+                        if(num >= 3){
+                            flg = 1;
                             break;
                         }
+                        pcolor1 = "";
+                        pcolor = "";
+                        num = 0;
+                        str1 = "";
+                        flg = 0;
                     }
                 }
-            }
-            if(num>=3){
-                //alert("第"+row+"行，第"+start+"个到第"+end+"个是同一种颜色");
-                for(var i=start;i<=end;i++){
-
-                    //画白色的球
-                    ctx.beginPath();
-                    ctx.fillStyle = "#fff";
-                    ctx.arc(balls[row][i].X, balls[row][i].Y+radius, radius+1, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.closePath();
-
-                    //数组清空
-                    balls[row][i].status = 0;
-                    balls[row][i].X = 0;
-                    balls[row][i].Y = 0;
-                    balls[row][i].color = "";
-
-                    //下降
-                   for(var j = row-1; j>=0; j--){
-                        if(balls[j][i].status == 1){
-                            balls[j+1][i].status = balls[j][i].status;
-                            balls[j+1][i].X = balls[j][i].X;
-                            balls[j+1][i].Y = balls[j][i].Y+radius2;
-                            balls[j+1][i].color = balls[j][i].color;
-
-                            //画白色的球
-                            ctx.beginPath();
-                            ctx.fillStyle = "#fff";
-                            ctx.arc(balls[j][i].X, balls[j][i].Y+radius, radius+1, 0, Math.PI*2);
-                            ctx.fill();
-                            ctx.closePath();
-
-                            balls[j][i].status = 0;
-                            balls[j][i].X = 0;
-                            balls[j][i].Y = 0;
-                            balls[j][i].color = "";
-
-                            ctx.beginPath();
-                             var x = balls[j+1][i].X;
-                             var y = balls[j+1][i].Y+radius;
-                             var grd = ctx.createRadialGradient(x+3, y-4, 3,x, y, radius);
-                             grd.addColorStop(0,"white");
-                             grd.addColorStop(1,balls[j+1][i].color);
-                             ctx.fillStyle = grd;
-                             grd = null;
-                             ctx.arc(x, y, radius, 0, Math.PI*2);
-                             ctx.fill();
-                             ctx.closePath();
-                        }
-                   }
-                }
-                jsjf(num);
-                deleteballs(i);
-                for(var i = 2;i>=0;i--){
-                    deleteballs_row(init_x+i);//先删除最下面的一行
-                }
-            }
-        }
-
-        //删除同一列col上颜色相同且超过三个球
-        function deleteballs(col){ //删除列
-            var start,end;
-            end = row-1;
-            var num = 1;
-            var pcolor = balls[row-1][col].color;
-            for(var i = row-2; i>=0; i--){
-                if(balls[i][col].status == 1){
-                    if(balls[i][col].color == pcolor){
-                        start = i;
-                        num ++;
-                    }else{
-                        if(num>=3){
-                            break;
-                        }else{
-                            pcolor = balls[i][col].color;
-                            end = i;
-                            num = 1;
-                        }
-                    }
-                }else{
+                if(flg == 1){
                     break;
                 }
             }
-            if(num>=3){
-                for(var i=start;i<=end;i++){
-                    //画白色的球
-                    ctx.beginPath();
-                    ctx.fillStyle = "#fff";
-                    ctx.arc(balls[i][col].X, balls[i][col].Y+radius, radius+1, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.closePath();
+            var arr = "";
 
-                    //数组清空
-                    balls[i][col].status = 0;
-                    balls[i][col].X = 0;
-                    balls[i][col].Y = 0;
-                    balls[i][col].color = "";
+            flg = 0;
+            num = 0;
+            pcolor = "";//上一个颜色
+            //纵向
+            for(j=0;j<col;j++){
+                for(i=0;i<row;i++){
+                    if(balls[i][j].status == 1){
+                        var pcolor1 = balls[i][j].color;
+                        if(pcolor1 == pcolor){
+                            num ++;
+                            str2 += i+","+j+"|";
+                        }else{
+                            if(num>=3){
+                                flg = 1;
+                                break;
+                            }else{
+                                num = 1;
+                                pcolor = pcolor1;
+                                str2 = i+","+j+"|";
+                            }
+                        }
+                    }else{
+                        if(num >= 3){
+                            flg = 1;
+                            break;
+                        }
+                        pcolor1 = "";
+                        pcolor = "";
+                        num = 0;
+                        str2 = "";
+                        flg = 0;
+                    }
                 }
-                jsjf(num);
+                if(flg == 1){
+                    str1 += str2;
+                    break;
+                }
+            }
 
-                for(var i = start-1;i>0;i--){
-                    if(balls[i][col].status == 1){
-                        balls[i+num][col].status = balls[i][col].status;
-                        balls[i+num][col].X = balls[i][col].X;
-                        balls[i+num][col].Y = balls[i][col].Y+num*radius2;
-                        balls[i+num][col].color = balls[i][col].color;
-
-                        ctx.beginPath();
-                        var x = balls[i+num][col].X;
-                        var y = balls[i+num][col].Y + radius;
-                        var grd = ctx.createRadialGradient(x+3, y-4, 3,x, y, radius);
-                        grd.addColorStop(0,"white");
-                        var color = balls[i+num][col].color;
-                        grd.addColorStop(1,color);
-                        ctx.fillStyle = grd;
-                        grd = null;
-                        ctx.arc(x, y, radius, 0, Math.PI*2);
-                        ctx.fill();
-                        ctx.closePath();
+            if(str1 != ""){
+                str1 = str1.substring(0,str1.length-1);
+                arr = str1.split("|");
+                num1 += arr.length;
+                if(num1 >= 3){
+                    //删除球并下降
+                    for(var i=0;i<arr.length;i++){
+                        var arr1 = arr[i].split(",");
+                        var x = parseInt(arr1[0]);
+                        var y = parseInt(arr1[1]);
 
                         //画白色的球
                         ctx.beginPath();
                         ctx.fillStyle = "#fff";
-                        ctx.arc(balls[i][col].X, balls[i][col].Y+radius, radius+1, 0, Math.PI*2);
+                        ctx.arc(balls[x][y].X, balls[x][y].Y+radius, radius+1, 0, Math.PI*2);
                         ctx.fill();
                         ctx.closePath();
 
-                        balls[i][col].status = 0;
-                        balls[i][col].X = 0;
-                        balls[i][col].Y = 0;
-                        balls[i][col].color = "";
+                        //数组清空
+                        balls[x][y].status = 0;
+                        balls[x][y].X = 0;
+                        balls[x][y].Y = 0;
+                        balls[x][y].color = "";
+
+                        //下降
+                        for(var j = x - 1; j > 0; j--){
+                            if(balls[j][y].status == 1){
+                                balls[j+1][y].status = balls[j][y].status;
+                                balls[j+1][y].X = balls[j][y].X;
+                                balls[j+1][y].Y = balls[j][y].Y + radius2;
+                                balls[j+1][y].color = balls[j][y].color;
+
+                                //画一个相同颜色的球
+                                ctx.beginPath();
+                                var x1 = balls[j+1][y].X;
+                                var y1 = balls[j+1][y].Y + radius;
+                                var grd = ctx.createRadialGradient(x1+3, y1-4, 3,x1, y1, radius);
+                                grd.addColorStop(0,"white");
+                                grd.addColorStop(1,balls[j+1][y].color);
+                                ctx.fillStyle = grd;
+                                grd = null;
+                                ctx.arc(x1, y1, radius, 0, Math.PI*2);
+                                ctx.fill();
+                                ctx.closePath();
+
+                                //清空上一个球的数组
+                                balls[j][y].status = 0;
+                                balls[j][y].X = 0;
+                                balls[j][y].Y = 0;
+                                balls[j][y].color = "";
+
+                                //画白色的球
+                                ctx.beginPath();
+                                ctx.fillStyle = "#fff";
+                                ctx.arc(x1,y1-radius2, radius + 1, 0, Math.PI*2);
+                                ctx.fill();
+                                ctx.closePath();
+                            }
+                        }
                     }
                 }
-                deleteballs(col);
+                jsjf(num1);//计算积分
+                deleteball();//再循环查找一次
             }
         }
-
         function jsjf(num){
             var jf = 0;
             switch(num){
                 case 3:jf = 10; break;
                 case 4:jf = 30; break;
                 case 5:jf = 60; break;
+                case 6:jf = 100;break;
+                case 7:jf = 150;break;
+                case 8:jf = 210;break;
+                case 9:jf = 300;break;
             }
             var count = parseInt(document.getElementById("jf").innerHTML) + jf;
             document.getElementById("jf").innerHTML = count;
         }
 
         function rowid(col){ //根据列得到行的id
+            //debugger;
             var c = row;
             for(var i = 2; i< row; i++){
                 if(balls[i][col].status == 1){
@@ -410,7 +401,7 @@
                 {
                     direction = "right";
                     current_y = init_y + 1;
-                    if(current_y>=0){
+                    if(current_y < col){
                         var c = rowid(current_y);
                         var h = height - (row-c)*radius2;
                         var current_y = init_balls[2].Y;
