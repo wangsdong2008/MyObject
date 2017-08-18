@@ -49,7 +49,7 @@
         var init_y;       //当前球位置y行
 
         var interval;     //定义一个定时器
-        var t = 500;     //定时器时间
+        var t = 1000;     //定时器时间
         var tnum = 0;     //定时器加速变量
 
         var color = new Array( "green","red","blue","purple"); //初始化小球颜色,"black","grey","#f0f"
@@ -92,7 +92,7 @@
             interval = setInterval(chat,t);   //定时的设置
         };
 
-        function chat(){
+        function chat(){        	
             var c = rowid(init_y);
             if(c <= 3){
                 ctx.beginPath();
@@ -101,6 +101,7 @@
                 ctx.fillText("Game Over",radius2*3,radius2*7);
                 ctx.closePath();
                 clearInterval(interval);
+                window.removeEventListener('keyup',keyup,false); //去掉键盘事件
             }else{
                 var h = height - (row-c)*radius2;
                 var current_y = init_balls[2].Y;
@@ -139,6 +140,7 @@
                 }
             }
         };
+        
         function deleteball(){
             var row = 15;    //15行
             var col = 11;    //11列
@@ -151,7 +153,9 @@
             var str2 = "";
             var flg = 0;
             //横向
+            outerloop://命名外圈语句
             for(i=0;i<row;i++){
+            	innerloop://命名内圈语句
                 for(j=0;j<col;j++){
                     if(balls[i][j].status == 1){
                         pcolor1 = balls[i][j].color;
@@ -161,7 +165,7 @@
                         }else{
                             if(num >= 3){
                                 flg = 1;
-                                break;
+                                break outerloop;
                             }else{
                                 num = 1;
                                 flg = 0;
@@ -175,23 +179,30 @@
                             break;
                         }
                         pcolor1 = "";
-                        pcolor = "";
-                        num = 0;
-                        str1 = "";
-                        flg = 0;
+	                    pcolor = "";
+	                    num = 0;
+	                    str1 = "";
+	                    flg = 0;                        
                     }
-                }
-                if(flg == 1){
-                    break;
-                }
+                }                
             }
+            
+            var s = str1;
+            s = s.substring(0,str1.length-1);
+            if(s.split("|").length<3){
+            	str1 = "";
+            };
+            
             var arr = "";
 
             flg = 0;
             num = 0;
             pcolor = "";//上一个颜色
-            //纵向
+            
+            //纵向            
+            outerloop2://命名外圈语句
             for(j=0;j<col;j++){
+            	innerloop2://命名内圈语句
                 for(i=0;i<row;i++){
                     if(balls[i][j].status == 1){
                         var pcolor1 = balls[i][j].color;
@@ -201,7 +212,7 @@
                         }else{
                             if(num>=3){
                                 flg = 1;
-                                break;
+                                break outerloop2;
                             }else{
                                 num = 1;
                                 pcolor = pcolor1;
@@ -214,18 +225,20 @@
                             break;
                         }
                         pcolor1 = "";
-                        pcolor = "";
-                        num = 0;
-                        str2 = "";
-                        flg = 0;
+	                    pcolor = "";
+	                    num = 0;
+	                    str2 = "";
+	                    flg = 0;                                                
                     }
-                }
-                if(flg == 1){
-                    str1 += str2;
-                    break;
-                }
+                }                
             }
-
+            var s = str2;
+            s = s.substring(0,str2.length-1);
+            if(s.split("|").length<3){
+            	str2 = "";
+            };
+            str1 += str2;
+            
             if(str1 != ""){
                 str1 = str1.substring(0,str1.length-1);
                 arr = str1.split("|");
@@ -286,11 +299,12 @@
                             }
                         }
                     }
-                }
-                jsjf(num1);//计算积分
-                deleteball();//再循环查找一次
+                    jsjf(num1);//计算积分
+                    deleteball();//再循环查找一次
+                }  
             }
         }
+        
         function jsjf(num){
             var jf = 0;
             switch(num){
@@ -306,10 +320,9 @@
             document.getElementById("jf").innerHTML = count;
         }
 
-        function rowid(col){ //根据列得到行的id
-            //debugger;
+        function rowid(col){ //根据列得到行的id            
             var c = row;
-            for(var i = 2; i< row; i++){
+            for(var i = 2; i < row; i++){
                 if(balls[i][col].status == 1){
                     c = i;
                     break;
@@ -400,7 +413,7 @@
                 case 39:
                 {
                     direction = "right";
-                    current_y = init_y + 1;
+                    current_y = init_y + 1;                    
                     if(current_y < col){
                         var c = rowid(current_y);
                         var h = height - (row-c)*radius2;
@@ -484,7 +497,7 @@
             }
         }
 
-        function draw2(balls){  //画球
+        function draw2(balls){  //画球        	
             for(var j = 0; j < balls.length; j++){
                 ctx1.beginPath();
                 var x = balls[j].X;
