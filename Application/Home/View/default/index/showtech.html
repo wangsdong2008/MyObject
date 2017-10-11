@@ -10,6 +10,20 @@
 .ad{ height:250px; margin:0 auto; margin-top:10px; width:600px; text-align:center;}
 .adv2{ margin:0 auto; width:540px; }
 .ad1{ margin:0 auto; margin-right:20px; float:left; }
+  .clear{ clear: both; }
+  .main_text{ padding: 30px 5px 10px 5px; }
+.main_text ul{
+  margin: 0px;
+  padding: 0px;
+  height:280px;
+}
+  .main_text ul li{
+    width: 300px;
+    height: 200px;
+    float: left;
+    margin-right: 5px;;
+  }
+
 </style>
 <script type="text/javascript" src="{$js_model_path}/js/jquery.js"></script>
 </head>
@@ -26,7 +40,31 @@
           <h1>{$news_title}</h1>
           <div class="abstract">{$news_time|date="Y-m-d H:i:s",###}&nbsp;&nbsp;&nbsp;来源：{$news_from}&nbsp;&nbsp;&nbsp;作者：{$news_author}&nbsp;&nbsp;&nbsp;浏览量:{$news_hits}&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" id="Favorite" rel="{$news_id}">收藏</a></div>
           
-          <div class="main_text"> {$news_content|htmlspecialchars_decode} <input type="hidden" name="token" id="token" value="{$token}"></div>
+          <div class="main_text">
+            <ul>
+              <li> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- 300x250广告 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:300px;height:250px"
+                     data-ad-client="ca-pub-3277338141353982"
+                     data-ad-slot="8882360766"></ins>
+                <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+                </script></li>
+              <li> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- 300x250广告 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:300px;height:250px"
+                     data-ad-client="ca-pub-3277338141353982"
+                     data-ad-slot="8882360766"></ins>
+                <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+                </script></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="content">{$news_content|htmlspecialchars_decode} <input type="hidden"
+                                                                                name="token" id="token"
+                                                                                value="{$token}"></div></div>
 
           <div class="lastnext">
             <volist name="news_about" id="news_about" key="k">
