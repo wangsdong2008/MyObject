@@ -34,7 +34,7 @@ class GoodsModel extends Model{
         $goodslist = $goods->where($goods_data)->limit(1)->find();
         unset($goods,$goods_data);
         if($goodslist){
-            return 1;
+            return $goodslist['goods_id'];
         }else{
             return 0;
         }
@@ -89,6 +89,13 @@ class GoodsModel extends Model{
              return $goods->save();
            }
         }
+    }
+
+    public function goodsUpdate($goods_id,$num){
+        $Model =  M();
+        $sql = "update my_goods set goods_num = goods_num + $num where `goods_id` = '$goods_id'";
+        $Model->execute($sql);
+        unset($goods_id,$sql,$Model);
     }
 
     public function goodsDel($goods_id)
