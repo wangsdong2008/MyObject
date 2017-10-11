@@ -27,10 +27,11 @@ class GoodsModel extends Model{
     );
 
     //下面是你要定义的函数
-    public function findGoods($goods_name){
+    public function findGoods($goods_name,$company_id = 0){
         if($goods_name=='') return;
         $goods = M('goods');
         $goods_data['goods_name'] = array('eq',$goods_name);
+        $goods_data['company_id'] = array('eq',$company_id);
         $goodslist = $goods->where($goods_data)->limit(1)->find();
         unset($goods,$goods_data);
         if($goodslist){
@@ -44,9 +45,10 @@ class GoodsModel extends Model{
      * 参数：$goods_id为ID
      * @return 单条记录
     */
-    public function showgoods($goods_id = 0){
+    public function showgoods($goods_id = 0,$company_id = 0){
         $goods = M('goods');
         $goods_data['goods_id'] = array('eq',$goods_id);
+        $goods_data['company_id'] = array('eq',$company_id);
         $goodslist = $goods->where($goods_data)->limit(1)->find();
         unset($goods,$goods_data);
         return $goodslist;
@@ -57,9 +59,10 @@ class GoodsModel extends Model{
      * $pages为当前页数，$pagesize每页数量
      * @return 分页记录
     */
-    public function pagegoodslist($pages = 1,$pagesize = 10){
+    public function pagegoodslist($pages = 1,$pagesize = 10,$company_id = 0){
         $goods = M('goods');
         $goods_data['goods_id'] = array('gt',0);
+        $goods_data['company_id'] = array('eq',$company_id);
         $count = $goods->where($goods_data)->count();
         $goodslist['count'] = $count;
         $Page = new \Think\Page($count,$pagesize);
@@ -98,19 +101,19 @@ class GoodsModel extends Model{
         unset($goods_id,$sql,$Model);
     }
 
-    public function goodsDel($goods_id)
+    public function goodsDel($goods_id,$company_id)
     {
         $Model =  M();
-        $sql = "delete from my_goods where `goods_id` = '$goods_id'";
+        $sql = "delete from my_goods where `goods_id` = '$goods_id' and company_id = $company_id";
         $Model->execute($sql);
         unset($goods_id,$sql,$Model);
     }
 
 
-    public function getMaxId()
+    public function getMaxId($company_id)
     {
         $Model =  M();
-        $sql = "select max(goods_id) as id from my_goods";
+        $sql = "select max(goods_id) as id from my_goods where company_id = $company_id";
         $result = $Model->query($sql);
         unset($sql,$Model);
         return $result[0]['id'];

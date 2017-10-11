@@ -3,7 +3,7 @@ namespace TaximeterApi\Controller;
 use Think\Controller;
 
 class IndexController extends Controller {
-    private $unit = '个|条|斤|份|碗|袋|头|本|块|根|封|枝';
+    private $unit = '个|条|斤|份|碗|袋|头|本|块|根|封|枝|只';
     private $split = '元|块';
 
     public function index(){
@@ -17,6 +17,7 @@ class IndexController extends Controller {
 
     //设置产品价格
     public function addgoods(){
+        //格式：小青菜每斤1.1元
         $str = I('get.str');
         $companyid = I("id");
         $patterns = "/([^']+)(每|一)(".$this->unit.")([\\d\\.]+)(".$this->split.")/";
@@ -24,14 +25,13 @@ class IndexController extends Controller {
         $status = 0;
         $jj = 0;
         $ii = 0;
-        //$list = explode("元",$str);
         $list = preg_split("/(".$this->split.")/",$str);
 
        for($i=0;$i<count($list)-1;$i++){
             $str2 = $list[$i]."元";
             preg_match_all($patterns,$str2,$arr);
             //检查重复
-           if(D("goods")->findGoods($arr[1][0]) > 0){
+           if(D("goods")->findGoods($arr[1][0],$companyid) > 0){
                 $status = 1;
                 $ii ++;
             }else{
@@ -73,7 +73,7 @@ class IndexController extends Controller {
             preg_match_all($patterns,$str2,$arr);
 
             //查找此产品
-            $goods_id = D("goods")->findGoods($arr[1][0]);
+            $goods_id = D("goods")->findGoods($arr[1][0],$companyid);
             if($goods_id > 0){
                 $goodsinput_data['goods_id'] = $goods_id;
                 $goodsinput_data['inum'] = $arr[2][0];
@@ -82,7 +82,7 @@ class IndexController extends Controller {
                 $pid = D("goods_input")->goods_inputSave($goodsinput_data);
                 if($pid>0){
                     //更新产品数量
-                    D("goods")->goodsUpdate($goods_id,$arr[2][0]);
+                    D("goods")->goodsUpdate($goods_id,$arr[2][0],$companyid);
                     $jj ++;
                 }
                 $arr = array();
@@ -99,8 +99,40 @@ class IndexController extends Controller {
             }
         }
         $arr1['status'] = $status;
-        unset($str,$patterns,$goods_data,$pid,$status);
+        unset($str,$patterns,$goods_data,$pid,$status,$companyid);
         echo json_encode($arr1);
+    }
+
+    //查询价格
+    public function findPrice(){
+        //格式：小青菜50斤
+        $str = I('get.str');
+        $companyid = I("id");
+        $patterns = "/([^\\d]+)(\\d+)(".$this->unit.")/";
+        $list = preg_split("/(".$this->unit.")/",$str);
+
+        $sum = 0;
+        $arrlist = array();
+        for($i=0;$i<count($list)-1;$i++){
+            $str2 = $list[$i]."个";
+            preg_match_all($patterns,$str2,$arr);
+
+            $goods_name = $arr[1][0];
+            $goods_id = D("goods")->findGoods($goods_name,$companyid);
+            if($goods_id>0){
+                $arrlist['list'][$i]['goods_name'] = $goods_name;
+                $goodslist = D("goods")->showgoods($goods_id,$companyid);
+                if($goodslist){
+                    $sum = $sum + $goodslist['goods_price']*$arr[2][0];
+                    $arrlist['list'][$i]['goods_price'] = $goodslist['goods_price']*1;
+                    $arrlist['list'][$i]['goods_num'] = $arr[2][0];
+                    $arrlist['list'][$i]['goods_count'] = $arr[2][0]*1*$goodslist['goods_price']*1;
+                }
+            }
+        }
+        $arrlist['count_price'] = $sum;
+        unset($str,$patterns,$goods_id,$companyid);
+        echo json_encode($arrlist);
     }
 
 
