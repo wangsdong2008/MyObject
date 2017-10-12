@@ -286,5 +286,62 @@ function is_mobile(){
   return false;
 }
 
+//将中文数字转是阿拉伯数字
+function NumtoNum($str = ''){
+  $num = 0;
+  if($str != ''){
+   switch($str){
+    case "一":{
+     $num = 1;
+     break;
+    }
+    case "两":{
+     $num = 2;
+     break;
+    }
+    case "二":{
+     $num = 2;
+     break;
+    }
+    case "三":{
+     $num = 3;
+     break;
+    }
+    case "四":{
+     $num = 4;
+     break;
+    }
+    case "五":{
+     $num = 5;
+     break;
+    }
+    case "六":{
+     $num = 6;
+     break;
+    }
+    case "七":{
+     $num = 7;
+     break;
+    }
+    case "八":{
+     $num = 8;
+     break;
+    }
+    case "九":{
+     $num = 9;
+     break;
+    }
+    case "十":{
+     $num = 10;
+     break;
+    }
+    default:{
+     $num = $str * 1;
+    }
+   }
+  }
+  return $num;
+}
+
 
 ?>

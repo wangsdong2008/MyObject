@@ -5,6 +5,7 @@ use Think\Controller;
 class IndexController extends Controller {
     private $unit = '个|条|斤|份|碗|袋|头|本|块|根|封|枝|只';
     private $split = '元|块';
+    private $numstr = '[\\d\\.一二三四五六七八九十]+';
 
     public function index(){
         $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover,{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
@@ -20,7 +21,7 @@ class IndexController extends Controller {
         //格式：小青菜每斤1.1元
         $str = I('get.str');
         $companyid = I("id");
-        $patterns = "/([^']+)(每|一)(".$this->unit.")([\\d\\.]+)(".$this->split.")/";
+        $patterns = "/([^']+)(每|一)(".$this->unit.")(".$this->numstr.")(".$this->split.")/u";
 
         $status = 0;
         $jj = 0;
@@ -36,7 +37,7 @@ class IndexController extends Controller {
                 $ii ++;
             }else{
                 $goods_data['goods_name'] = $arr[1][0];
-                $goods_data['goods_price'] = $arr[4][0];
+                $goods_data['goods_price'] = NumtoNum($arr[4][0]);
                 $goods_data['company_id'] = $companyid;
                 $pid = D("goods")->GoodsSave($goods_data);
                 if($pid>0){
@@ -63,7 +64,7 @@ class IndexController extends Controller {
         //格式：小青菜50斤1.1元
         $str = I('get.str');
         $companyid = I("id");
-        $patterns = "/([^\\d]+)(\\d+)(".$this->unit.")([\\d\\.]+)(".$this->split.")/";
+        $patterns = "/([^\\d]+)(".$this->numstr.")(".$this->unit.")(".$this->numstr.")(".$this->split.")/u";
         $list = preg_split("/(".$this->split.")/",$str);
         $status = 0;
         $ii = 0;
@@ -75,16 +76,18 @@ class IndexController extends Controller {
             //查找此产品
             $goods_id = D("goods")->findGoods($arr[1][0],$companyid);
             if($goods_id > 0){
+                $nums = NumtoNum($arr[2][0]);
                 $goodsinput_data['goods_id'] = $goods_id;
-                $goodsinput_data['inum'] = $arr[2][0];
+                $goodsinput_data['inum'] = $nums;
                 $goodsinput_data['company_id'] = $companyid;
-                $goodsinput_data['goods_price'] = $arr[4][0];
+                $goodsinput_data['goods_price'] = NumtoNum($arr[4][0]);
                 $pid = D("goods_input")->goods_inputSave($goodsinput_data);
                 if($pid>0){
                     //更新产品数量
-                    D("goods")->goodsUpdate($goods_id,$arr[2][0],$companyid);
+                    D("goods")->goodsUpdate($goods_id,$nums,$companyid);
                     $jj ++;
                 }
+                unset($nums);
                 $arr = array();
             }
             else{
@@ -107,8 +110,9 @@ class IndexController extends Controller {
     public function findPrice(){
         //格式：小青菜50斤
         $str = I('get.str');
+
         $companyid = I("id");
-        $patterns = "/([^\\d]+)(\\d+)(".$this->unit.")/";
+        $patterns = "/([^\\d]+)(".$this->numstr.")(".$this->unit.")/u";
         $list = preg_split("/(".$this->unit.")/",$str);
 
         $sum = 0;
@@ -123,10 +127,11 @@ class IndexController extends Controller {
                 $arrlist['list'][$i]['goods_name'] = $goods_name;
                 $goodslist = D("goods")->showgoods($goods_id,$companyid);
                 if($goodslist){
-                    $sum = $sum + $goodslist['goods_price']*$arr[2][0];
+                    $num = NumtoNum($arr[2][0]);
+                    $sum = $sum + $goodslist['goods_price']*$num;
                     $arrlist['list'][$i]['goods_price'] = $goodslist['goods_price']*1;
-                    $arrlist['list'][$i]['goods_num'] = $arr[2][0];
-                    $arrlist['list'][$i]['goods_count'] = $arr[2][0]*1*$goodslist['goods_price']*1;
+                    $arrlist['list'][$i]['goods_num'] = $num;
+                    $arrlist['list'][$i]['goods_count'] = $num*1*$goodslist['goods_price']*1;
                 }
             }
         }
