@@ -281,13 +281,121 @@ class IndexController extends Controller {
         $content2 = "";
         if($url!='') {
             $content = http($url, $data, $referer, $header, $post, 30);
-            $content2 = $this->get1($content,$url,$this->flg,$g_url);
+            //$content2 = $this->get1($content,$url,$this->flg,$g_url);
+            $content2 = $this->get2($content,$url,$this->flg,$g_url);
         }
         unset($array,$j,$p,$k,$key);
         echo json_encode($content2);
     }
 
+    private function get2($content,$url,$flg,$g_url){
+        $s9 = explode("<!DOCTYPE ",$content);
+        $content = "<!DOCTYPE ".$s9[1]; //去掉<!DOCTYPE 多余的代码
+        unset($s9);
+        $j=0;
+        $array = array();
+        $ext = getExt($url);
+        if($ext == "no extension")
+            $array['filename'] = "index";
+        else{
+            $array['filename'] = basename($url);
+        }
+
+        //补齐图片，js,css,swf的链接
+        $pattern="/(\=|\()?('|\" )?([^'\"\)\ ]+)(\.css|\.js|\.jpg|\.gif|\.png|\.swf)('|\"|\)|\ )?/is";//图片css,swf正则
+        preg_match_all($pattern, $content, $pic_arr);//匹配内容到arr数组
+        $html = preg_split($pattern,$content);
+        $str2 = "";
+        foreach($html as $key => $val){
+            $str2 .= $html[$key]."".$pic_arr[1][$key] . $pic_arr[2][$key] . $this->getWebUrl($pic_arr[3][$key],$url).$pic_arr[4][$key] . $pic_arr[5][$key];
+        }
+        $content = $str2;
+        foreach($pic_arr[3] as $key => $v1){
+            $array['Resources'][$j]['url'] = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
+            $replace_val = $this->getxdpath($v1.$pic_arr[4][$key],$url);
+            $array['Resources'][$j]['real_url'] = $replace_val;
+            $j++;
+        }
+
+        //补齐内部链接
+        $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
+        preg_match_all($pattern, $content, $link_arr);//匹配内容到arr数组
+        //补齐链接
+        $str3 = "";
+        $html2 = preg_split($pattern,$content);
+        foreach($html2 as $key => $val){
+            $str3 .= $html2[$key]."<".$link_arr[1][$key] ." ". $link_arr[2][$key]  ."=". $link_arr[3][$key] .$this->getWebUrl($link_arr[4][$key],$url) . $link_arr[5][$key];
+        }
+        $content = $str3;
+        //补齐内部链接结束
+
+        $arr1 = array();
+        $k = 0;
+        foreach($link_arr[4] as $key => $val){
+            $val = trim($val);
+            if(substr($val,0,7)!="mailto:" && substr($val,0,11)!="javascript:" &&
+                substr($val,0,1) != "#" && $val != $url && $val != $url."/" && $val != "/") {
+                if($this->getWebUrl($val,$url)  != ""){
+                    $arr1[$k]['url'] = $this->getWebUrl($val,$url);
+                    $replace_val = $this->getxdpath($val,$url);
+                    $arr1[$k]['real_url'] = $replace_val;
+                    $k++;
+                }
+            }
+        }
+        //二维数据按url长度排序
+        usort($arr1, function($a, $b) {
+            $al = strlen($a['url']);
+            $bl = strlen($b['url']);
+            if ($al == $bl)
+                return 0;
+            return ($al > $bl) ? -1 : 1;
+        });
+
+        //查询重复
+        $k = 0;
+        foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
+            $array['links'][$k]['url'] = $val['url'];
+            $array['links'][$k]['real_url'] = str_replace("//index.html","/index.html",$val['real_url']);
+            $k++;
+        }
+
+        //替换掉里面的资源
+        foreach($array['Resources'] as $key => $val){
+            $content = str_replace($val['url'],$val['real_url'],$content);
+        }
+        //替换链接
+        foreach($array['links'] as $key => $val){
+            $content = str_replace($val['url'],$val['real_url'],$content);
+        }
+        //替换首链接
+        $content = str_replace($g_url,"/",$content);
+
+        print_r($content);exit;
+
+
+
+
+
+
+
+
+
+
+        $array['status'] = 3;
+        $ht = explode("</html>",$content);
+        $content = $ht[0]."</html>";
+        //$content = str_replace($g_url,"",$content);
+        print_r($content);exit;
+        $array['html'] = urlencode($content);
+        unset($pattern,$str2,$replace_val);
+        return $array;
+    }
+
     private function get1($content,$url,$flg,$g_url){
+        $s9 = explode("<!DOCTYPE ",$content);
+        $content = "<!DOCTYPE ".$s9[1]; //去掉<!DOCTYPE 多余的代码
+        unset($s9);
         $j=0;
         $array = array();
         $ext = getExt($url);
@@ -307,12 +415,14 @@ class IndexController extends Controller {
         }
         $content = $str2;
         //补齐图片，js链接结束
+
         //图片链接
         foreach($pic_arr[3] as $key => $v1){
-            $array['Resources'][$j]['url'] = $this->getWebUrl($v1,$url);
+            $u = $this->getWebUrl($v1,$url);
+            $array['Resources'][$j]['url'] = $u;
             $replace_val = $this->getxdpath($v1,$url);
             $array['Resources'][$j]['real_url'] = $replace_val;
-            $content = str_replace($this->getWebUrl($v1,$url),"".$replace_val,$content); //替换图片地址
+            $content = str_replace($u,$replace_val,$content); //替换图片地址
             $j++;
         }
 
@@ -325,7 +435,8 @@ class IndexController extends Controller {
             $str2 .= $html[$key]."<link". $css_arr[1][$key] ."href=". $css_arr[2][$key] . $this->getWebUrl($css_arr[3][$key],$url) . $css_arr[5][$key];
         }
         $content = $str2;
-        //补齐css链接结束       
+        //补齐css链接结束
+
 
         //补齐内部链接
         $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
@@ -337,6 +448,7 @@ class IndexController extends Controller {
             $str3 .= $html2[$key]."<".$link_arr[1][$key] ." ". $link_arr[2][$key]  ."=". $link_arr[3][$key] .$this->getWebUrl($link_arr[4][$key],$url) . $link_arr[5][$key];
         }
         $content = $str3;
+
         //补齐内部链接结束
         $arr1 = array();
         $k = 0;
@@ -365,8 +477,8 @@ class IndexController extends Controller {
 		$k = 0;
         foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
             $array['links'][$k]['url'] = $val['url'];
-            $array['links'][$k]['real_url'] = $val['real_url'];
-            $content = str_replace($val['url'],$val['real_url'],$content);
+            $array['links'][$k]['real_url'] = str_replace("//index.html","/index.html",$val['real_url']);
+            //$content = str_replace($val['url'],str_replace("//index.html","/index.html",$val['real_url']),$content);
             $k++;
         }
 
@@ -417,6 +529,7 @@ class IndexController extends Controller {
         $array['status'] = 3;
         $ht = explode("</html>",$content);
         $content = $ht[0]."</html>";
+        $content = str_replace($g_url,"",$content);
         $array['html'] = urlencode($content);
         unset($pattern,$str2,$replace_val);
 

@@ -28,10 +28,12 @@ function get_moni($url){
  */
 function http($url, $data=array(),$referer=array(), $header=array(),$method='GET',$timeout=30){
     $curl = curl_init(); // 启动一个CURL会话
+    $user_agent = "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)";//这里模拟的是百度蜘蛛
+    //$user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.0.04506;.NET CLR 3.5.21022; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
     curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 对认证证书来源的检查
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); // 从证书中检查SSL加密算法是否存在
-    curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
+    curl_setopt($curl, CURLOPT_USERAGENT,$user_agent ); // 模拟用户使用的浏览器
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
     curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout - 2);
