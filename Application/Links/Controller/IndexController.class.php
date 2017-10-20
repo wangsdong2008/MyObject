@@ -200,7 +200,6 @@ class IndexController extends Controller {
         else{
             $arr['html'] = $content;
         }
-        print_r($arr['html']);exit;
         if(count($arr)>0){
             $arr['status'] = 1;
         }else{
@@ -281,7 +280,6 @@ class IndexController extends Controller {
         $content2 = "";
         if($url!='') {
             $content = http($url, $data, $referer, $header, $post, 30);
-            //$content2 = $this->get1($content,$url,$this->flg,$g_url);
             $content2 = $this->get2($content,$url,$this->flg,$g_url);
         }
         unset($array,$j,$p,$k,$key);
@@ -304,17 +302,59 @@ class IndexController extends Controller {
         //补齐图片，js,css,swf的链接
         $pattern="/(\=|\()?('|\" )?([^'\"\)\ ]+)(\.css|\.js|\.jpg|\.gif|\.png|\.swf)('|\"|\)|\ )?/is";//图片css,swf正则
         preg_match_all($pattern, $content, $pic_arr);//匹配内容到arr数组
+
         $html = preg_split($pattern,$content);
         $str2 = "";
         foreach($html as $key => $val){
             $str2 .= $html[$key]."".$pic_arr[1][$key] . $pic_arr[2][$key] . $this->getWebUrl($pic_arr[3][$key],$url).$pic_arr[4][$key] . $pic_arr[5][$key];
         }
         $content = $str2;
+        $ii = 0; //CSS 文件
         foreach($pic_arr[3] as $key => $v1){
-            $array['Resources'][$j]['url'] = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
-            $replace_val = $this->getxdpath($v1.$pic_arr[4][$key],$url);
-            $array['Resources'][$j]['real_url'] = $replace_val;
-            $j++;
+            $purl = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
+            if($this->getWebUrl($v1,$url) != ""){
+                $array['Resources'][$j]['url'] = $purl;
+                $replace_val = $this->getxdpath($v1.$pic_arr[4][$key],$url);
+                $array['Resources'][$j]['real_url'] = $replace_val;
+
+                if($pic_arr[4][$key] == ".css"){ //如果是CSS，获取其内容和图片
+                    $array['css'][$ii]['url'] = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
+                    $array['css'][$ii]['real_url'] = $replace_val;
+                    if($flg == 1){ //收费用户
+                        //获取替换后的CSS
+                        $content1 = http($purl);
+                        $pattern="/background(-image)?:( )?url('|\"|\()?([^'\"\) ]+)('|\"|\))?/is";//正则
+                        preg_match_all($pattern, $content1, $arr3);//匹配内容到arr数组
+
+                        //补齐图片链接
+                        $str3 = "";
+                        $html2 = preg_split($pattern,$content1);
+                        foreach($html2 as $key => $val){
+                            $str3 .= $html2[$key]." background".$arr3[1][$key] .":url". $arr3[2][$key] . $arr3[3][$key] .$this->getWebUrl($arr3[4][$key],$url) . $arr3[5][$key];
+                        }
+                        $str3 = str_replace('background'.$url.'/','',$str3);
+                        //补齐图片链接结束
+
+                        //使用替换后的图片地址替换掉
+                        foreach($arr3[4] as $key => $v){
+                            $array['css'][$ii]['imglist'][$key]['url'] = $this->getWebUrl($v,$purl);
+                            //$replace_val = $this->getxdpath($v,$url);
+                            $replace_val = $this->getxdpath($v,$purl);
+                            $array['css'][$ii]['imglist'][$key]['real_url'] = $replace_val;
+                            $str3 = str_replace($this->getWebUrl($v,$url),"".$replace_val,$str3); //替换图片地址
+                        }
+                        $array['css'][$ii]['content']  = urlencode($str3);
+                        unset($arr3,$str3,$html2);
+
+                    }else{ //免费用户
+                        //获取替换前的CSS
+                        $array['css'][$ii]['content']  = urlencode(http($purl));
+                    }
+                    $ii++;
+                }else{
+                    $j++;
+                }
+            }
         }
 
         //补齐内部链接
@@ -360,10 +400,16 @@ class IndexController extends Controller {
             $k++;
         }
 
+        //替换掉里面的css资源
+        foreach($array['css'] as $key => $val){
+            $content = str_replace($val['url'],$val['real_url'],$content);
+        }
+
         //替换掉里面的资源
         foreach($array['Resources'] as $key => $val){
             $content = str_replace($val['url'],$val['real_url'],$content);
         }
+
         //替换链接
         foreach($array['links'] as $key => $val){
             $content = str_replace($val['url'],$val['real_url'],$content);
@@ -371,22 +417,9 @@ class IndexController extends Controller {
         //替换首链接
         $content = str_replace($g_url,"/",$content);
 
-        print_r($content);exit;
-
-
-
-
-
-
-
-
-
-
         $array['status'] = 3;
         $ht = explode("</html>",$content);
         $content = $ht[0]."</html>";
-        //$content = str_replace($g_url,"",$content);
-        print_r($content);exit;
         $array['html'] = urlencode($content);
         unset($pattern,$str2,$replace_val);
         return $array;
@@ -494,9 +527,9 @@ class IndexController extends Controller {
             $content = str_replace($this->getWebUrl($val,$url),"".$replace_val,$content); //替换图片地址
            if($flg == 1){
                 //获取替换后的CSS
-                $content1 = http($this->getWebUrl($val,$url));
-                $pattern="/background(-image)?:( )?url('|\"|\()?([^'\"\) ]+)('|\"|\))?/is";//正则
-                preg_match_all($pattern, $content1, $arr3);//匹配内容到arr数组
+               $content1 = http($this->getWebUrl($val,$url));
+               $pattern="/background(-image)?:( )?url('|\"|\()?([^'\"\) ]+)('|\"|\))?/is";//正则
+               preg_match_all($pattern, $content1, $arr3);//匹配内容到arr数组
 
                 //补齐图片链接
                 $html2 = preg_split($pattern,$content1);
@@ -621,27 +654,37 @@ class IndexController extends Controller {
         if ($domain == geturl($current_url)) {
             $new_url = $current_url;//加了http的完整地址
         }else{
-            if(substr($current_url,0,5)=="http:" || substr($current_url,0,5)=="https"){
-                //友情链接地址排除在外
-                if($this->getdomain($current_url != $this->getdomain($domain_url))){ //域名不一样
-                    $new_url = $current_url;
-                }else{
-                    $openhtml = array('jpg','gif','png','js','css','ico'); //外网的图片，js要保留下来
-                     if (in_array(getExt($current_url), $openhtml)) {
-                         $new_url = $current_url;
-                     }
-                }
+            if($current_url == "/" ){
+                $new_url = $current_url;
             }else{
-                if(substr($current_url,0,2) == "//"){
-                    $new_url = $http.":".$current_url;
-                }elseif(substr($current_url,0,1) == "/"){
-                    $new_url = $domain.$current_url;
-                }elseif(substr($current_url,0,3) == "../"){
-                    $new_url = $url2."/".substr($current_url,3,strlen($current_url)-3);;
-                }elseif(substr($current_url,0,2) == "./"){
-                    $new_url = $url1."/".substr($current_url,2,strlen($current_url)-2);
+                if(substr($current_url,0,5)=="http:" || substr($current_url,0,5)=="https"){
+                    //友情链接地址排除在外
+                    if($this->getdomain($current_url != $this->getdomain($domain_url))){ //域名不一样
+                        $new_url = $current_url;
+                    }else{
+                        $openhtml = array('jpg','gif','png','js','css','ico'); //外网的图片，js要保留下来
+                        if (in_array(getExt($current_url), $openhtml)) {
+                            $new_url = $current_url;
+                        }
+                    }
                 }else{
-                    $new_url = $domain."/".$current_url; //直接就是相对目录
+                    if(substr($current_url,0,2) == "//"){
+                        $new_url = $http.":".$current_url;
+                    }elseif(substr($current_url,0,1) == "/" ){
+                        $new_url = $domain.$current_url;
+                    }elseif(substr($current_url,0,3) == "../"){
+                        $new_url = $url2."/".substr($current_url,3,strlen($current_url)-3);;
+                    }elseif(substr($current_url,0,2) == "./"){
+                        $new_url = $url1."/".substr($current_url,2,strlen($current_url)-2);
+                    }else{
+                        if(substr($current_url,0,11) != "javascript:"){
+                            $new_url = $domain."/".$current_url; //直接就是相对目录
+                        }else{
+                            $new_url = $current_url;
+                        }
+
+
+                    }
                 }
             }
         }
