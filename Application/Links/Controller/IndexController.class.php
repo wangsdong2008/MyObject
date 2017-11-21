@@ -279,149 +279,168 @@ class IndexController extends Controller {
         $array = array();
         $content2 = "";
         if($url!='') {
-            $content = http($url, $data, $referer, $header, $post, 30);
+            $content = socket_data($url, $data, $referer, $header, $post, 30);
             $content2 = $this->get2($content,$url,$this->flg,$g_url);
         }
         unset($array,$j,$p,$k,$key);
         echo json_encode($content2);
     }
 
+    function socket_data($url){  //抓取远程html页面
+        $ch = curl_init();
+        $timeout = 5;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $contents = curl_exec($ch);
+        curl_close($ch);
+        return $contents;
+    }
+
     private function get2($content,$url,$flg,$g_url){
-        $s9 = explode("<!DOCTYPE ",$content);
-        $content = "<!DOCTYPE ".$s9[1]; //去掉<!DOCTYPE 多余的代码
-        unset($s9);
-        $j=0;
+        if(strpos($content,"<!DOCTYPE ")){
+            $s9 = explode("<!DOCTYPE ",$content);
+            $content = "<!DOCTYPE ".$s9[1]; //去掉<!DOCTYPE 多余的代码
+            unset($s9);
+        }
+        $status = 4;
         $array = array();
-        $ext = getExt($url);
-        if($ext == "no extension")
-            $array['filename'] = "index";
-        else{
-            $array['filename'] = basename($url);
-        }
+        if($content == "404"){
+            $status = 3;
+        }else{
+            $j=0;
+            $ext = getExt($url);
+            if($ext == "no extension")
+                $array['filename'] = "index";
+            else{
+                $array['filename'] = basename($url);
+            }
 
-        //补齐图片，js,css,swf的链接
-        $pattern="/(\=|\()?('|\" )?([^'\"\)\ ]+)(\.css|\.js|\.jpg|\.gif|\.png|\.swf)('|\"|\)|\ )?/is";//图片css,swf正则
-        preg_match_all($pattern, $content, $pic_arr);//匹配内容到arr数组
+            //补齐图片，js,css,swf的链接
+            $pattern="/(\=|\()?('|\" )?([^'\"\)\ ]+)(\.css|\.js|\.jpg|\.gif|\.png|\.swf)('|\"|\)|\ )?/is";//图片css,swf正则
+            preg_match_all($pattern, $content, $pic_arr);//匹配内容到arr数组
 
-        $html = preg_split($pattern,$content);
-        $str2 = "";
-        foreach($html as $key => $val){
-            $str2 .= $html[$key]."".$pic_arr[1][$key] . $pic_arr[2][$key] . $this->getWebUrl($pic_arr[3][$key],$url).$pic_arr[4][$key] . $pic_arr[5][$key];
-        }
-        $content = $str2;
-        $ii = 0; //CSS 文件
-        foreach($pic_arr[3] as $key => $v1){
-            $purl = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
-            if($this->getWebUrl($v1,$url) != ""){
-                $array['Resources'][$j]['url'] = $purl;
-                $replace_val = $this->getxdpath($v1.$pic_arr[4][$key],$url);
-                $array['Resources'][$j]['real_url'] = $replace_val;
+            $html = preg_split($pattern,$content);
+            $str2 = "";
+            foreach($html as $key => $val){
+                $str2 .= $html[$key]."".$pic_arr[1][$key] . $pic_arr[2][$key] . $this->getWebUrl($pic_arr[3][$key],$url).$pic_arr[4][$key] . $pic_arr[5][$key];
+            }
+            $content = $str2;
+            $ii = 0; //CSS 文件
+            foreach($pic_arr[3] as $key => $v1){
+                $purl = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
+                if($this->getWebUrl($v1,$url) != ""){
+                    $array['Resources'][$j]['url'] = $purl;
+                    $replace_val = $this->getxdpath($v1.$pic_arr[4][$key],$url);
+                    $array['Resources'][$j]['real_url'] = $replace_val;
 
-                if($pic_arr[4][$key] == ".css"){ //如果是CSS，获取其内容和图片
-                    $array['css'][$ii]['url'] = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
-                    $array['css'][$ii]['real_url'] = $replace_val;
-                    if($flg == 1){ //收费用户
-                        //获取替换后的CSS
-                        $content1 = http($purl);
-                        $pattern="/background(-image)?:( )?url('|\"|\()?([^'\"\) ]+)('|\"|\))?/is";//正则
-                        preg_match_all($pattern, $content1, $arr3);//匹配内容到arr数组
+                    if($pic_arr[4][$key] == ".css"){ //如果是CSS，获取其内容和图片
+                        $array['css'][$ii]['url'] = $this->getWebUrl($v1,$url).$pic_arr[4][$key];
+                        $array['css'][$ii]['real_url'] = $replace_val;
+                        if($flg == 1){ //收费用户
+                            //获取替换后的CSS
+                            $content1 = http($purl);
+                            $pattern="/background(-image)?:( )?url('|\"|\()?([^'\"\) ]+)('|\"|\))?/is";//正则
+                            preg_match_all($pattern, $content1, $arr3);//匹配内容到arr数组
 
-                        //补齐图片链接
-                        $str3 = "";
-                        $html2 = preg_split($pattern,$content1);
-                        foreach($html2 as $key => $val){
-                            $str3 .= $html2[$key]." background".$arr3[1][$key] .":url". $arr3[2][$key] . $arr3[3][$key] .$this->getWebUrl($arr3[4][$key],$url) . $arr3[5][$key];
+                            //补齐图片链接
+                            $str3 = "";
+                            $html2 = preg_split($pattern,$content1);
+                            foreach($html2 as $key => $val){
+                                $str3 .= $html2[$key]." background".$arr3[1][$key] .":url". $arr3[2][$key] . $arr3[3][$key] .$this->getWebUrl($arr3[4][$key],$url) . $arr3[5][$key];
+                            }
+                            $str3 = str_replace('background'.$url.'/','',$str3);
+                            //补齐图片链接结束
+
+                            //使用替换后的图片地址替换掉
+                            foreach($arr3[4] as $key => $v){
+                                $array['css'][$ii]['imglist'][$key]['url'] = $this->getWebUrl($v,$purl);
+                                //$replace_val = $this->getxdpath($v,$url);
+                                $replace_val = $this->getxdpath($v,$purl);
+                                $array['css'][$ii]['imglist'][$key]['real_url'] = $replace_val;
+                                $str3 = str_replace($this->getWebUrl($v,$url),"".$replace_val,$str3); //替换图片地址
+                            }
+                            $array['css'][$ii]['content']  = urlencode($str3);
+                            unset($arr3,$str3,$html2);
+
+                        }else{ //免费用户
+                            //获取替换前的CSS
+                            $array['css'][$ii]['content']  = urlencode(http($purl));
                         }
-                        $str3 = str_replace('background'.$url.'/','',$str3);
-                        //补齐图片链接结束
-
-                        //使用替换后的图片地址替换掉
-                        foreach($arr3[4] as $key => $v){
-                            $array['css'][$ii]['imglist'][$key]['url'] = $this->getWebUrl($v,$purl);
-                            //$replace_val = $this->getxdpath($v,$url);
-                            $replace_val = $this->getxdpath($v,$purl);
-                            $array['css'][$ii]['imglist'][$key]['real_url'] = $replace_val;
-                            $str3 = str_replace($this->getWebUrl($v,$url),"".$replace_val,$str3); //替换图片地址
-                        }
-                        $array['css'][$ii]['content']  = urlencode($str3);
-                        unset($arr3,$str3,$html2);
-
-                    }else{ //免费用户
-                        //获取替换前的CSS
-                        $array['css'][$ii]['content']  = urlencode(http($purl));
+                        $ii++;
+                    }else{
+                        $j++;
                     }
-                    $ii++;
-                }else{
-                    $j++;
                 }
             }
-        }
 
-        //补齐内部链接
-        $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
-        preg_match_all($pattern, $content, $link_arr);//匹配内容到arr数组
-        //补齐链接
-        $str3 = "";
-        $html2 = preg_split($pattern,$content);
-        foreach($html2 as $key => $val){
-            $str3 .= $html2[$key]."<".$link_arr[1][$key] ." ". $link_arr[2][$key]  ."=". $link_arr[3][$key] .$this->getWebUrl($link_arr[4][$key],$url) . $link_arr[5][$key];
-        }
-        $content = $str3;
-        //补齐内部链接结束
+            //补齐内部链接
+            $pattern="/<(a|form)[\w+ '\"\=\/-:]+(href|action)=('|\")?([^'\" ]+)('|\"| )?/is";
+            preg_match_all($pattern, $content, $link_arr);//匹配内容到arr数组
+            //补齐链接
+            $str3 = "";
+            $html2 = preg_split($pattern,$content);
+            foreach($html2 as $key => $val){
+                $str3 .= $html2[$key]."<".$link_arr[1][$key] ." ". $link_arr[2][$key]  ."=". $link_arr[3][$key] .$this->getWebUrl($link_arr[4][$key],$url) . $link_arr[5][$key];
+            }
+            $content = $str3;
+            //补齐内部链接结束
 
-        $arr1 = array();
-        $k = 0;
-        foreach($link_arr[4] as $key => $val){
-            $val = trim($val);
-            if(substr($val,0,7)!="mailto:" && substr($val,0,11)!="javascript:" &&
-                substr($val,0,1) != "#" && $val != $url && $val != $url."/" && $val != "/") {
-                if($this->getWebUrl($val,$url)  != ""){
-                    $arr1[$k]['url'] = $this->getWebUrl($val,$url);
-                    $replace_val = $this->getxdpath($val,$url);
-                    $arr1[$k]['real_url'] = $replace_val;
-                    $k++;
+            $arr1 = array();
+            $k = 0;
+            foreach($link_arr[4] as $key => $val){
+                $val = trim($val);
+                if(substr($val,0,7)!="mailto:" && substr($val,0,11)!="javascript:" &&
+                    substr($val,0,1) != "#" && $val != $url && $val != $url."/" && $val != "/") {
+                    if($this->getWebUrl($val,$url)  != ""){
+                        $arr1[$k]['url'] = $this->getWebUrl($val,$url);
+                        $replace_val = $this->getxdpath($val,$url);
+                        $arr1[$k]['real_url'] = $replace_val;
+                        $k++;
+                    }
                 }
             }
-        }
-        //二维数据按url长度排序
-        usort($arr1, function($a, $b) {
-            $al = strlen($a['url']);
-            $bl = strlen($b['url']);
-            if ($al == $bl)
-                return 0;
-            return ($al > $bl) ? -1 : 1;
-        });
+            //二维数据按url长度排序
+            usort($arr1, function($a, $b) {
+                $al = strlen($a['url']);
+                $bl = strlen($b['url']);
+                if ($al == $bl)
+                    return 0;
+                return ($al > $bl) ? -1 : 1;
+            });
 
-        //查询重复
-        $k = 0;
-        foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
-            $array['links'][$k]['url'] = $val['url'];
-            $array['links'][$k]['real_url'] = str_replace("//index.html","/index.html",$val['real_url']);
-            $k++;
-        }
+            //查询重复
+            $k = 0;
+            foreach(array_unique($arr1,SORT_REGULAR) as $key => $val){ //重新输入下标
+                $array['links'][$k]['url'] = $val['url'];
+                $array['links'][$k]['real_url'] = str_replace("//index.html","/index.html",$val['real_url']);
+                $k++;
+            }
 
-        //替换掉里面的css资源
-        foreach($array['css'] as $key => $val){
-            $content = str_replace($val['url'],$val['real_url'],$content);
-        }
+            //替换掉里面的css资源
+            foreach($array['css'] as $key => $val){
+                $content = str_replace($val['url'],$val['real_url'],$content);
+            }
 
-        //替换掉里面的资源
-        foreach($array['Resources'] as $key => $val){
-            $content = str_replace($val['url'],$val['real_url'],$content);
-        }
+            //替换掉里面的资源
+            foreach($array['Resources'] as $key => $val){
+                $content = str_replace($val['url'],$val['real_url'],$content);
+            }
 
-        //替换链接
-        foreach($array['links'] as $key => $val){
-            $content = str_replace($val['url'],$val['real_url'],$content);
-        }
-        //替换首链接
-        $content = str_replace($g_url,"/",$content);
+            //替换链接
+            foreach($array['links'] as $key => $val){
+                $content = str_replace($val['url'],$val['real_url'],$content);
+            }
+            //替换首链接
+            $content = str_replace($g_url,"/",$content);
 
-        $array['status'] = 3;
-        $ht = explode("</html>",$content);
-        $content = $ht[0]."</html>";
-        $array['html'] = urlencode($content);
-        unset($pattern,$str2,$replace_val);
+            $ht = explode("</html>",$content);
+            $content = $ht[0]."</html>";
+            $array['html'] = urlencode($content);
+            unset($pattern,$str2,$replace_val);
+        }
+        $array['status'] = $status;
+
         return $array;
     }
 

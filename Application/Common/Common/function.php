@@ -343,5 +343,201 @@ function NumtoNum($str = ''){
   return $num;
 }
 
+//url base64编码
+function urlsafe_b64encode($string) {
+ $data = base64_encode($string);
+ $data = str_replace(array('+','/','='),array('-','_',''),$data);
+ return $data;
+}
+//url base64解码
+function urlsafe_b64decode($string) {
+ $data = str_replace(array('-','_'),array('+','/'),$string);
+ $mod4 = strlen($data) % 4;
+ if ($mod4) {
+  $data .= substr('====', $mod4);
+ }
+ return base64_decode($data);
+}
+
+// 获取完整URL
+function curPageURL()
+{
+ $pageURL = 'http';
+ /*if ($_SERVER['HTTPS'] == "on")
+ {
+     $pageURL .= "s";
+ }*/
+ $pageURL .= "://";
+ if ($_SERVER["SERVER_PORT"] != "80")
+ {
+  $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+ }
+ else
+ {
+  $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+ }
+ return $pageURL;
+}
+
+//替换分页地址
+function pageReplaceUrl($cs,$cPage){
+ return preg_replace("/page\/\d+\.html/i",'page/'.$cPage.'.html', $cs);
+}
+
+/**
+ * 基于curl的get访问方式，要求php打开curl扩展
+ * $url @string 请求地址
+ * $param_array @array 参数数组
+ * $cpage为当前页数 $count为最大数量
+ * $obj为分页参数
+ * $num为分页样式，$pagesize为每页条数
+ * */
+function showpage($cPage,$count,$obj,$num=0,$pagesize=10){
+ $pagesize = $pagesize>0?$pagesize:10;
+ $maxPage = getpagenum($count,$pagesize);
+ $str = '';
+ //开始获取分页参数
+ $cs = '';
+ $cs = curPageURL();
+ if(strpos($cs,"/page/")<=0){
+  $cs = preg_replace("/\.html/i",'/page/1.html', $cs);
+ }
+ if(count($obj) > 0){
+  foreach($obj as $key => $value){
+   $cs = preg_replace("/".$key."\/(\w+)\//i","$key/".$value."/", $cs);
+  }
+ }
+ switch($num) {
+  case 0:
+   $str .= '<div id="pagesinfo">共'.$maxPage.'页 每页'.$pagesize.'条 页次：'.$cPage.'/'.$maxPage.'</div>';
+   $str .= '<div id="pages"><ul>';
+   if($cPage*1 > 1){
+    $str .= '<li class="pbutton"><a href="'.pageReplaceUrl($cs,1).'">首页</a></li> ';
+    $str .= '<li class="pbutton"><a href="'.pageReplaceUrl($cs,1).'">上一页</a></li> ';
+   }
+   else{
+    $str .= '<li class="pbutton">首页</li> ';
+    $str .= '<li class="pbutton">上一页</li> ';
+   }
+   $str .= '<li class="pagesnow">'.$cPage.'</li> ';
+   if($cPage*1 < $maxPage*1){
+    $str .= '<li class="pbutton"><a href="'.pageReplaceUrl($cs,$cPage+1).'">下一页</a> </li> ';
+    $str .= '<li class="pbutton"><a href="'.pageReplaceUrl($cs,$maxPage).'">尾页</a></li> ';
+   }
+   else{
+    $str .= '<li class="pbutton">下一页</li> ';
+    $str .= '<li class="pbutton">尾页</li> ';
+   }
+
+
+   $str .= '<li class="opt">';
+   $str .= '<select onChange="window.location=this.options[this.selectedIndex].value">';
+   for($i=1;$i<=$maxPage;$i++){
+    if($i == $cPage){
+     $str .= '<option value="'.pageReplaceUrl($cs,$i).'" selected>第'.$i.'页</option>';
+    }
+    else{
+     $str .= '<option value="'.pageReplaceUrl($cs,$i).'">第'.$i.'页</option>';
+    }
+   }
+   $str .= '</select>';
+   $str .= '</li> ';
+   $str .= '';
+   $str .= '</ul></div>';
+   break;
+  case 1:
+   if($cPage*1 > 1){
+    $str .= '&nbsp;&nbsp;<a href="'.pageReplaceUrl($cs,1).'">&lt;&lt;</a>&nbsp;&nbsp;';
+    $str .= '&nbsp;&nbsp;<a href="'.pageReplaceUrl($cs,$cPage-1).'">&lt;</a>&nbsp;&nbsp;';
+   }
+   else{
+    $str .= '&nbsp;&nbsp;<a href="javascript:;">&lt;&lt;</a>&nbsp;&nbsp;';
+    $str .= '&nbsp;&nbsp;<a href="javascript:;">&lt;</a>&nbsp;&nbsp;';
+   }
+
+   for($i=1;$i<=$maxPage;$i++){
+    if($i == $cPage){
+     $str .= '&nbsp;&nbsp;<a href="javascript:;">'.$i.'</a>&nbsp;&nbsp;';
+    }
+    else{
+     $str .= '&nbsp;&nbsp;<a href="'.pageReplaceUrl($cs,$i).'">'.$i.'</a>&nbsp;&nbsp;';
+    }
+   }
+
+   if($cPage*1 < $maxPage*1){
+    $str .= '&nbsp;&nbsp;<a href="'.pageReplaceUrl($cs,$cPage+1).'">&gt;</a>&nbsp;&nbsp;';
+   }
+   else{
+    $str .= '&nbsp;&nbsp;<a href="javascript:;">&gt;</a>&nbsp;&nbsp;';
+   }
+
+   if($cPage*1 < $maxPage*1){
+    $str .= '&nbsp;&nbsp;<a href="'.pageReplaceUrl($cs,$maxPage).'">&gt;&gt;</a> ';
+   }
+   else{
+    $str .= '&nbsp;&nbsp;<a href="javascript:;">&gt;&gt;</a> ';
+   }
+   break;
+
+  default:
+   if($cPage*1 > 1){
+    $str .= '<a href="'.pageReplaceUrl($cs,1).'">&lt;</a>';
+   }
+   else{
+    $str .= '<a href="javascript:;" class="disabled">&lt;</a>';
+   }
+
+   if($cPage == 1) {
+    $str .= '<a href="javascript:;" class="action">'.$cPage.'</a>';
+   } else {
+    $str .= '<a href="'.pageReplaceUrl($cs,1).'">1</a>';
+   }
+
+   if($cPage > 4) {
+    $str .= '<a class="border_none" href="javascript:;">· · ·</a>';
+    for($i=$cPage-2;$i<=$cPage;$i++){
+     if($i == $cPage){
+      $str .= '<a href="javascript:;" class="action">'.$i.'</a>&nbsp;';
+     }
+     else{
+      $str .= '<a href="'.pageReplaceUrl($cs,$i).'">'.$i.'</a>';
+     }
+    }
+   } else {
+    for($i=2;$i<=$cPage;$i++){
+     if($i == $cPage){
+      $str .= '<a href="javascript:;" class="action">'.$i.'</a>';
+     }
+     else{
+      $str .= '<a href="'.pageReplaceUrl($cs,$i).'">'.$i.'</a>';
+     }
+    }
+   }
+
+   if($maxPage-$cPage < 3) {
+    for($i=$cPage+1;$i<=$maxPage;$i++){
+     $str .= '<a href="'.pageReplaceUrl($cs,$i).'">'.$i.'</a>';
+    }
+   } else {
+    for($i=$cPage+1;$i<=$cPage+2;$i++){
+     $str .= '<a href="'.pageReplaceUrl($cs,$i).'">'.$i.'</a>';
+    }
+    $str .= '<a class="border_none" href="javascript:;">· · ·</a>';
+    $str .= '<a href="'.pageReplaceUrl($cs,$i).'">'.$maxPage.'</a>';
+   }
+
+   if($cPage*1 < $maxPage*1){
+    $str .= '<a href="'.pageReplaceUrl($cs,$cPage+1).'">&gt;</a>';
+   }
+   else{
+    $str .= '<a href="javascript:;" class="disabled">&gt;</a>';
+   }
+   $str .= '<span class="gotopage">跳至</span>';
+   $str .= '<input type="text" id="gotopage" fale="'.$cs.'page/" value="'.$cPage.'" max="'.$maxPage.'" min="1" />';
+   $str .= '<span class="page">页</span><input class="turnpage" type="button" name="" id="" onclick="pagejump('.$maxPage.')" value="跳转" />';
+
+ }
+ return $str;
+}
 
 ?>

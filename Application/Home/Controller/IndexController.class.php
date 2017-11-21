@@ -308,7 +308,6 @@ class IndexController extends Controller {
 		$this->assign('bestnewslist',$hotnewslist);
 		unset($hotnewslist);
 
-
 		//相关分类
 		$categorylist = D('category')->getCategory($cat_id);
 		$this->assign('categorylist',$categorylist);

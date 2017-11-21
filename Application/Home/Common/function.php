@@ -7,7 +7,7 @@
 
 
 //$obj为分页参数 $cpage为当前页数 $count为最大数量
-function showpage($cPage,$count,$obj,$num=0,$pagesize=0){
+function showpage2($cPage,$count,$obj,$num=0,$pagesize=0){
 	$pagesize = $pagesize>0?$pagesize:C(ADMIN_DEFAULT_PAGENUM);
 	$maxPage = getpagenum($count,$pagesize);
 	$str = '';
