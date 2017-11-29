@@ -767,7 +767,8 @@ class IndexController extends Controller {
 		//最新教程
 		$newslist = D('news')->getTopNewslist(9);
 		foreach($newslist as $key => $v){
-			if(date("Y-m-d",$v['news_time']) == date("Y-m-d",time())){
+			//if(date("Y-m-d",$v['news_time']) == date("Y-m-d",time())){
+			if(time() - $v['news_time']*1 < 24*60*60){
 				$newslist[$key]['flg'] = 1;
 			}else{
 				$newslist[$key]['flg'] = 0;
