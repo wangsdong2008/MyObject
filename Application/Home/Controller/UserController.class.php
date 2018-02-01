@@ -137,6 +137,61 @@ class UserController extends Controller {
 		echo $this->checkv();
 	}
 
+	public function qqdl(){
+		$QQlogin_config = C('QQlogin_config');
+		D('Home/third_login')->get_Qq_url($QQlogin_config);
+		unset($QQlogin_config);
+	}
+
+	public function qqlogin(){
+		/*echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$QQlogin_config = C('QQlogin_config');
+		$result = D('Home/third_login')->QQ_result($QQlogin_config);
+		$open_img = $result->figureurl_qq_2;
+		$open_name = $result->nickname;
+		$openid = $result->openid;
+		$this->assign('open_img',$open_img);
+		$this->assign('open_name',$open_name);
+		$userid = $this->check_account($openid,2);
+		if($userid>0){
+			session("userid",$userid);
+			$this->reidrect("index");
+		}else{
+			$this->error("登录失败");
+		}*/
+
+		$QQlogin_config = C('QQlogin_config');
+		D('Home/third_login')->get_Qq_url($QQlogin_config);
+		unset($QQlogin_config);
+
+	}
+
+	//QQ回调
+	public function qqcallback(){
+		$QQlogin_config = C('QQlogin_config');
+		$result = D('Home/third_login')->QQ_result($QQlogin_config);
+
+		$open_img = $result->figureurl_qq_2;
+		$open_name = $result->nickname;
+		$openid = $result->openid;
+		$this->assign('open_img',$open_img);
+		$this->assign('open_name',$open_name);
+
+
+		$userid = $this->check_account($openid,2);
+		if($userid>0){
+			session("userid",$userid);
+			if(is_mobile_request()){
+				$this->redirect("/Wap/User/index"); //兼容手机QQ登录
+			}else{
+				$this->redirect("usercenter");
+			}
+		}else{
+			session("openlist",array('openid'=>$openid,'thrid_type'=>2,'open_img'=>$open_img,'open_name'=>$open_name));//保存用户openid和thrid_type
+			$this->display('thrid_account_other');
+		}
+	}
+
 
 	//初始化类
   	public function _initialize() {
@@ -145,7 +200,7 @@ class UserController extends Controller {
 		$this->assign('APP_NAME',APP_NAME);
 		$this->assign('App_ManageName',App_ManageName);
 		$this->assign('DEFAULT_PATH',C('DEFAULT_PATH'));
-		if(ACTION_NAME != 'login' && ACTION_NAME != 'addfavorite' && ACTION_NAME != 'dl' && ACTION_NAME != 'verify'  && ACTION_NAME != 'checkverify' && ACTION_NAME != 'reg' && ACTION_NAME != 'register' && ACTION_NAME != 'checkusersname'){
+		if(ACTION_NAME != 'qqlogin' && ACTION_NAME != 'qqcallback' && ACTION_NAME != 'login' && ACTION_NAME != 'addfavorite' && ACTION_NAME != 'dl' && ACTION_NAME != 'verify'  && ACTION_NAME != 'checkverify' && ACTION_NAME != 'reg' && ACTION_NAME != 'register' && ACTION_NAME != 'checkusersname'){
 		  if(!session('userid')){
 			  $this -> redirect('login');
 		  }
@@ -309,40 +364,9 @@ class UserController extends Controller {
 			  $loginnum = $userslist['loginnum'];
 			  unset($userslist,$users,$users_data);
 
-			  //事务开始
-			  M()->startTrans();//开启事务
-			  $result = true;
+			  $this->loginOP($loginnum,$username);
 
-			  //记录日志
-			  $users_log = M('users_log');
-			  $users_log_data['log_content'] = $username.'登录成功';
-			  $users_log_data['user_id'] =  session('userid');
-			  $users_log_data['login_time'] = time();
-			  $users_log_data['login_ip'] = get_client_ip();
-			  $m = $users_log->add($users_log_data);
-			  if(!$m){
-				  $result = false;
-			  }
 
-			  //记录登录信息
-			  $Model = M();
-			  $sql = "update think_users set `logintime` = '".time()."',`loginnum` = '".($loginnum+1)."',`loginip` = '".get_client_ip()."' where `id` = '".session('userid')."'";
-			  $m = $Model->execute($sql);
-			  if(!$m){
-				  $result =false;
-			  }
-			  unset($logintime,$loginnum,$loginip,$sql,$Model,$id);
-
-			  //赠送积分
-			  $m = D('Home/IntegralRecord')->GiveIntgral(45); //登录赠送积分
-			  if(!$m){
-				  $result =false;
-			  }
-			  if (!result) {
-				  M()->rollback();//回滚
-			  }
-			  M()->commit();//事务提交
-			  //事务结束
 
 			  if($fromurl != ''){
 				  echo "<script>location.href='".$fromurl."';</script>";
@@ -353,6 +377,44 @@ class UserController extends Controller {
 			  }
 		  }
 	  }
+	}
+
+	public function loginOP($loginnum,$username){
+	    //事务开始
+		M()->startTrans();//开启事务
+		$result = true;
+
+		//记录日志
+		$users_log = M('users_log');
+		$users_log_data['log_content'] = $username.'登录成功';
+		$users_log_data['user_id'] =  session('userid');
+		$users_log_data['login_time'] = time();
+		$users_log_data['login_ip'] = get_client_ip();
+		$m = $users_log->add($users_log_data);
+		if(!$m){
+			$result = false;
+		}
+
+		//记录登录信息
+		$Model = M();
+		$sql = "update think_users set `logintime` = '".time()."',`loginnum` = '".($loginnum+1)."',`loginip` = '".get_client_ip()."' where `id` = '".session('userid')."'";
+		$m = $Model->execute($sql);
+		if(!$m){
+			$result =false;
+		}
+		unset($logintime,$loginnum,$loginip,$sql,$Model,$id);
+
+		//赠送积分
+		$m = D('Home/IntegralRecord')->GiveIntgral(45); //登录赠送积分
+		if(!$m){
+			$result =false;
+		}
+		if (!result) {
+			M()->rollback();//回滚
+		}
+		M()->commit();//事务提交
+		//事务结束
+
 	}
 
 	//我的积分

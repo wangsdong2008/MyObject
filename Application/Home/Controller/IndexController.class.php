@@ -46,7 +46,43 @@ class IndexController extends Controller {
 	public function init(){
 		//$agent = trim($_SERVER["HTTP_ACCEPT"]);
 		$curr = $this->curPageURL();
-		$cs_arr = array('BtnSave','cat_id','order_id','pays','flow_id','flowid','goods_id','id','searchtype','keyword','Topic','Description','Cat_id','username','password','usecpwd','question','answer','email','validationCode','page','news_title','news_id','news_from','news_author','news_content','flg','act','fromurl');
+		$cs_arr = array(
+			'param',
+			'name',
+			'code',
+			'state',
+			'BtnSave',
+			'cat_id',
+			'order_id',
+			'pays',
+			'flow_id',
+			'flowid',
+			'goods_id',
+			'id',
+			'searchtype',
+			'keyword',
+			'Topic',
+			'Description',
+			'Cat_id',
+			'username',
+			'password',
+			'usecpwd',
+			'question',
+			'answer',
+			'email',
+			'validationCode',
+			'page',
+			'news_title',
+			'news_id',
+			'news_from',
+			'news_author',
+			'news_content',
+			'flg',
+			'act',
+			'fromurl',
+			'token',
+			'mycode'
+		);
 		$arr = $_GET;
 		if(count($arr)>0){
 			foreach($arr as $key => $val){
@@ -67,7 +103,6 @@ class IndexController extends Controller {
 				}
 			}
 		}
-
 		if(strpos($curr,"index.php")){
 			$this->error();
 			exit;
@@ -670,8 +705,8 @@ class IndexController extends Controller {
 	}
 
 	public function error(){
-		Header("HTTP/1.1 404 Moved Permanently");
-		Header("Location: /404.html");
+		/*Header("HTTP/1.1 404 Moved Permanently");
+		Header("Location: /404.html");*/
 	}
 
 	public function showsoft(){
@@ -712,6 +747,9 @@ class IndexController extends Controller {
 			unset($newgoodslist);
 
 			$this->assign('goods_id',$id);
+
+			//写入浏览记录
+			D('users_browse_history')->users_browse_history(session("userid"),$id,4);
 
 		}
 		$this->display('showsoft');
@@ -889,14 +927,18 @@ class IndexController extends Controller {
 	}
 
 	public function users(){
+		//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
 		$id = I('id',0);
 		$this->assign('usersdetail',D('users')->showUsers($id));
 
 		//推荐的教程
-		$this->assign('technewslist',D('users')->getusernews($id));
+		$mynewslist = D("Home/users_browse_history")->showUserBrowseHistory(session("userid"),1,10);
+		$this->assign('technewslist',$mynewslist);
+		unset($mynewslist);
 
 		//推荐的软件
-		$this->assign('usersoftlist',D('users')->getusersoft($id));
+		$this->assign('usersoftlist',D('users')->getusersoft($id));  //等待完善
 
 		//推荐的源码
 		$this->assign('usercodelist',D('users')->getusercode($id));
