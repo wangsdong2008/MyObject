@@ -933,15 +933,18 @@ class IndexController extends Controller {
 		$this->assign('usersdetail',D('users')->showUsers($id));
 
 		//推荐的教程
-		$mynewslist = D("Home/users_browse_history")->showUserBrowseHistory(session("userid"),1,10);
+		$mynewslist = D("Home/users_browse_history")->showUserBrowseHistory($id,1,10);
 		$this->assign('technewslist',$mynewslist);
 		unset($mynewslist);
 
 		//推荐的软件
-		$this->assign('usersoftlist',D('users')->getusersoft($id));  //等待完善
+		//$this->assign('usersoftlist',D('users')->getusersoft($id));  //等待完善
+		$this->assign('usersoftlist',D("Home/users_browse_history")->showUserBrowseHistory($id,4,10));
+
 
 		//推荐的源码
-		$this->assign('usercodelist',D('users')->getusercode($id));
+		//$this->assign('usercodelist',D('users')->getusercode($id));
+		$this->assign('usercodelist',D("Home/users_browse_history")->showUserBrowseHistory($id,3,10));
 
 		$this->display('showuser');
 	}

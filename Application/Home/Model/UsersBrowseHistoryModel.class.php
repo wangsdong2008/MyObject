@@ -82,12 +82,13 @@ class UsersBrowseHistoryModel extends Model{
      */
     public function showUserBrowseHistory($userid=0,$ptype=0,$num=10){
         $UsersBrowseHistory = M('users_browse_history');
+        $UsersBrowseHistory_data['think_users_browse_history.ptype'] = array('eq',$ptype);
         switch($ptype){
             case 1:{ //新闻
                 $UsersBrowseHistory_data['think_news.isdel'] = array('eq','0');
                 $UsersBrowseHistory_data['think_news.is_show'] = array('eq','1');
-                $userid = session('userid');
                 $UsersBrowseHistory_data['think_users_browse_history.userid'] = array('eq',$userid);
+                $UsersBrowseHistory_data['think_category.u_id'] = array('eq','2');
                 $UsersBrowseHistorylist = $UsersBrowseHistory
                     ->join('inner join think_news on think_news.news_id = think_users_browse_history.pid')
                     ->join('inner join think_category on think_news.cat_id = think_category.cat_id')
@@ -101,10 +102,37 @@ class UsersBrowseHistoryModel extends Model{
                 break;
             }
             case 3:{ //源码
-
+                $UsersBrowseHistory_data['think_goods.isdel'] = array('eq','0');
+                $UsersBrowseHistory_data['think_goods.is_show'] = array('eq','1');
+                $UsersBrowseHistory_data['think_users_browse_history.userid'] = array('eq',$userid);
+                $UsersBrowseHistory_data['think_category.u_id'] = array('eq','1');
+                $UsersBrowseHistory_data['think_category.root_id'] = array('eq','29');
+                $UsersBrowseHistorylist = $UsersBrowseHistory
+                    ->join('inner join think_goods on think_goods.goods_id = think_users_browse_history.pid')
+                    ->join('inner join think_category on think_goods.cat_id = think_category.cat_id')
+                    ->where($UsersBrowseHistory_data)
+                    ->order('`think_users_browse_history`.`ptime` desc')
+                    ->field('`think_category`.`cat_name`,`think_goods`.`cat_id`,`think_goods`.`goods_id`,`think_goods`.`goods_name`')
+                    ->limit($num)
+                    ->select();
+                unset($userid,$UsersBrowseHistory,$UsersBrowseHistory_data);
                 break;
             }
             case 4:{ //软件
+                $UsersBrowseHistory_data['think_goods.isdel'] = array('eq','0');
+                $UsersBrowseHistory_data['think_goods.is_show'] = array('eq','1');
+                $UsersBrowseHistory_data['think_users_browse_history.userid'] = array('eq',$userid);
+                $UsersBrowseHistory_data['think_category.u_id'] = array('eq','1');
+                $UsersBrowseHistory_data['think_category.root_id'] = array('eq','30');
+                $UsersBrowseHistorylist = $UsersBrowseHistory
+                    ->join('inner join think_goods on think_goods.goods_id = think_users_browse_history.pid')
+                    ->join('inner join think_category on think_goods.cat_id = think_category.cat_id')
+                    ->where($UsersBrowseHistory_data)
+                    ->order('`think_users_browse_history`.`ptime` desc')
+                    ->field('`think_category`.`cat_name`,`think_goods`.`cat_id`,`think_goods`.`goods_id`,`think_goods`.`goods_name`')
+                    ->limit($num)
+                    ->select();
+                unset($userid,$UsersBrowseHistory,$UsersBrowseHistory_data);
 
                 break;
             }
